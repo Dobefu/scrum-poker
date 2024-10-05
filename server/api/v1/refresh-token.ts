@@ -7,6 +7,8 @@ export default defineEventHandler(async (event) => {
   const { db } = useDatabase()
   const body = await readBody(event)
 
+  if (!body?.token) return
+
   const token = body.token
   if (!token) return
 
