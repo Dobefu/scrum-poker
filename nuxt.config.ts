@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   app: {
     rootAttrs: {
       id: "app",
-      class: "flex flex-col flex-1",
+      class: "flex flex-col flex-1 gap-4",
     },
   },
 
