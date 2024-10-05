@@ -11,5 +11,6 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "nuxt-security",
     "@nuxtjs/seo",
+    "@nuxt/icon",
   ],
 })
