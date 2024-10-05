@@ -18,6 +18,13 @@ export default defineEventHandler(async (event) => {
     lastActive: new Date(),
   })
 
+  setCookie(event, "auth-token", hash, {
+    httpOnly: true,
+    expires: new Date(Date.now() + 864e5),
+    path: "/",
+    sameSite: "lax",
+  })
+
   return {
     success: true,
   }
