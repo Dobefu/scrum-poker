@@ -1,3 +1,3 @@
 <template>
-  <h1>{{ $config.public.siteName }}</h1>
+  <TypographyHeading type="h1">{{ $config.public.siteName }}</TypographyHeading>
 </template>
