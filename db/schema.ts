@@ -5,5 +5,5 @@ export const users = sqliteTable("users", {
   name: text("name").notNull(),
   token: text("token").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-  lastActive: integer("created_at", { mode: "timestamp" }).notNull(),
+  lastActive: integer("last_active", { mode: "timestamp" }).notNull(),
 })

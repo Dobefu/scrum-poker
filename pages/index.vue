@@ -1,8 +1,17 @@
 <script setup lang="ts">
 const name = ref("")
 
-const createTmpAccount = () => {
-  console.log(1)
+const createTmpAccount = async () => {
+  if (import.meta.server) return
+
+  const result = await $fetch("/api/v1/create-tmp-account", {
+    method: "POST",
+    body: {
+      name: name.value,
+    },
+  })
+
+  console.log(JSON.stringify(result))
 }
 </script>
 
