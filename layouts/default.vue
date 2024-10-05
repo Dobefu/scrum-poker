@@ -5,7 +5,8 @@ useHead({
     class: "h-full",
   },
   bodyAttrs: {
-    class: "min-h-full flex flex-col",
+    class:
+      "min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-800 dark:text-white",
   },
 })
 </script>

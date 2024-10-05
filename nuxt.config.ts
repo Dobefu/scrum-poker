@@ -45,6 +45,8 @@ export default defineNuxtConfig({
           success: colors.green,
           warning: colors.amber,
           danger: colors.rose,
+
+          gray: colors.zinc,
         },
       },
     },
