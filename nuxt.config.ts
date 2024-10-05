@@ -1,3 +1,5 @@
+import colors from "tailwindcss/colors"
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
@@ -33,6 +35,18 @@ export default defineNuxtConfig({
   tailwindcss: {
     config: {
       content: ["nuxt.config.ts"],
+      theme: {
+        colors: {
+          ...colors,
+
+          primary: colors.blue,
+
+          info: colors.sky,
+          success: colors.green,
+          warning: colors.amber,
+          danger: colors.rose,
+        },
+      },
     },
   },
 })
