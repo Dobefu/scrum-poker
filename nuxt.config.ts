@@ -29,4 +29,10 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/image",
   ],
+
+  tailwindcss: {
+    config: {
+      content: ["nuxt.config.ts"],
+    },
+  },
 })
