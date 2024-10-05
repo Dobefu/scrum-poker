@@ -8,6 +8,12 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  runtimeConfig: {
+    public: {
+      siteName: "Scrum Poker",
+    },
+  },
+
   app: {
     rootAttrs: {
       id: "app",
