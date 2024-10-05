@@ -13,6 +13,13 @@ useHead({
 <template>
   <NuxtRouteAnnouncer />
 
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only"
+  >
+    Skip to main content
+  </a>
+
   <div class="flex flex-1 flex-col justify-between gap-4">
     <LayoutHeader />
 
