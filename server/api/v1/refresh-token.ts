@@ -20,6 +20,8 @@ export default defineEventHandler(async (event) => {
 
   const user = usersWithToken[0]
 
+  if (!user.id) return
+
   const newToken = randomBytes(64).toString("hex")
 
   await db
