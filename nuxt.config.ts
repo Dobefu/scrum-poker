@@ -27,5 +27,6 @@ export default defineNuxtConfig({
     "nuxt-security",
     "@nuxtjs/seo",
     "@nuxt/icon",
+    "@nuxt/image",
   ],
 })
