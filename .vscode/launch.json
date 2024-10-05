@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "cwd": "${workspaceFolder}",
+      "name": "[Dev] Launch",
+      "request": "launch",
+      "runtimeArgs": ["dev"],
+      "runtimeExecutable": "pnpm",
+      "localRoot": "${workspaceRoot}",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    }
+  ]
+}
