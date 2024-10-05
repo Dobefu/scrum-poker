@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "nuxt": "^3.13.0",
+    "tailwind-merge": "^2.5.3",
     "vue": "latest",
     "vue-router": "latest"
   },
