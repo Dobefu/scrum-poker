@@ -6,5 +6,5 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  modules: ["@vueuse/nuxt"],
+  modules: ["@vueuse/nuxt", "@nuxtjs/tailwindcss"],
 });
