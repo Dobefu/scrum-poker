@@ -1,5 +1,7 @@
 # Scrum Poker
 
+[![CI](https://github.com/Dobefu/scrum-poker/actions/workflows/ci.yml/badge.svg)](https://github.com/Dobefu/scrum-poker/actions/workflows/ci.yml)
+
 ## Setup
 
 Make sure to install the dependencies:
