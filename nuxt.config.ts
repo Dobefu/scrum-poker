@@ -2,8 +2,17 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
 
+  ssr: true,
+
   devtools: {
     enabled: true,
+  },
+
+  app: {
+    rootAttrs: {
+      id: "app",
+      class: "flex flex-col flex-1",
+    },
   },
 
   modules: [
