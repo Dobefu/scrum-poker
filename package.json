@@ -9,9 +9,12 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "prettier --check --config .prettierrc **/*.{ts,vue,json} .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "generate:db": "drizzle-kit generate"
   },
   "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "drizzle-orm": "^0.33.0",
     "nuxt": "^3.13.0",
     "tailwind-merge": "^2.5.3",
     "vue": "latest",
@@ -24,7 +27,9 @@
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/seo": "2.0.0-rc.23",
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@types/better-sqlite3": "^7.6.11",
     "@vueuse/nuxt": "^11.1.0",
+    "drizzle-kit": "^0.24.2",
     "nuxt-security": "^2.0.0",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8"

@@ -10,6 +10,12 @@ Make sure to install the dependencies:
 pnpm install
 ```
 
+Then generate the database:
+
+```bash
+pnpm generate:db
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
