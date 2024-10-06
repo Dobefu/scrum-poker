@@ -1,17 +1,18 @@
+import { useSSRContext } from "vue"
+
 export function useAuth() {
-  const token = useCookie("auth-token")
-
   const getUser = async () => {
-    if (!token) return
+    const { data, error } = await useAsyncData("get-user", () => {
+      const context = useSSRContext()
+      const token = context?.event.context.authToken
 
-    const { data, error } = await useAsyncData("get-user", () =>
-      $fetch("/api/v1/get-user", {
+      return $fetch("/api/v1/get-user", {
         method: "POST",
         body: {
-          token: token.value,
+          token: token,
         },
-      }),
-    )
+      })
+    })
 
     if (error.value) return
 

@@ -6,15 +6,10 @@ export default defineEventHandler(async (event) => {
   const { db } = useDatabase()
   const body = await readBody(event)
 
-  if (!body?.token) {
-    return { success: false }
-  }
+  if (!body?.token) return false
 
   const token = body.token
-
-  if (!token) {
-    return { success: false }
-  }
+  if (!token) return false
 
   const usersWithToken = await db
     .select()
@@ -22,18 +17,11 @@ export default defineEventHandler(async (event) => {
     .where(eq(users.token, token))
     .execute()
 
-  if (usersWithToken.length !== 1) {
-    return { success: false }
-  }
+  if (usersWithToken.length !== 1) return false
 
   const user = usersWithToken[0]
 
-  if (!user.id) {
-    return { success: false }
-  }
+  if (!user.id) return false
 
-  return {
-    success: true,
-    user,
-  }
+  return user
 })

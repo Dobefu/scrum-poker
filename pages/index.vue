@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const { getUser } = useAuth()
+const user = await getUser()
+
 const name = ref("")
 
 const createTmpAccount = async () => {
@@ -10,8 +13,6 @@ const createTmpAccount = async () => {
       name: name.value,
     },
   })
-
-  console.log(JSON.stringify(result))
 }
 </script>
 
@@ -21,6 +22,7 @@ const createTmpAccount = async () => {
   </TypographyHeading>
 
   <form
+    v-if="!user"
     class="mx-auto my-8 flex w-full max-w-2xl flex-col gap-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-md max-sm:px-4 dark:border-gray-800 dark:bg-gray-900"
     @submit.prevent="createTmpAccount"
   >
