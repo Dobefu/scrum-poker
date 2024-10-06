@@ -54,4 +54,16 @@ const createTmpAccount = async () => {
       Create a poker room
     </FormButton>
   </form>
+
+  <div
+    v-else
+    class="mx-auto my-8 flex w-full max-w-2xl flex-col gap-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-md max-sm:px-4 dark:border-gray-800 dark:bg-gray-900"
+  >
+    <TypographyHeading
+      type="h2"
+      class="text-center"
+    >
+      Hi {{ user.name }}!
+    </TypographyHeading>
+  </div>
 </template>
