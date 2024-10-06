@@ -36,6 +36,8 @@ const cardOptions = [
   "100",
 ]
 
+const userData = reactive<{ value: Record<string, string> }>({ value: {} })
+
 if (user && import.meta.client) {
   const connection = async (socket: WebSocket, timeout = 10000) => {
     const isOpened = () => socket.readyState === WebSocket.OPEN
@@ -60,10 +62,24 @@ if (user && import.meta.client) {
 
   wss.onmessage = async (e) => {
     const response = JSON.parse(await (e.data as Blob).text())
+
+    if ("type" in response && response.type === "init") {
+      userData.value = reactive(response.data)
+      return
+    }
+
+    if ("type" in response && response.type === "join") {
+      userData.value[response.user] = response.data
+    }
+
+    if ("type" in response && response.type === "leave") {
+      delete userData.value[response.data]
+    }
+
     console.log(response)
   }
 
-  wss.send("join")
+  wss.send("init")
 }
 </script>
 
