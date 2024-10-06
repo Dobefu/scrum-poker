@@ -18,7 +18,14 @@ export default defineEventHandler(async (event) => {
     .where(eq(users.token, token))
     .execute()
 
-  if (usersWithToken.length !== 1) return
+  // If the token doesn't match with that of a user, remove the token.
+  if (usersWithToken.length !== 1) {
+    setCookie(event, "auth-token", "", {
+      expires: new Date(0),
+    })
+
+    return
+  }
 
   const user = usersWithToken[0]
 
