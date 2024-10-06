@@ -53,4 +53,22 @@ const cardOptions = [
       v-for="(option, index) in cardOptions"
     />
   </div>
+
+  <table
+    class="mx-auto w-full max-w-2xl border-separate rounded-xl border border-gray-200 bg-white p-2 shadow-md"
+  >
+    <thead>
+      <tr>
+        <td class="p-4 font-medium">Name</td>
+        <td class="p-4 font-medium">Estimate</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td class="p-4">{{ user.name }}</td>
+        <td class="p-4">-</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
