@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ad913a56-ac0a-4842-a202-bff85347aa11",
+  "id": "a3242d01-2dab-4236-af92-ef4d95197c4f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "rooms": {
@@ -19,6 +19,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "owner": {
+          "name": "owner",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "json": {

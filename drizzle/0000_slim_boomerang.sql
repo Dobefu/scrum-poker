@@ -1,6 +1,7 @@
 CREATE TABLE `rooms` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`token` text NOT NULL,
+	`owner` integer,
 	`json` blob NOT NULL,
 	`created_at` integer NOT NULL
 );

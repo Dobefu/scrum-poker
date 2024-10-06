@@ -11,6 +11,7 @@ const createTmpAccount = async () => {
     method: "POST",
     body: {
       name: name.value,
+      withRoom: true,
     },
   })
 }
