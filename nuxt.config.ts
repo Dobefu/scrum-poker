@@ -34,7 +34,7 @@ export default defineNuxtConfig({
 
   tailwindcss: {
     config: {
-      content: ["nuxt.config.ts"],
+      content: ["nuxt.config.ts", "components"],
       theme: {
         colors: {
           ...colors,

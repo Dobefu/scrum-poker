@@ -26,8 +26,31 @@ if (error.value) {
     statusMessage: "The page could not be found",
   })
 }
+
+const cardOptions = [
+  "?",
+  "∞",
+  "0",
+  "0.5",
+  "1",
+  "2",
+  "3",
+  "5",
+  "8",
+  "13",
+  "20",
+  "40",
+  "100",
+]
 </script>
 
 <template>
   <TypographyHeading type="h1">Poker Room</TypographyHeading>
+
+  <div class="my-8 flex flex-wrap justify-center gap-4">
+    <PokerCard
+      :value="cardOptions[index]"
+      v-for="(option, index) in cardOptions"
+    />
+  </div>
 </template>

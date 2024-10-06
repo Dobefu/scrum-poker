@@ -5,8 +5,6 @@ const user = await getUser()
 const name = ref("")
 
 const createTmpAccount = async () => {
-  if (import.meta.server) return
-
   const result = await $fetch("/api/v1/create-tmp-account", {
     method: "POST",
     body: {
