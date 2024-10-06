@@ -23,6 +23,12 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+  },
+
   modules: [
     "@vueuse/nuxt",
     "@nuxtjs/tailwindcss",

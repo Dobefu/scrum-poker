@@ -35,6 +35,36 @@ const cardOptions = [
   "40",
   "100",
 ]
+
+if (user && import.meta.client) {
+  const connection = async (socket: WebSocket, timeout = 10000) => {
+    const isOpened = () => socket.readyState === WebSocket.OPEN
+
+    if (socket.readyState !== WebSocket.CONNECTING) {
+      return isOpened()
+    } else {
+      const intrasleep = 100
+      const ttl = timeout / intrasleep
+      let tries = 0
+
+      while (socket.readyState === WebSocket.CONNECTING && tries < ttl) {
+        await new Promise((resolve) => setTimeout(resolve, intrasleep))
+        tries++
+      }
+      return isOpened()
+    }
+  }
+  const wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
+
+  await connection(wss)
+
+  wss.onmessage = async (e) => {
+    const response = JSON.parse(await (e.data as Blob).text())
+    console.log(response)
+  }
+
+  wss.send("join")
+}
 </script>
 
 <template>
