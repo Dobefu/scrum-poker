@@ -1,7 +1,4 @@
 <script setup lang="ts">
-const { getUser } = useAuth()
-const user = await getUser()
-
 const name = ref("")
 
 const createTmpAccount = async () => {
@@ -9,21 +6,16 @@ const createTmpAccount = async () => {
     method: "POST",
     body: {
       name: name.value,
-      withRoom: true,
+      withRoom: false,
     },
   })
 
-  if (result?.success) navigateTo(`/rooms/${result.room}`)
+  if (result?.success) reloadNuxtApp()
 }
 </script>
 
 <template>
-  <TypographyHeading type="h1">
-    {{ $config.public.siteName }}
-  </TypographyHeading>
-
   <form
-    v-if="!user"
     class="mx-auto my-8 flex w-full max-w-2xl flex-col gap-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-md max-sm:px-4 dark:border-gray-800 dark:bg-gray-900"
     @submit.prevent="createTmpAccount"
   >
@@ -31,7 +23,7 @@ const createTmpAccount = async () => {
       type="h2"
       class="text-center"
     >
-      {{ $config.public.siteName }}
+      Enter poker room
     </TypographyHeading>
 
     <FormInputGroup>
@@ -52,19 +44,7 @@ const createTmpAccount = async () => {
       variant="primary"
       class="m-auto"
     >
-      Create a poker room
+      Enter the poker room
     </FormButton>
   </form>
-
-  <div
-    v-else
-    class="mx-auto my-8 flex w-full max-w-2xl flex-col gap-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-md max-sm:px-4 dark:border-gray-800 dark:bg-gray-900"
-  >
-    <TypographyHeading
-      type="h2"
-      class="text-center"
-    >
-      Hi {{ user.name }}!
-    </TypographyHeading>
-  </div>
 </template>
