@@ -1,10 +1,8 @@
-import { useSSRContext } from "vue"
-
 export function useAuth() {
   const getUser = async () => {
     const { data, error } = await useAsyncData("get-user", () => {
-      const context = useSSRContext()
-      const token = context?.event.context.authToken
+      const { ssrContext } = useNuxtApp()
+      const token = ssrContext?.event.context.authToken
 
       return $fetch("/api/v1/get-user", {
         method: "POST",
