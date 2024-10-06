@@ -14,6 +14,8 @@ const createTmpAccount = async () => {
       withRoom: true,
     },
   })
+
+  if (result?.success) navigateTo(`/rooms/${result.room}`)
 }
 </script>
 
