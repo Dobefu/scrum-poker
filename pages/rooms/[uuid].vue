@@ -39,6 +39,7 @@ const cardOptions = [
 
 const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
+const roomSettings = reactive<{ value: unknown }>({ value: {} })
 let wss: WebSocket
 
 const connection = async (socket: WebSocket, timeout = 10000) => {
@@ -96,6 +97,11 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "estimate") {
       userData.value[response.user].estimate = response.data
+      return
+    }
+
+    if ("type" in response && response.type === "roomSettings") {
+      roomSettings.value = response.data
       return
     }
 

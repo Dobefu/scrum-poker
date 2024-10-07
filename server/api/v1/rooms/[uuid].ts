@@ -1,9 +1,22 @@
+import { eq } from "drizzle-orm"
+import { useDatabase } from "~/composables/useDatabase"
+import { rooms } from "~/db/schema"
 import { UserData } from "~/types/user-data"
 
 const data: UserData = {}
+const { db } = useDatabase()
+let roomSettings = {}
 
 export default defineWebSocketHandler({
-  open(peer) {
+  async open(peer) {
+    const url = new URL(peer.request?.url!)
+    const pathParts = url.pathname.split("/")
+    const roomUuid = pathParts[pathParts.length - 1]
+
+    roomSettings = (
+      await db.select().from(rooms).where(eq(rooms.uuid, roomUuid))
+    )[0]
+
     peer.subscribe("poker")
   },
   message(peer, message) {
@@ -17,6 +30,7 @@ export default defineWebSocketHandler({
       }
 
       peer.send({ user: "server", type: "init", data })
+      peer.send({ user: "server", type: "roomSettings", data: roomSettings })
 
       peer.publish("poker", {
         user: peer.toString(),
