@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { type UserData } from "@/types/user-data"
+
 const route = useRoute()
 
 const { data, error } = await useAsyncData(`room-${route.params.uuid}`, () =>
@@ -36,7 +38,7 @@ const cardOptions = [
   "100",
 ]
 
-const userData = reactive<{ value: Record<string, string> }>({ value: {} })
+const userData = reactive<{ value: UserData }>({ value: {} })
 
 if (user && import.meta.client) {
   const connection = async (socket: WebSocket, timeout = 10000) => {
@@ -111,9 +113,8 @@ if (user && import.meta.client) {
       </thead>
 
       <tbody>
-        <tr v-for="tableUser of userData.value">
-          <pre>{{ tableUser }}</pre>
-          <td class="p-4">{{ user.name }}</td>
+        <tr v-for="tableData of userData.value">
+          <td class="p-4">{{ tableData.user.name }}</td>
           <td class="p-4">-</td>
         </tr>
       </tbody>

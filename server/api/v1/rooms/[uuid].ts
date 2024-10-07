@@ -1,16 +1,18 @@
-const data: Record<string, object> = {}
+import { UserData } from "~/types/user-data"
+
+const data: UserData = {}
 
 export default defineWebSocketHandler({
   open(peer) {
     peer.subscribe("poker")
   },
   message(peer, message) {
-    const payload = JSON.parse(message.text())
+    const payload: { type: string; data: unknown } = JSON.parse(message.text())
 
     if (payload.type === "init") {
       if (!(peer.toString() in Object.keys(data))) {
         data[peer.toString()] = {
-          user: payload.data,
+          user: payload.data as UserData[0]["user"],
         }
       }
 
