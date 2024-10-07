@@ -28,6 +28,8 @@ export default defineWebSocketHandler({
     }
 
     if (payload.type === "estimate") {
+      data[peer.toString()].estimate = payload.data as UserData[0]["estimate"]
+
       peer.publish("poker", {
         user: peer.toString(),
         type: "estimate",
