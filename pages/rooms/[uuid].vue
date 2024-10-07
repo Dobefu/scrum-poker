@@ -56,8 +56,8 @@ if (user && import.meta.client) {
       return isOpened()
     }
   }
-  const wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
 
+  const wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
   await connection(wss)
 
   wss.onmessage = async (e) => {
@@ -79,7 +79,7 @@ if (user && import.meta.client) {
     console.log(response)
   }
 
-  wss.send("init")
+  wss.send(JSON.stringify({ type: "init", data: user }))
 }
 </script>
 
@@ -96,7 +96,7 @@ if (user && import.meta.client) {
     <div class="my-8 flex flex-wrap justify-center gap-4">
       <PokerCard
         :value="cardOptions[index]"
-        v-for="(option, index) in cardOptions"
+        v-for="(_option, index) in cardOptions"
       />
     </div>
 
@@ -111,7 +111,8 @@ if (user && import.meta.client) {
       </thead>
 
       <tbody>
-        <tr>
+        <tr v-for="tableUser of userData.value">
+          <pre>{{ tableUser }}</pre>
           <td class="p-4">{{ user.name }}</td>
           <td class="p-4">-</td>
         </tr>

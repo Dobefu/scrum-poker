@@ -1,20 +1,27 @@
-const data: Record<string, string> = {}
+const data: Record<string, object> = {}
 
 export default defineWebSocketHandler({
   open(peer) {
     peer.subscribe("poker")
-
-    if (!(peer.toString() in Object.keys(data))) data[peer.toString()] = "test"
-
-    peer.publish("poker", {
-      user: peer.toString(),
-      type: "join",
-      data: data[peer.toString()],
-    })
   },
   message(peer, message) {
-    if (message.text() === "init") {
+    const payload = JSON.parse(message.text())
+
+    if (payload.type === "init") {
+      if (!(peer.toString() in Object.keys(data))) {
+        data[peer.toString()] = {
+          user: payload.data,
+        }
+      }
+
       peer.send({ user: "server", type: "init", data })
+
+      peer.publish("poker", {
+        user: peer.toString(),
+        type: "join",
+        data: data[peer.toString()],
+      })
+
       return
     }
 
@@ -28,6 +35,7 @@ export default defineWebSocketHandler({
   },
   close(peer) {
     delete data[peer.toString()]
+
     peer.publish("poker", {
       user: "server",
       type: "leave",
