@@ -72,10 +72,12 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "join") {
       userData.value[response.user] = response.data
+      return
     }
 
     if ("type" in response && response.type === "leave") {
       delete userData.value[response.data]
+      return
     }
 
     console.log(response)
