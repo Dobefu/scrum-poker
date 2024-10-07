@@ -46,17 +46,18 @@ if (user && import.meta.client) {
 
     if (socket.readyState !== WebSocket.CONNECTING) {
       return isOpened()
-    } else {
-      const intrasleep = 100
-      const ttl = timeout / intrasleep
-      let tries = 0
-
-      while (socket.readyState === WebSocket.CONNECTING && tries < ttl) {
-        await new Promise((resolve) => setTimeout(resolve, intrasleep))
-        tries++
-      }
-      return isOpened()
     }
+
+    const intrasleep = 100
+    const ttl = timeout / intrasleep
+    let tries = 0
+
+    while (socket.readyState === WebSocket.CONNECTING && tries < ttl) {
+      await new Promise((resolve) => setTimeout(resolve, intrasleep))
+      tries++
+    }
+
+    return isOpened()
   }
 
   const wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
