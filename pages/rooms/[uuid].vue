@@ -137,8 +137,21 @@ if (user && import.meta.client) {
 
       <tbody>
         <tr v-for="tableData of userData.value">
-          <td class="p-4">{{ tableData.user.name }}</td>
-          <td class="p-4">{{ tableData.estimate ?? "-" }}</td>
+          <td class="w-full p-4">{{ tableData.user.name }}</td>
+          <td class="w-full p-4">{{ tableData.estimate ?? "-" }}</td>
+          <td class="p-4">
+            <FormButton
+              variant="danger"
+              @click="pickEstimate(undefined)"
+              size="sm"
+              v-if="
+                tableData.user.id === user.id &&
+                typeof tableData.estimate !== 'undefined'
+              "
+            >
+              Clear&nbsp;estimate
+            </FormButton>
+          </td>
         </tr>
       </tbody>
     </table>
