@@ -17,7 +17,7 @@ const props = withDefaults(
   <div
     :class="
       twMerge(
-        'relative inline-block h-48 w-32 rounded-lg bg-white p-2 text-2xl font-medium text-gray-800 shadow-md dark:bg-gray-200',
+        'relative inline-block h-48 w-32 rounded-lg bg-white p-2 text-2xl font-medium text-gray-800 shadow-md transition-all max-lg:h-36 max-lg:w-24 max-lg:text-xl dark:bg-gray-200',
         $props.class,
       )
     "
@@ -34,7 +34,7 @@ const props = withDefaults(
       src="/logo.svg"
       :height="80"
       :width="80"
-      class="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2"
+      class="absolute inset-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
     />
 
     <div class="h-full rotate-180 leading-none">
