@@ -12,7 +12,10 @@ export default defineEventHandler(async (event) => {
   if (!token) return false
 
   const usersWithToken = await db
-    .select()
+    .select({
+      id: users.id,
+      name: users.name,
+    })
     .from(users)
     .where(eq(users.token, token))
     .execute()

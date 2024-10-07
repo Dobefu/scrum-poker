@@ -13,7 +13,11 @@ const createTmpAccount = async () => {
     },
   })
 
-  if (result?.success) navigateTo(`/rooms/${result.room}`)
+  if (result?.success) {
+    navigateTo(`/rooms/${result.room}`, {
+      external: true,
+    })
+  }
 }
 </script>
 
