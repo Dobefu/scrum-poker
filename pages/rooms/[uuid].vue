@@ -26,7 +26,6 @@ const cardOptions = [
   "?",
   "∞",
   "0",
-  "0.5",
   "1",
   "2",
   "3",
@@ -38,29 +37,38 @@ const cardOptions = [
   "100",
 ]
 
+const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
+let wss: WebSocket
 
-if (user && import.meta.client) {
-  const connection = async (socket: WebSocket, timeout = 10000) => {
-    const isOpened = () => socket.readyState === WebSocket.OPEN
+const connection = async (socket: WebSocket, timeout = 10000) => {
+  const isOpened = () => socket.readyState === WebSocket.OPEN
 
-    if (socket.readyState !== WebSocket.CONNECTING) {
-      return isOpened()
-    }
-
-    const intrasleep = 100
-    const ttl = timeout / intrasleep
-    let tries = 0
-
-    while (socket.readyState === WebSocket.CONNECTING && tries < ttl) {
-      await new Promise((resolve) => setTimeout(resolve, intrasleep))
-      tries++
-    }
-
+  if (socket.readyState !== WebSocket.CONNECTING) {
     return isOpened()
   }
 
-  const wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
+  const intrasleep = 100
+  const ttl = timeout / intrasleep
+  let tries = 0
+
+  while (socket.readyState === WebSocket.CONNECTING && tries < ttl) {
+    await new Promise((resolve) => setTimeout(resolve, intrasleep))
+    tries++
+  }
+
+  return isOpened()
+}
+
+const pickEstimate = async (value?: string) => {
+  userData.value[uuid.value].estimate = value
+
+  await connection(wss)
+  wss.send(JSON.stringify({ type: "estimate", data: value }))
+}
+
+if (user && import.meta.client) {
+  wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
   await connection(wss)
 
   wss.onmessage = async (e) => {
@@ -68,6 +76,11 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "init") {
       userData.value = reactive(response.data)
+
+      uuid.value = Object.entries(userData.value).find(([key, value]) => {
+        return value.user.id === user.id
+      })[0]
+
       return
     }
 
@@ -78,6 +91,11 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "leave") {
       delete userData.value[response.data]
+      return
+    }
+
+    if ("type" in response && response.type === "estimate") {
+      userData.value[response.user].estimate = response.data
       return
     }
 
@@ -100,8 +118,10 @@ if (user && import.meta.client) {
 
     <div class="my-8 flex flex-wrap justify-center gap-4">
       <PokerCard
-        :value="cardOptions[index]"
-        v-for="(_option, index) in cardOptions"
+        :value="option"
+        v-for="option in cardOptions"
+        @click="() => pickEstimate(option)"
+        class="cursor-pointer"
       />
     </div>
 
@@ -118,7 +138,7 @@ if (user && import.meta.client) {
       <tbody>
         <tr v-for="tableData of userData.value">
           <td class="p-4">{{ tableData.user.name }}</td>
-          <td class="p-4">-</td>
+          <td class="p-4">{{ tableData.estimate ?? "-" }}</td>
         </tr>
       </tbody>
     </table>

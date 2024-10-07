@@ -17,7 +17,7 @@ const props = withDefaults(
   <div
     :class="
       twMerge(
-        'relative inline-block h-48 w-32 shrink-0 rounded-lg bg-white p-2 text-2xl font-medium text-gray-800 shadow-md transition-all max-lg:h-36 max-lg:w-24 max-lg:text-xl dark:bg-gray-200',
+        'relative inline-block h-48 w-32 shrink-0 select-none rounded-lg bg-white p-2 text-2xl font-medium text-gray-800 shadow-md transition-all max-lg:h-36 max-lg:w-24 max-lg:text-xl dark:bg-gray-200',
         $props.class,
       )
     "

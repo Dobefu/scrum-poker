@@ -5,5 +5,6 @@ export type UserData = Record<
       id: number
       name: string
     }
+    estimate?: string
   }
 >

@@ -27,6 +27,16 @@ export default defineWebSocketHandler({
       return
     }
 
+    if (payload.type === "estimate") {
+      peer.publish("poker", {
+        user: peer.toString(),
+        type: "estimate",
+        data: payload.data,
+      })
+
+      return
+    }
+
     const msg = {
       user: peer.toString(),
       data: data.toString(),
