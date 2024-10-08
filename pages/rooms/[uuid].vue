@@ -68,6 +68,11 @@ const pickEstimate = async (value?: string) => {
   wss.send(JSON.stringify({ type: "estimate", data: value }))
 }
 
+const toggleCardVisibility = async () => {
+  const isHidden = roomSettings.value.showCards
+  wss.send(JSON.stringify({ type: "toggleCardVisibility", data: user.token }))
+}
+
 if (user && import.meta.client) {
   wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
   await connection(wss)
@@ -105,6 +110,11 @@ if (user && import.meta.client) {
       return
     }
 
+    if ("type" in response && response.type === "toggleCardVisibility") {
+      roomSettings.value.showCards = !roomSettings.value.showCards
+      return
+    }
+
     console.log(response)
   }
 
@@ -129,6 +139,20 @@ if (user && import.meta.client) {
         @click="() => pickEstimate(option)"
         class="cursor-pointer"
       />
+    </div>
+
+    <div
+      class="m-auto mb-4 flex max-w-2xl justify-end"
+      v-if="
+        'admins' in roomSettings.value &&
+        (roomSettings.value.admins.includes(user.id) ||
+          roomSettings.value.owner === user.id)
+      "
+    >
+      <FormButton @click="toggleCardVisibility">
+        <template v-if="true">Show cards</template>
+        <template v-if="false">Hide cards</template>
+      </FormButton>
     </div>
 
     <table

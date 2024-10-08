@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
     .select({
       id: users.id,
       name: users.name,
+      token: users.token,
     })
     .from(users)
     .where(eq(users.token, token))
