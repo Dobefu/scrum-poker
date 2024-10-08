@@ -101,7 +101,9 @@ if (user && import.meta.client) {
     }
 
     if ("type" in response && response.type === "estimate") {
-      userData.value[response.user].estimate = response.data
+      if (userData.value[response.user].user.id !== user.id)
+        userData.value[response.user].estimate = response.data
+
       return
     }
 
@@ -118,7 +120,7 @@ if (user && import.meta.client) {
     console.log(response)
   }
 
-  wss.send(JSON.stringify({ type: "init", data: user }))
+  wss.send(JSON.stringify({ type: "init", data: user.token }))
 }
 </script>
 
@@ -150,8 +152,8 @@ if (user && import.meta.client) {
       "
     >
       <FormButton @click="toggleCardVisibility">
-        <template v-if="true">Show cards</template>
-        <template v-if="false">Hide cards</template>
+        <template v-if="!roomSettings.value.showCards">Show cards</template>
+        <template v-else>Hide cards</template>
       </FormButton>
     </div>
 
