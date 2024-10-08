@@ -69,8 +69,7 @@ const pickEstimate = async (value?: string) => {
 }
 
 const toggleCardVisibility = async () => {
-  const isHidden = roomSettings.value.showCards
-  wss.send(JSON.stringify({ type: "toggleCardVisibility", data: user.token }))
+  wss.send(JSON.stringify({ type: "toggleCardVisibility", data: user?.token }))
 }
 
 if (user && import.meta.client) {
@@ -83,7 +82,8 @@ if (user && import.meta.client) {
     if ("type" in response && response.type === "init") {
       userData.value = reactive(response.data)
 
-      uuid.value = Object.entries(userData.value).find(([key, value]) => {
+      console.log(response)
+      uuid.value = Object.entries(userData.value).find(([_, value]) => {
         return value.user.id === user.id
       })[0]
 

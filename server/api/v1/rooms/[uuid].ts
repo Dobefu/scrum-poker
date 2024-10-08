@@ -46,13 +46,30 @@ export default defineWebSocketHandler({
         }
       }
 
-      peer.send({ user: "server", type: "init", data: currentUserData })
+      let newUserData: UserData = {}
+
+      Object.entries(currentUserData).forEach(([key, entry]) => {
+        newUserData[key] = {
+          ...currentUserData[key],
+          estimate:
+            roomSettings?.showCards ||
+            !entry.estimate ||
+            entry.user.id === user.id
+              ? entry.estimate
+              : estimateRedactedString,
+        }
+      })
+
+      peer.send({ user: "server", type: "init", data: newUserData })
       peer.send({ user: "server", type: "roomSettings", data: roomSettings })
 
       peer.publish("poker", {
         user: peer.toString(),
         type: "join",
-        data: currentUserData[peer.toString()],
+        data: {
+          ...newUserData[peer.toString()],
+          estimate: estimateRedactedString,
+        },
       })
 
       return
