@@ -15,4 +15,6 @@ export const rooms = sqliteTable("rooms", {
   owner: integer("owner"),
   admins: blob("json", { mode: "json" }).$type<number[]>().notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+
+  showCards: integer("show_cards", { mode: "boolean" }).default(false),
 })
