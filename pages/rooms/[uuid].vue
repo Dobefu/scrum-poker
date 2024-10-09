@@ -45,6 +45,17 @@ const roomSettings = reactive<{
 }>({
   value: undefined,
 })
+
+const sortedUserData = computed<UserData>(() => {
+  let result: UserData = {}
+
+  Object.entries(userData.value)
+    .toSorted((a, b) => a[1].user.name.localeCompare(b[1].user.name))
+    .forEach(([key, value]) => (result[key] = value))
+
+  return result
+})
+
 let wss: WebSocket
 
 const connection = async (socket: WebSocket, timeout = 10000) => {
@@ -147,7 +158,7 @@ if (user && import.meta.client) {
         :value="option"
         v-for="option in cardOptions"
         @click="() => pickEstimate(option)"
-        :ariaSelected="userData.value[uuid]?.estimate === option"
+        :ariaSelected="sortedUserData[uuid]?.estimate === option"
         class="cursor-pointer"
       />
     </div>
@@ -178,7 +189,7 @@ if (user && import.meta.client) {
       </thead>
 
       <tbody>
-        <tr v-for="tableData of userData.value">
+        <tr v-for="tableData of sortedUserData">
           <td class="w-full p-4">{{ tableData.user.name }}</td>
           <td class="w-full p-4">{{ tableData.estimate ?? "-" }}</td>
           <td class="p-4">
