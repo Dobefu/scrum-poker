@@ -5,10 +5,10 @@ import { UserData } from "~/types/user-data"
 
 const estimateRedactedString = "<HIDDEN>"
 
-const currentUserData: UserData = {}
-const userData: UserData = {}
+const currentUserData: Record<string, UserData | undefined> = {}
+const userData: Record<string, UserData | undefined> = {}
 const { db } = useDatabase()
-let roomSettings: (typeof rooms)["$inferSelect"] | undefined
+let roomSettings: Record<string, (typeof rooms)["$inferSelect"]> | undefined
 
 export default defineWebSocketHandler({
   async open(peer) {
@@ -16,13 +16,21 @@ export default defineWebSocketHandler({
     const pathParts = url.pathname.split("/")
     const roomUuid = pathParts[pathParts.length - 1]
 
-    roomSettings = (
+    if (!roomSettings) roomSettings = {}
+
+    roomSettings[roomUuid] = (
       await db.select().from(rooms).where(eq(rooms.uuid, roomUuid))
     )[0]
 
-    peer.subscribe("poker")
+    peer.subscribe(`poker_${roomUuid}`)
   },
   async message(peer, message) {
+    if (typeof roomSettings === "undefined") return
+
+    const url = new URL(peer.request?.url!)
+    const pathParts = url.pathname.split("/")
+    const roomUuid = pathParts[pathParts.length - 1]
+
     const payload: { type: string; data: unknown } = JSON.parse(message.text())
 
     if (payload.type === "init" && typeof payload.data === "string") {
@@ -38,12 +46,14 @@ export default defineWebSocketHandler({
       if (usersWithToken.length !== 1) return
 
       const user = usersWithToken[0]
-      const userDataUser = Object.values(userData).find(
+      const userDataUser = Object.values(userData[roomUuid] ?? []).find(
         (entry) => entry.user.id === user.id,
       )
 
-      if (!(user.id in Object.keys(currentUserData))) {
-        currentUserData[peer.toString()] = {
+      if (!(user.id in Object.keys(currentUserData[roomUuid] ?? []))) {
+        if (!currentUserData[roomUuid]) currentUserData[roomUuid] = {}
+
+        currentUserData[roomUuid][peer.toString()] = {
           ...userDataUser,
           user: user as UserData[0]["user"],
         }
@@ -51,28 +61,37 @@ export default defineWebSocketHandler({
 
       let newUserData: UserData = {}
 
-      Object.entries(currentUserData).forEach(([key, entry]) => {
-        newUserData[key] = {
-          ...currentUserData[key],
-          estimate:
-            roomSettings?.showCards ||
-            !entry.estimate ||
-            entry.user.id === user.id
-              ? entry.estimate
-              : estimateRedactedString,
-        }
-      })
+      Object.entries(currentUserData[roomUuid] ?? []).forEach(
+        ([key, entry]) => {
+          if (!roomSettings) return
+          if (!currentUserData[roomUuid]) currentUserData[roomUuid] = {}
+
+          newUserData[key] = {
+            ...currentUserData[roomUuid][key],
+            estimate:
+              roomSettings[roomUuid]?.showCards ||
+              !entry.estimate ||
+              entry.user.id === user.id
+                ? entry.estimate
+                : estimateRedactedString,
+          }
+        },
+      )
 
       peer.send({ user: "server", type: "init", data: newUserData })
-      peer.send({ user: "server", type: "roomSettings", data: roomSettings })
+      peer.send({
+        user: "server",
+        type: "roomSettings",
+        data: roomSettings[roomUuid],
+      })
 
-      peer.publish("poker", {
+      peer.publish(`poker_${roomUuid}`, {
         user: peer.toString(),
         type: "join",
         data: {
           ...newUserData[peer.toString()],
           estimate:
-            roomSettings?.showCards || !userDataUser?.estimate
+            roomSettings[roomUuid]?.showCards || !userDataUser?.estimate
               ? userDataUser?.estimate
               : estimateRedactedString,
         },
@@ -82,14 +101,17 @@ export default defineWebSocketHandler({
     }
 
     if (payload.type === "estimate") {
-      currentUserData[peer.toString()].estimate =
+      if (!currentUserData[roomUuid])
+        currentUserData[roomUuid] = userData[roomUuid] ?? {}
+
+      currentUserData[roomUuid][peer.toString()].estimate =
         payload.data as UserData[0]["estimate"]
 
-      peer.publish("poker", {
+      peer.publish(`poker_${roomUuid}`, {
         user: peer.toString(),
         type: "estimate",
         data:
-          roomSettings?.showCards || !payload.data
+          roomSettings[roomUuid]?.showCards || !payload.data
             ? payload.data
             : estimateRedactedString,
       })
@@ -102,6 +124,7 @@ export default defineWebSocketHandler({
       typeof payload.data === "string"
     ) {
       if (!roomSettings) return
+      if (!currentUserData[roomUuid]) currentUserData[roomUuid] = {}
 
       const usersWithToken = await db
         .select({
@@ -115,34 +138,39 @@ export default defineWebSocketHandler({
 
       const user = usersWithToken[0]
 
-      const peerId = currentUserData[peer.toString()].user.id
+      const peerId = currentUserData[roomUuid][peer.toString()].user.id
       if (peerId !== user.id) return
 
       db.update(rooms)
-        .set({ showCards: !roomSettings.showCards })
-        .where(eq(rooms.id, roomSettings.id))
+        .set({ showCards: !roomSettings[roomUuid].showCards })
+        .where(eq(rooms.id, roomSettings[roomUuid].id))
         .run()
 
-      roomSettings.showCards = !roomSettings.showCards
+      roomSettings[roomUuid].showCards = !roomSettings[roomUuid].showCards
 
       peer.send({ user: "server", type: "toggleCardVisibility" })
-      peer.publish("poker", { user: "server", type: "toggleCardVisibility" })
+      peer.publish(`poker_${roomUuid}`, {
+        user: "server",
+        type: "toggleCardVisibility",
+      })
 
-      Object.entries(currentUserData).forEach(([uuid, data]) => {
+      Object.entries(currentUserData[roomUuid]).forEach(([uuid, data]) => {
+        if (!roomSettings) return
+
         peer.send({
           user: uuid,
           type: "estimate",
           data:
-            roomSettings?.showCards || !data.estimate
+            roomSettings[roomUuid]?.showCards || !data.estimate
               ? data.estimate
               : estimateRedactedString,
         })
 
-        peer.publish("poker", {
+        peer.publish(`poker_${roomUuid}`, {
           user: uuid,
           type: "estimate",
           data:
-            roomSettings?.showCards || !data.estimate
+            roomSettings[roomUuid]?.showCards || !data.estimate
               ? data.estimate
               : estimateRedactedString,
         })
@@ -153,22 +181,36 @@ export default defineWebSocketHandler({
 
     const msg = {
       user: peer.toString(),
-      data: currentUserData.toString(),
+      data: currentUserData[roomUuid]?.toString(),
     }
 
     peer.send(msg)
-    peer.publish("poker", msg)
+    peer.publish(`poker_${roomUuid}`, msg)
   },
   close(peer) {
-    const peerUuid = (Object.entries(userData).find(
-      ([_, entry]) =>
-        entry.user.id === currentUserData[peer.toString()].user.id,
+    const url = new URL(peer.request?.url!)
+    const pathParts = url.pathname.split("/")
+    const roomUuid = pathParts[pathParts.length - 1]
+    if (!currentUserData[roomUuid])
+      currentUserData[roomUuid] = userData[roomUuid] ?? {}
+
+    const peerUuid = (Object.entries(userData[roomUuid] ?? []).find(
+      ([_, entry]) => {
+        if (!currentUserData[roomUuid]) return
+
+        entry.user.id === currentUserData[roomUuid][peer.toString()].user.id
+      },
     ) ?? [peer.toString()])[0]
 
-    userData[peerUuid] = { ...currentUserData[peer.toString()] }
-    delete currentUserData[peer.toString()]
+    if (!userData[roomUuid]) userData[roomUuid] = {}
 
-    peer.publish("poker", {
+    userData[roomUuid][peerUuid] = {
+      ...currentUserData[roomUuid][peer.toString()],
+    }
+
+    delete currentUserData[roomUuid][peer.toString()]
+
+    peer.publish(`poker_${roomUuid}`, {
       user: "server",
       type: "leave",
       data: peer.toString(),
