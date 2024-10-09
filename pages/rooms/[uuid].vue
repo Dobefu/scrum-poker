@@ -95,7 +95,6 @@ if (user && import.meta.client) {
     }
 
     if ("type" in response && response.type === "join") {
-      console.log(response)
       userData.value[response.user] = response.data
       return
     }
@@ -148,6 +147,7 @@ if (user && import.meta.client) {
         :value="option"
         v-for="option in cardOptions"
         @click="() => pickEstimate(option)"
+        :ariaSelected="userData.value[uuid]?.estimate === option"
         class="cursor-pointer"
       />
     </div>
