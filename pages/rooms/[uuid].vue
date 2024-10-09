@@ -95,6 +95,7 @@ if (user && import.meta.client) {
     }
 
     if ("type" in response && response.type === "join") {
+      console.log(response)
       userData.value[response.user] = response.data
       return
     }

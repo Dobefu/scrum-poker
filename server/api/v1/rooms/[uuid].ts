@@ -38,10 +38,13 @@ export default defineWebSocketHandler({
       if (usersWithToken.length !== 1) return
 
       const user = usersWithToken[0]
+      const userDataUser = Object.values(userData).find(
+        (entry) => entry.user.id === user.id,
+      )
 
       if (!(user.id in Object.keys(currentUserData))) {
         currentUserData[peer.toString()] = {
-          ...Object.values(userData).find((entry) => entry.user.id === user.id),
+          ...userDataUser,
           user: user as UserData[0]["user"],
         }
       }
@@ -68,7 +71,10 @@ export default defineWebSocketHandler({
         type: "join",
         data: {
           ...newUserData[peer.toString()],
-          estimate: estimateRedactedString,
+          estimate:
+            roomSettings?.showCards || !userDataUser?.estimate
+              ? userDataUser?.estimate
+              : estimateRedactedString,
         },
       })
 
