@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type UserData } from "@/types/user-data"
+import type { rooms } from "~/db/schema"
 
 const route = useRoute()
 
@@ -39,7 +40,11 @@ const cardOptions = [
 
 const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
-const roomSettings = reactive<{ value: unknown }>({ value: {} })
+const roomSettings = reactive<{
+  value: (typeof rooms)["$inferSelect"] | undefined
+}>({
+  value: undefined,
+})
 let wss: WebSocket
 
 const connection = async (socket: WebSocket, timeout = 10000) => {
@@ -82,10 +87,9 @@ if (user && import.meta.client) {
     if ("type" in response && response.type === "init") {
       userData.value = reactive(response.data)
 
-      console.log(response)
-      uuid.value = Object.entries(userData.value).find(([_, value]) => {
+      uuid.value = (Object.entries(userData.value).find(([_, value]) => {
         return value.user.id === user.id
-      })[0]
+      }) ?? [""])[0]
 
       return
     }
@@ -112,7 +116,11 @@ if (user && import.meta.client) {
       return
     }
 
-    if ("type" in response && response.type === "toggleCardVisibility") {
+    if (
+      "type" in response &&
+      response.type === "toggleCardVisibility" &&
+      roomSettings.value
+    ) {
       roomSettings.value.showCards = !roomSettings.value.showCards
       return
     }
@@ -146,6 +154,7 @@ if (user && import.meta.client) {
     <div
       class="m-auto mb-4 flex max-w-2xl justify-end"
       v-if="
+        roomSettings.value &&
         'admins' in roomSettings.value &&
         (roomSettings.value.admins.includes(user.id) ||
           roomSettings.value.owner === user.id)
