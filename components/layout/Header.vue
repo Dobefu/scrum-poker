@@ -1,7 +1,22 @@
+<script setup lang="ts">
+const { getUser } = useAuth()
+const user = await getUser()
+
+const logout = async () => {
+  const result = await $fetch("/api/v1/logout")
+
+  if (result.success) {
+    navigateTo("/", {
+      external: true,
+    })
+  }
+}
+</script>
+
 <template>
   <header class="mx-auto w-full max-w-7xl px-4 py-8 max-sm:px-1 max-sm:py-3">
     <div
-      class="rounded-full border border-gray-100 bg-white py-4 shadow-md dark:border-gray-950 dark:bg-gray-900"
+      class="flex items-center justify-between gap-4 rounded-full border border-gray-100 bg-white py-4 pe-6 shadow-md dark:border-gray-950 dark:bg-gray-900"
     >
       <NuxtLink
         :external="true"
@@ -16,6 +31,13 @@
         />
         {{ $config.public.siteName }}
       </NuxtLink>
+
+      <button
+        @click="logout()"
+        v-if="user?.id"
+      >
+        Log out
+      </button>
     </div>
   </header>
 </template>
