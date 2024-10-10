@@ -213,7 +213,9 @@ if (user && import.meta.client) {
               "
               type="sm"
               :isHidden="
-                tableData.user.id !== user.id && !roomSettings.value?.showCards
+                !!tableData.estimate &&
+                tableData.user.id !== user.id &&
+                !roomSettings.value?.showCards
               "
             />
           </td>
