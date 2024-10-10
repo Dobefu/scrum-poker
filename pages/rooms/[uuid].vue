@@ -4,7 +4,7 @@ import type { rooms } from "~/db/schema"
 
 const route = useRoute()
 
-const { data, error } = await useAsyncData(`room-${route.params.uuid}`, () =>
+const { error } = await useAsyncData(`room-${route.params.uuid}`, () =>
   $fetch("/api/v1/get-room", {
     method: "POST",
     body: {

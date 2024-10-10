@@ -4,6 +4,17 @@ const user = await getUser()
 
 const name = ref("")
 
+const { data: room, error: roomError } = await useAsyncData(
+  `user-room-${user?.token}`,
+  () =>
+    $fetch("/api/v1/get-user-room", {
+      method: "POST",
+      body: {
+        token: user?.token,
+      },
+    }),
+)
+
 const createTmpAccount = async () => {
   const result = await $fetch("/api/v1/create-tmp-account", {
     method: "POST",
@@ -70,5 +81,21 @@ const createTmpAccount = async () => {
     >
       Hi {{ user.name }}!
     </TypographyHeading>
+
+    <div
+      v-if="room && !roomError"
+      class="flex flex-col items-center gap-4"
+    >
+      <TypographyHeading type="h3">
+        You have an open poker room
+      </TypographyHeading>
+
+      <FormButton
+        :to="`/rooms/${room.uuid}`"
+        variant="primary"
+      >
+        Enter room
+      </FormButton>
+    </div>
   </div>
 </template>
