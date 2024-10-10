@@ -117,13 +117,12 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "estimate") {
       if (userData.value[response.user].user.id !== user.id) {
-        let revealTimeout = setTimeout(
+        setTimeout(
           () => (userData.value[response.user].estimate = response.data),
           200,
         )
 
         if (response.data !== "<HIDDEN>") {
-          clearTimeout(revealTimeout)
           userData.value[response.user].estimate = response.data
         }
       }
