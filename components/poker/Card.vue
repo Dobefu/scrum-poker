@@ -56,24 +56,31 @@ const cardClass = computed(() => {
 
     <template v-else>
       <div
-        class="absolute inset-4 rounded-md border border-gray-200 dark:border-gray-400"
-      />
+        class="absolute inset-2"
+        :style="{ backfaceVisibility: 'hidden' }"
+      >
+        <div
+          class="absolute inset-2 rounded-md border border-gray-200 dark:border-gray-400"
+        />
 
-      <p class="absolute -m-1 bg-white p-1 leading-none dark:bg-gray-200">
-        {{ $props.value }}
-      </p>
-
-      <NuxtImg
-        src="/logo.svg"
-        :height="80"
-        :width="80"
-        class="absolute inset-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
-      />
-
-      <div class="h-full rotate-180 leading-none">
-        <p class="-m-1 inline-block bg-white p-1 leading-none dark:bg-gray-200">
+        <p class="absolute -m-1 bg-white p-1 leading-none dark:bg-gray-200">
           {{ $props.value }}
         </p>
+
+        <NuxtImg
+          src="/logo.svg"
+          :height="80"
+          :width="80"
+          class="absolute inset-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
+        />
+
+        <div class="h-full rotate-180 leading-none">
+          <p
+            class="-m-1 inline-block bg-white p-1 leading-none dark:bg-gray-200"
+          >
+            {{ $props.value }}
+          </p>
+        </div>
       </div>
     </template>
 

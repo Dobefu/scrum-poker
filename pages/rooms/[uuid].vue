@@ -203,7 +203,7 @@ if (user && import.meta.client) {
           <td
             class="w-full px-4"
             :style="{
-              perspective: '25rem',
+              perspective: '20rem',
             }"
           >
             <PokerCard
