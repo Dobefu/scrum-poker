@@ -116,8 +116,17 @@ if (user && import.meta.client) {
     }
 
     if ("type" in response && response.type === "estimate") {
-      if (userData.value[response.user].user.id !== user.id)
-        userData.value[response.user].estimate = response.data
+      if (userData.value[response.user].user.id !== user.id) {
+        let revealTimeout = setTimeout(
+          () => (userData.value[response.user].estimate = response.data),
+          200,
+        )
+
+        if (response.data !== "<HIDDEN>") {
+          clearTimeout(revealTimeout)
+          userData.value[response.user].estimate = response.data
+        }
+      }
 
       return
     }
@@ -191,7 +200,24 @@ if (user && import.meta.client) {
       <tbody>
         <tr v-for="tableData of sortedUserData">
           <td class="w-full p-4">{{ tableData.user.name }}</td>
-          <td class="w-full p-4">{{ tableData.estimate ?? "-" }}</td>
+          <td
+            class="w-full px-4"
+            :style="{
+              perspective: '25rem',
+            }"
+          >
+            <PokerCard
+              :value="
+                tableData.estimate !== '<HIDDEN>'
+                  ? (tableData.estimate ?? '-')
+                  : ''
+              "
+              type="sm"
+              :isHidden="
+                tableData.user.id !== user.id && !roomSettings.value?.showCards
+              "
+            />
+          </td>
           <td class="p-4">
             <FormButton
               variant="danger"
