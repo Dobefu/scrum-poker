@@ -220,17 +220,26 @@ if (user && import.meta.client) {
             />
           </td>
           <td class="p-4">
-            <FormButton
-              variant="danger"
-              @click="pickEstimate(undefined)"
-              size="sm"
-              v-if="
-                tableData.user.id === user.id &&
-                typeof tableData.estimate !== 'undefined'
-              "
+            <Transition
+              enterActiveClass="transition-all"
+              leaveActiveClass="transition-all"
+              enterFromClass="scale-0 opacity-0"
+              enterToClass="scale-100 opacity-100"
+              leaveToClass="scale-0 opacity-0"
+              leaveFromClass="scale-100 opacity-100"
             >
-              Clear&nbsp;estimate
-            </FormButton>
+              <FormButton
+                variant="danger"
+                @click="pickEstimate(undefined)"
+                size="sm"
+                v-if="
+                  tableData.user.id === user.id &&
+                  typeof tableData.estimate !== 'undefined'
+                "
+              >
+                Clear&nbsp;estimate
+              </FormButton>
+            </Transition>
           </td>
         </tr>
       </tbody>
