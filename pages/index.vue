@@ -30,6 +30,21 @@ const createTmpAccount = async () => {
     })
   }
 }
+
+const createRoom = async () => {
+  const result = await $fetch("/api/v1/create-room", {
+    method: "POST",
+    body: {
+      token: user!.token,
+    },
+  })
+
+  if (result?.success && "room" in result) {
+    navigateTo(`/rooms/${result.room}`, {
+      external: true,
+    })
+  }
+}
 </script>
 
 <template>
@@ -84,7 +99,7 @@ const createTmpAccount = async () => {
 
     <div
       v-if="room && !roomError"
-      class="flex flex-col items-center gap-4"
+      class="flex flex-col items-center gap-8"
     >
       <TypographyHeading type="h3">
         You have an open poker room
@@ -97,5 +112,22 @@ const createTmpAccount = async () => {
         Enter room
       </FormButton>
     </div>
+
+    <form
+      @submit.prevent="createRoom"
+      class="flex flex-col items-center gap-8"
+      v-else
+    >
+      <TypographyHeading type="h3">
+        You currently don't have a poker room
+      </TypographyHeading>
+
+      <FormButton
+        type="submit"
+        variant="primary"
+      >
+        Create a room
+      </FormButton>
+    </form>
   </div>
 </template>

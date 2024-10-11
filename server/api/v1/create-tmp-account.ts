@@ -14,11 +14,9 @@ export default defineEventHandler(async (event) => {
   const hash = randomBytes(64).toString("hex")
 
   let roomId = undefined
-  let roomUuid = randomBytes(16).toString("hex")
+  const roomUuid = randomBytes(16).toString("hex")
 
   if (withRoom) {
-    roomUuid = randomBytes(16).toString("hex")
-
     const newRoom = await db
       .insert(rooms)
       .values({
