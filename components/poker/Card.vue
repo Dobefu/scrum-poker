@@ -30,7 +30,7 @@ const cardClass = computed(() => {
   <div
     :class="
       twMerge(
-        'aria-selected:border-primary-200 relative inline-block shrink-0 origin-bottom select-none rounded-lg border border-gray-100 bg-white p-2 font-medium text-gray-800 shadow-md transition-all aria-selected:scale-105 aria-selected:shadow-lg dark:bg-gray-200',
+        'aria-selected:border-primary-200 dark:aria-selected:border-primary-400 relative inline-block shrink-0 origin-bottom select-none rounded-lg border border-gray-100 bg-white p-2 font-medium text-gray-800 shadow-md transition-all aria-selected:scale-105 aria-selected:shadow-lg dark:bg-gray-200',
         cardClass,
         $props.class,
       )

@@ -78,7 +78,9 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
 }
 
 const pickEstimate = async (value?: string) => {
-  userData.value[uuid.value].estimate = value
+  if (userData.value[uuid.value].estimate === value)
+    userData.value[uuid.value].estimate = undefined
+  else userData.value[uuid.value].estimate = value
 
   await connection(wss)
   wss.send(JSON.stringify({ type: "estimate", data: value }))
