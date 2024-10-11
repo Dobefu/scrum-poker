@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type UserData } from "@/types/user-data"
+import { twMerge } from "tailwind-merge"
 import type { rooms } from "~/db/schema"
 
 const route = useRoute()
@@ -222,26 +223,23 @@ if (user && import.meta.client) {
             />
           </td>
           <td class="p-4">
-            <Transition
-              enterActiveClass="transition-all"
-              leaveActiveClass="transition-all"
-              enterFromClass="scale-0 opacity-0"
-              enterToClass="scale-100 opacity-100"
-              leaveToClass="scale-0 opacity-0"
-              leaveFromClass="scale-100 opacity-100"
+            <FormButton
+              variant="danger"
+              @click="pickEstimate(undefined)"
+              size="sm"
+              :class="
+                twMerge(
+                  'pointer-events-none scale-0 opacity-0 transition-all',
+                  [
+                    tableData.user.id === user.id &&
+                      typeof tableData.estimate !== 'undefined' &&
+                      'pointer-events-auto scale-100 opacity-100',
+                  ],
+                )
+              "
             >
-              <FormButton
-                variant="danger"
-                @click="pickEstimate(undefined)"
-                size="sm"
-                v-if="
-                  tableData.user.id === user.id &&
-                  typeof tableData.estimate !== 'undefined'
-                "
-              >
-                Clear&nbsp;estimate
-              </FormButton>
-            </Transition>
+              Clear&nbsp;estimate
+            </FormButton>
           </td>
         </tr>
       </tbody>
