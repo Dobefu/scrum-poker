@@ -164,7 +164,7 @@ if (user && import.meta.client) {
   <template v-else>
     <TypographyHeading type="h1">Poker Room</TypographyHeading>
 
-    <div class="my-8 flex flex-wrap justify-center gap-4">
+    <div class="my-4 flex flex-wrap justify-center gap-4">
       <PokerCard
         :value="option"
         v-for="option in cardOptions"

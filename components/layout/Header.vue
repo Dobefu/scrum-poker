@@ -14,7 +14,9 @@ const logout = async () => {
 </script>
 
 <template>
-  <header class="mx-auto w-full max-w-7xl px-4 py-8 max-sm:px-1 max-sm:py-3">
+  <header
+    class="mx-auto w-full max-w-7xl px-4 pb-4 pt-8 max-sm:px-1 max-sm:py-3"
+  >
     <div
       class="flex items-center justify-between gap-4 rounded-full border border-gray-100 bg-white py-4 pe-6 shadow-md dark:border-gray-950 dark:bg-gray-900"
     >

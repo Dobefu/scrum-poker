@@ -19,9 +19,9 @@ const props = withDefaults(
 const cardClass = computed(() => {
   switch (props.type) {
     case "sm":
-      return "h-24 w-16 max-lg:h-24 max-lg:w-16 max-lg:text-md text-md"
+      return "w-14 max-lg:text-md text-md"
     default:
-      return "h-48 w-32 max-lg:h-36 max-lg:w-24 max-lg:text-xl text-2xl"
+      return "w-24 max-md:w-20 max-md:text-lg text-xl"
   }
 })
 </script>
@@ -30,7 +30,7 @@ const cardClass = computed(() => {
   <div
     :class="
       twMerge(
-        'aria-selected:border-primary-200 dark:aria-selected:border-primary-400 relative inline-block shrink-0 origin-bottom select-none rounded-lg border border-gray-100 bg-white p-2 font-medium text-gray-800 shadow-md transition-all aria-selected:scale-105 aria-selected:shadow-lg dark:bg-gray-200',
+        'aria-selected:border-primary-200 dark:aria-selected:border-primary-400 relative inline-block aspect-[2/3] shrink-0 origin-bottom select-none rounded-lg border border-gray-100 bg-white p-2 font-medium text-gray-800 shadow-md transition-all aria-selected:scale-105 aria-selected:shadow-lg dark:bg-gray-200',
         cardClass,
         $props.class,
       )
@@ -47,7 +47,7 @@ const cardClass = computed(() => {
         />
 
         <p
-          class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 leading-none"
+          class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full leading-none"
         >
           {{ props.value }}
         </p>
@@ -56,14 +56,16 @@ const cardClass = computed(() => {
 
     <template v-else>
       <div
-        class="absolute inset-2"
+        class="absolute inset-2 transition-all max-md:inset-1"
         :style="{ backfaceVisibility: 'hidden' }"
       >
         <div
           class="absolute inset-2 rounded-md border border-gray-200 dark:border-gray-400"
         />
 
-        <p class="absolute -m-1 bg-white p-1 leading-none dark:bg-gray-200">
+        <p
+          class="absolute -m-1 rounded-full bg-white p-1 leading-none dark:bg-gray-200"
+        >
           {{ $props.value }}
         </p>
 
@@ -71,12 +73,12 @@ const cardClass = computed(() => {
           src="/logo.svg"
           :height="80"
           :width="80"
-          class="absolute inset-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
+          class="absolute inset-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
         />
 
         <div class="h-full rotate-180 leading-none">
           <p
-            class="-m-1 inline-block bg-white p-1 leading-none dark:bg-gray-200"
+            class="-m-1 inline-block rounded-full bg-white p-1 leading-none dark:bg-gray-200"
           >
             {{ $props.value }}
           </p>
