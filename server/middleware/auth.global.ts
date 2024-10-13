@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
     .update(users)
     .set({
       token: newToken,
+      lastActive: new Date(),
     })
     .where(eq(users.id, user.id))
 
