@@ -43,8 +43,6 @@ export default defineNuxtConfig({
       content: ["nuxt.config.ts", "components"],
       theme: {
         colors: {
-          ...colors,
-
           primary: colors.blue,
 
           info: colors.sky,
@@ -53,6 +51,11 @@ export default defineNuxtConfig({
           danger: colors.rose,
 
           gray: colors.zinc,
+
+          slate: colors.slate,
+          neutral: colors.neutral,
+          zinc: colors.zinc,
+          white: colors.white,
         },
       },
     },
