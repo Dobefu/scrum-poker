@@ -66,7 +66,6 @@ export default defineNuxtConfig({
           "https:",
           "https://scrum-poker.connor.nl/cdn-cgi/speculation",
           "'unsafe-inline'",
-          "'strict-dynamic'",
           "'nonce-{{nonce}}'",
         ],
       },
