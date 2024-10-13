@@ -12,6 +12,7 @@ const expiredUsers = await db
   .execute()
 
 for (let user of expiredUsers) {
+  console.info(`Cleaning up user: ${user.id}`)
   await db.delete(users).where(eq(users.id, user.id)).execute()
 }
 
@@ -28,5 +29,6 @@ const orphanedRooms = await db
 for (let room of orphanedRooms) {
   if (!!room.userId && room.userId && room.owner) continue
 
+  console.info(`Cleaning up room: ${room.roomId}`)
   await db.delete(rooms).where(eq(rooms.id, room.roomId)).execute()
 }
