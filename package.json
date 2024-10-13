@@ -10,10 +10,13 @@
     "postinstall": "nuxt prepare",
     "lint": "prettier --check --config .prettierrc **/*.{ts,vue,json} .",
     "typecheck": "nuxt typecheck",
-    "generate:db": "drizzle-kit generate"
+    "generate:db": "drizzle-kit generate",
+    "cron": "pnpm cron:clean",
+    "cron:clean": "bun cli/clean.ts"
   },
   "dependencies": {
     "better-sqlite3": "^11.3.0",
+    "bun": "^1.1.30",
     "drizzle-orm": "^0.33.0",
     "nuxt": "^3.13.0",
     "tailwind-merge": "^2.5.3",
