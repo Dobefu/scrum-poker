@@ -84,7 +84,12 @@ const pickEstimate = async (value?: string) => {
   else userData.value[uuid.value].estimate = value
 
   await connection(wss)
-  wss.send(JSON.stringify({ type: "estimate", data: value }))
+  wss.send(
+    JSON.stringify({
+      type: "estimate",
+      data: userData.value[uuid.value].estimate,
+    }),
+  )
 }
 
 const toggleCardVisibility = async () => {
