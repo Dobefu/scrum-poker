@@ -57,4 +57,19 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        "script-src": [
+          "'self'",
+          "https:",
+          "https://scrum-poker.connor.nl/cdn-cgi/speculation",
+          "'unsafe-inline'",
+          "'strict-dynamic'",
+          "'nonce-{{nonce}}'",
+        ],
+      },
+    },
+  },
 })
