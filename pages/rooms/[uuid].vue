@@ -96,7 +96,10 @@ if (user && import.meta.client) {
   await connection(wss)
 
   wss.onmessage = async (e) => {
-    const response = JSON.parse(await (e.data as Blob).text())
+    let response
+
+    if (process.env.NODE_ENV === "production") response = JSON.parse(e.data)
+    else response = JSON.parse(await (e.data as Blob).text())
 
     if ("type" in response && response.type === "init") {
       userData.value = reactive(response.data)

@@ -12,8 +12,13 @@ let roomSettings: Record<string, (typeof rooms)["$inferSelect"]> | undefined
 
 export default defineWebSocketHandler({
   async open(peer) {
-    const url = new URL(peer.request?.url!)
-    const pathParts = url.pathname.split("/")
+    let pathParts
+
+    if (process.env.NODE_ENV === "production") {
+      // @ts-expect-error Production has a different object.
+      pathParts = peer.ctx.node.req.url.split("/")
+    } else pathParts = new URL(peer.request?.url!).pathname.split("/")
+
     const roomUuid = pathParts[pathParts.length - 1]
 
     if (!roomSettings) roomSettings = {}
@@ -27,8 +32,13 @@ export default defineWebSocketHandler({
   async message(peer, message) {
     if (typeof roomSettings === "undefined") return
 
-    const url = new URL(peer.request?.url!)
-    const pathParts = url.pathname.split("/")
+    let pathParts
+
+    if (process.env.NODE_ENV === "production") {
+      // @ts-expect-error Production has a different object.
+      pathParts = peer.ctx.node.req.url.split("/")
+    } else pathParts = new URL(peer.request?.url!).pathname.split("/")
+
     const roomUuid = pathParts[pathParts.length - 1]
 
     const payload: { type: string; data: unknown } = JSON.parse(message.text())
@@ -188,8 +198,13 @@ export default defineWebSocketHandler({
     peer.publish(`poker_${roomUuid}`, msg)
   },
   close(peer) {
-    const url = new URL(peer.request?.url!)
-    const pathParts = url.pathname.split("/")
+    let pathParts
+
+    if (process.env.NODE_ENV === "production") {
+      // @ts-expect-error Production has a different object.
+      pathParts = peer.ctx.node.req.url.split("/")
+    } else pathParts = new URL(peer.request?.url!).pathname.split("/")
+
     const roomUuid = pathParts[pathParts.length - 1]
     if (!currentUserData[roomUuid])
       currentUserData[roomUuid] = userData[roomUuid] ?? {}
