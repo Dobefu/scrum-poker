@@ -254,13 +254,22 @@ if (user && import.meta.client) {
         size="sm"
         @click="toggleCardVisibility"
       >
-        <Icon
-          name="mdi:cards"
-          ssr
-        />
+        <template v-if="!roomSettings.value.showCards">
+          <Icon
+            name="mdi:cards"
+            ssr
+          />
 
-        <template v-if="!roomSettings.value.showCards">Show cards</template>
-        <template v-else>Hide cards</template>
+          Show cards
+        </template>
+        <template v-else>
+          <Icon
+            name="mdi:cards-outline"
+            ssr
+          />
+
+          Hide cards
+        </template>
       </FormButton>
     </div>
 
