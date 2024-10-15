@@ -120,11 +120,11 @@ defineExpose({ open, close })
                   <div v-else />
 
                   <button
-                    class="-m-3 rounded-full p-3 transition-transform hover:scale-125"
+                    class="-m-3 rounded-full p-3 outline-none transition-transform hover:scale-125"
                     @click="close"
                   >
                     <Icon
-                      class="size-6"
+                      class="size-6 align-bottom"
                       name="mdi:close"
                       ssr
                     />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { OffCanvasModal } from "#build/components"
 import { type UserData } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
 import type { rooms } from "~/db/schema"
@@ -56,6 +57,8 @@ const sortedUserData = computed<UserData>(() => {
 
   return result
 })
+
+const modalRef = ref<typeof OffCanvasModal | undefined>(undefined)
 
 let wss: WebSocket
 
@@ -155,6 +158,12 @@ if (user && import.meta.client) {
 
     if ("type" in response && response.type === "roomSettings") {
       roomSettings.value = response.data
+
+      if (roomSettings.value?.owner === user.id) {
+        // Open the share dialog if there is no one else.
+        if (Object.keys(userData.value).length <= 1) modalRef.value?.open()
+      }
+
       return
     }
 
@@ -182,6 +191,12 @@ if (user && import.meta.client) {
   </template>
 
   <template v-else>
+    <OffCanvasModal ref="modalRef">
+      <template #title>Share this room</template>
+
+      test
+    </OffCanvasModal>
+
     <TypographyHeading type="h1">Poker Room</TypographyHeading>
 
     <div class="my-4 flex flex-wrap justify-center gap-4">
