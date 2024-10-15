@@ -242,6 +242,11 @@ if (user && import.meta.client) {
         :disabled="!+hasEstimates"
         @click="clearEstimates"
       >
+        <Icon
+          name="mdi:do-not-disturb-alt"
+          ssr
+        />
+
         Clear all estimates
       </FormButton>
 
@@ -249,6 +254,11 @@ if (user && import.meta.client) {
         size="sm"
         @click="toggleCardVisibility"
       >
+        <Icon
+          name="mdi:cards"
+          ssr
+        />
+
         <template v-if="!roomSettings.value.showCards">Show cards</template>
         <template v-else>Hide cards</template>
       </FormButton>
@@ -303,7 +313,12 @@ if (user && import.meta.client) {
                 )
               "
             >
-              Clear&nbsp;estimate
+              <Icon
+                name="mdi:do-not-disturb-alt"
+                ssr
+              />
+
+              Clear
             </FormButton>
           </td>
         </tr>
