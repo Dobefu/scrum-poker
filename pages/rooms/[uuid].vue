@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge"
 import type { rooms } from "~/db/schema"
 
 const route = useRoute()
+const url = useRequestURL()
 
 const { error } = await useAsyncData(`room-${route.params.uuid}`, () =>
   $fetch("/api/v1/get-room", {
@@ -194,7 +195,7 @@ if (user && import.meta.client) {
     <OffCanvasModal ref="modalRef">
       <template #title>Share this room</template>
 
-      test
+      <QrCode :data="url" />
     </OffCanvasModal>
 
     <TypographyHeading type="h1">Poker Room</TypographyHeading>

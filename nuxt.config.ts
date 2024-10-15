@@ -29,6 +29,10 @@ export default defineNuxtConfig({
     },
   },
 
+  experimental: {
+    componentIslands: true,
+  },
+
   modules: [
     "@vueuse/nuxt",
     "@nuxtjs/tailwindcss",
