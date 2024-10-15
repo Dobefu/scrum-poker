@@ -189,6 +189,45 @@ export default defineWebSocketHandler({
       return
     }
 
+    if (payload.type === "clearEstimates" && typeof payload.data === "string") {
+      if (!roomSettings) return
+      if (!currentUserData[roomUuid]) currentUserData[roomUuid] = {}
+
+      const usersWithToken = await db
+        .select({
+          id: users.id,
+        })
+        .from(users)
+        .where(eq(users.token, payload.data))
+        .execute()
+
+      if (usersWithToken.length !== 1) return
+
+      const user = usersWithToken[0]
+
+      const peerId = currentUserData[roomUuid][peer.toString()].user.id
+      if (peerId !== user.id) return
+
+      Object.entries(currentUserData[roomUuid]).forEach(([uuid]) => {
+        if (!currentUserData[roomUuid]) return
+        currentUserData[roomUuid][uuid].estimate = undefined
+
+        peer.send({
+          user: uuid,
+          type: "estimate",
+          data: undefined,
+        })
+
+        peer.publish(`poker_${roomUuid}`, {
+          user: uuid,
+          type: "estimate",
+          data: undefined,
+        })
+      })
+
+      return
+    }
+
     const msg = {
       user: peer.toString(),
       data: currentUserData[roomUuid]?.toString(),

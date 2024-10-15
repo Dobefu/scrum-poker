@@ -96,6 +96,10 @@ const toggleCardVisibility = async () => {
   wss.send(JSON.stringify({ type: "toggleCardVisibility", data: user?.token }))
 }
 
+const clearEstimates = async () => {
+  wss.send(JSON.stringify({ type: "clearEstimates", data: user?.token }))
+}
+
 if (user && import.meta.client) {
   wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
   await connection(wss)
@@ -127,7 +131,7 @@ if (user && import.meta.client) {
     }
 
     if ("type" in response && response.type === "estimate") {
-      if (userData.value[response.user].user.id !== user.id) {
+      if (userData.value[response.user].user.id !== user.id || !response.data) {
         setTimeout(
           () => (userData.value[response.user].estimate = response.data),
           200,
@@ -183,7 +187,7 @@ if (user && import.meta.client) {
     </div>
 
     <div
-      class="m-auto mb-4 flex max-w-2xl justify-end"
+      class="m-auto mb-4 flex max-w-2xl justify-between"
       v-if="
         roomSettings.value &&
         'admins' in roomSettings.value &&
@@ -191,7 +195,18 @@ if (user && import.meta.client) {
           roomSettings.value.owner === user.id)
       "
     >
-      <FormButton @click="toggleCardVisibility">
+      <FormButton
+        size="sm"
+        variant="danger"
+        @click="clearEstimates"
+      >
+        Clear estimates
+      </FormButton>
+
+      <FormButton
+        size="sm"
+        @click="toggleCardVisibility"
+      >
         <template v-if="!roomSettings.value.showCards">Show cards</template>
         <template v-else>Hide cards</template>
       </FormButton>
