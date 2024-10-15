@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteName: "Scrum Poker",
+      version: "v0.1.0",
     },
   },
 
