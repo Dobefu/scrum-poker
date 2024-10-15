@@ -78,6 +78,14 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
   return isOpened()
 }
 
+const hasEstimates = computed(() => {
+  for (let u of Object.values(userData.value)) {
+    if (!!u.estimate) return true
+  }
+
+  return false
+})
+
 const pickEstimate = async (value?: string) => {
   if (userData.value[uuid.value].estimate === value)
     userData.value[uuid.value].estimate = undefined
@@ -197,10 +205,11 @@ if (user && import.meta.client) {
     >
       <FormButton
         size="sm"
-        variant="danger"
+        :variant="hasEstimates ? 'danger' : 'ghost'"
+        :disabled="!+hasEstimates"
         @click="clearEstimates"
       >
-        Clear estimates
+        Clear all estimates
       </FormButton>
 
       <FormButton
