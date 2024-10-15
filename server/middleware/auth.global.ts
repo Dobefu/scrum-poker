@@ -41,10 +41,13 @@ export default defineEventHandler(async (event) => {
     })
     .where(eq(users.id, user.id))
 
+  const config = useRuntimeConfig()
+
   setCookie(event, "auth-token", newToken, {
     httpOnly: true,
     expires: new Date(Date.now() + 864e5),
     path: "/",
+    secure: config.public.https,
     sameSite: "lax",
   })
 
