@@ -15,9 +15,12 @@
     "cron:clean": "bun cli/clean.ts"
   },
   "dependencies": {
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/integrations": "^11.1.0",
     "better-sqlite3": "^11.3.0",
     "bun": "^1.1.30",
     "drizzle-orm": "^0.33.0",
+    "focus-trap": "^7",
     "nuxt": "^3.13.0",
     "tailwind-merge": "^2.5.3",
     "vue": "latest",
