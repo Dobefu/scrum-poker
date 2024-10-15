@@ -202,7 +202,20 @@ if (user && import.meta.client) {
       </div>
     </OffCanvasModal>
 
-    <TypographyHeading type="h1">Poker Room</TypographyHeading>
+    <div class="flex items-center justify-between">
+      <TypographyHeading type="h1">Poker Room</TypographyHeading>
+
+      <FormButton
+        @click="modalRef?.open()"
+        title="Share this room"
+        size="square"
+      >
+        <Icon
+          name="mdi:qrcode"
+          ssr
+        />
+      </FormButton>
+    </div>
 
     <div class="my-4 flex flex-wrap justify-center gap-4">
       <PokerCard
