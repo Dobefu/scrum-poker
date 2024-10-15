@@ -10,13 +10,14 @@ const props = withDefaults(
 
 const code = await QRCode.toDataURL(props.data, {
   type: "image/jpeg",
-  margin: 2,
+  margin: 3,
   errorCorrectionLevel: "H",
 })
 </script>
 
 <template>
   <img
+    class="rounded-xl border shadow-md dark:border-gray-800"
     :alt="$props.data"
     :title="$props.data"
     :src="code"

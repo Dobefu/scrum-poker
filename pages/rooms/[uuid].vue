@@ -195,7 +195,11 @@ if (user && import.meta.client) {
     <OffCanvasModal ref="modalRef">
       <template #title>Share this room</template>
 
-      <QrCode :data="url" />
+      <div class="flex flex-col items-center justify-center gap-8">
+        <QrCode :data="url" />
+
+        <p>{{ url }}</p>
+      </div>
     </OffCanvasModal>
 
     <TypographyHeading type="h1">Poker Room</TypographyHeading>
