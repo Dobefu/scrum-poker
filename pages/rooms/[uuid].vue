@@ -204,6 +204,7 @@ if (user && import.meta.client) {
 
           <FormButton
             v-if="isSupported"
+            aria-label="Copy link to this room"
             @click="copy()"
             :variant="copied ? 'success' : 'ghost'"
             :disabled="copied"

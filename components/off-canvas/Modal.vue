@@ -123,6 +123,7 @@ defineExpose({ open, close })
                   <button
                     class="-m-3 rounded-full p-3 -outline-offset-8 transition-transform hover:scale-125"
                     @click="close"
+                    aria-label="Close share overlay"
                   >
                     <Icon
                       class="size-6 align-bottom"
