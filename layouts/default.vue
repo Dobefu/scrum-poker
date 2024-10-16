@@ -25,7 +25,7 @@ useHead({
     <LayoutHeader />
 
     <main
-      class="mx-auto w-full max-w-7xl flex-1 px-8"
+      class="mx-auto w-full max-w-[88rem] flex-1 px-8"
       id="main-content"
     >
       <NuxtPage />
