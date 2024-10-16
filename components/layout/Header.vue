@@ -26,6 +26,7 @@ const logout = async () => {
         to="/"
       >
         <NuxtImg
+          :alt="`${$config.public.siteName} logo`"
           src="/logo.svg"
           :height="80"
           :width="80"
