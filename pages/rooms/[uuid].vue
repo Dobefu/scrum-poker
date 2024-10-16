@@ -236,9 +236,12 @@ if (user && import.meta.client) {
 
     <div class="my-4 flex flex-wrap justify-center gap-4">
       <PokerCard
+        tabindex="0"
         :value="option"
         v-for="option in cardOptions"
         @click="() => pickEstimate(option)"
+        @keydown.space="() => pickEstimate(option)"
+        @keydown.enter="() => pickEstimate(option)"
         :ariaSelected="sortedUserData[uuid]?.estimate === option"
         class="cursor-pointer"
       />
