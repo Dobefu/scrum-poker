@@ -88,7 +88,7 @@ defineExpose({ open, close })
         />
 
         <div
-          class="fixed inset-0 mx-auto flex w-full max-w-2xl flex-col justify-center px-8 max-sm:p-2 max-sm:px-4"
+          class="fixed inset-0 mx-auto flex w-full max-w-3xl flex-col justify-center px-8 max-sm:p-2 max-sm:px-4"
           @click.self="close"
         >
           <Transition
