@@ -8,12 +8,14 @@ const props = withDefaults(
     class?: HTMLAttributes["class"]
     size?: "lg" | "md" | "sm"
     wrapperClass?: HTMLAttributes["class"]
+    as?: string
   }>(),
   {
     align: undefined,
     class: undefined,
     size: "md",
     wrapperClass: undefined,
+    as: "div",
   },
 )
 
@@ -65,7 +67,8 @@ const paddingFooterHeader = computed(() => {
 </script>
 
 <template>
-  <div
+  <component
+    :is="$props.as"
     :class="
       twMerge(
         'overflow-hidden border border-gray-200 bg-white shadow dark:border-gray-800 dark:bg-gray-950',
@@ -111,5 +114,5 @@ const paddingFooterHeader = computed(() => {
     >
       <slot name="footer" />
     </div>
-  </div>
+  </component>
 </template>

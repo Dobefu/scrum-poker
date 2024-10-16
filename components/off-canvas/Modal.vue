@@ -102,6 +102,7 @@ defineExpose({ open, close })
             @after-leave="isOpen = false"
           >
             <UiCard
+              as="dialog"
               v-if="isInnerOpen"
               class="max-h-full flex-1 overflow-auto"
               :wrapper-class="
