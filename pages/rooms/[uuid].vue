@@ -60,6 +60,7 @@ const sortedUserData = computed<UserData>(() => {
 })
 
 const modalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
 let wss: WebSocket
 
@@ -198,7 +199,22 @@ if (user && import.meta.client) {
       <div class="flex flex-col items-center justify-center gap-8">
         <QrCode :data="url" />
 
-        <p>{{ url }}</p>
+        <span class="flex w-full flex-wrap items-center justify-center gap-4">
+          <p class="break-all text-center">{{ url }}</p>
+
+          <FormButton
+            v-if="isSupported"
+            @click="copy()"
+            :variant="copied ? 'success' : 'ghost'"
+            :disabled="copied"
+            size="square"
+          >
+            <Icon
+              name="mdi:clipboard"
+              ssr
+            />
+          </FormButton>
+        </span>
       </div>
     </OffCanvasModal>
 
