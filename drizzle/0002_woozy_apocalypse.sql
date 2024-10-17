@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` ADD `cards` text DEFAULT '?,∞,0,1,2,3,5,8,13,20,40,100' NOT NULL;

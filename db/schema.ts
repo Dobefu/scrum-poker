@@ -17,4 +17,5 @@ export const rooms = sqliteTable("rooms", {
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
 
   showCards: integer("show_cards", { mode: "boolean" }).default(false),
+  cards: text("cards").default("?,∞,0,1,2,3,5,8,13,20,40,100").notNull(),
 })

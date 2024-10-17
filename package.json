@@ -11,6 +11,7 @@
     "lint": "prettier --check --config .prettierrc **/*.{ts,vue,json} .",
     "typecheck": "nuxt typecheck",
     "generate:db": "drizzle-kit generate",
+    "migrate:db": "drizzle-kit migrate",
     "cron": "pnpm cron:clean",
     "cron:clean": "bun cli/clean.ts"
   },

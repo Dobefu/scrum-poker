@@ -15,6 +15,13 @@
       "when": 1728364600372,
       "tag": "0001_motionless_mongoose",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1729167844017,
+      "tag": "0002_woozy_apocalypse",
+      "breakpoints": true
     }
   ]
 }

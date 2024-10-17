@@ -228,6 +228,74 @@ export default defineWebSocketHandler({
       return
     }
 
+    if (
+      payload.type === "setCards" &&
+      payload.data &&
+      typeof payload.data === "object" &&
+      "token" in payload.data &&
+      "cards" in payload.data
+    ) {
+      if (!currentUserData[roomUuid]) return
+
+      const usersWithToken = await db
+        .select({
+          id: users.id,
+        })
+        .from(users)
+        .where(eq(users.token, payload.data.token as string))
+        .execute()
+
+      if (usersWithToken.length !== 1) return
+
+      const user = usersWithToken[0]
+
+      const peerId = currentUserData[roomUuid][peer.toString()].user.id
+
+      if (peerId !== user.id) return
+      if (
+        !roomSettings[roomUuid].admins.includes(user.id) &&
+        roomSettings[roomUuid].owner !== user.id
+      )
+        return
+
+      const cardsMap: Map<string, boolean> = new Map()
+      const cardsArray: string[] = []
+
+      let cards = payload.data.cards as string
+      cards.split(",").filter(Boolean).join(",")
+
+      for (const card of cards.split(",").filter(Boolean)) {
+        cardsMap.set(card, true)
+      }
+
+      for (const card of cardsMap.keys()) {
+        cardsArray.push(card)
+      }
+
+      cards = cardsArray.join(",")
+
+      db.update(rooms)
+        .set({ cards })
+        .where(eq(rooms.id, roomSettings[roomUuid].id))
+        .run()
+
+      roomSettings[roomUuid].cards = cards
+
+      peer.send({
+        user: peer.toString(),
+        type: "setCards",
+        data: roomSettings[roomUuid].cards,
+      })
+
+      peer.publish(`poker_${roomUuid}`, {
+        user: peer.toString(),
+        type: "setCards",
+        data: roomSettings[roomUuid].cards,
+      })
+
+      return
+    }
+
     const msg = {
       user: peer.toString(),
       data: currentUserData[roomUuid]?.toString(),

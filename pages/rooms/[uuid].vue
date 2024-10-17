@@ -26,21 +26,6 @@ if (error.value) {
 const { getUser } = useAuth()
 const user = await getUser()
 
-const cardOptions = [
-  "?",
-  "∞",
-  "0",
-  "1",
-  "2",
-  "3",
-  "5",
-  "8",
-  "13",
-  "20",
-  "40",
-  "100",
-]
-
 const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
 const roomSettings = reactive<{
@@ -48,6 +33,8 @@ const roomSettings = reactive<{
 }>({
   value: undefined,
 })
+
+const cardOptions = computed(() => roomSettings.value?.cards.split(","))
 
 const sortedUserData = computed<UserData>(() => {
   let result: UserData = {}
@@ -59,7 +46,9 @@ const sortedUserData = computed<UserData>(() => {
   return result
 })
 
-const modalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+const settingsModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+const shareModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+
 const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
 let wss: WebSocket
@@ -91,6 +80,17 @@ const hasEstimates = computed(() => {
   return false
 })
 
+const isAdmin = computed(() => {
+  if (!user) return false
+  if (!roomSettings.value) return false
+
+  return (
+    "admins" in roomSettings.value &&
+    (roomSettings.value.admins.includes(user.id) ||
+      roomSettings.value.owner === user.id)
+  )
+})
+
 const pickEstimate = async (value?: string) => {
   if (userData.value[uuid.value].estimate === value)
     userData.value[uuid.value].estimate = undefined
@@ -111,6 +111,19 @@ const toggleCardVisibility = async () => {
 
 const clearEstimates = async () => {
   wss.send(JSON.stringify({ type: "clearEstimates", data: user?.token }))
+}
+
+const settingsFormSubmit = async (e: Event) => {
+  const target = e.target as HTMLFormElement
+
+  const cards =
+    target.querySelector<HTMLInputElement>('[name="cards"]')?.value ?? ""
+
+  wss.send(
+    JSON.stringify({ type: "setCards", data: { token: user?.token, cards } }),
+  )
+
+  settingsModalRef.value?.close()
 }
 
 if (user && import.meta.client) {
@@ -163,7 +176,7 @@ if (user && import.meta.client) {
 
       if (roomSettings.value?.owner === user.id) {
         // Open the share dialog if there is no one else.
-        if (Object.keys(userData.value).length <= 1) modalRef.value?.open()
+        if (Object.keys(userData.value).length <= 1) shareModalRef.value?.open()
       }
 
       return
@@ -175,6 +188,15 @@ if (user && import.meta.client) {
       roomSettings.value
     ) {
       roomSettings.value.showCards = !roomSettings.value.showCards
+      return
+    }
+
+    if (
+      "type" in response &&
+      response.type === "setCards" &&
+      roomSettings.value
+    ) {
+      roomSettings.value.cards = response.data
       return
     }
 
@@ -193,14 +215,53 @@ if (user && import.meta.client) {
   </template>
 
   <template v-else>
-    <OffCanvasModal ref="modalRef">
+    <OffCanvasModal
+      class="w-full max-w-2xl"
+      ref="settingsModalRef"
+    >
+      <template #title>Room Settings</template>
+
+      <form
+        id="settings-form"
+        @submit.prevent="(e) => settingsFormSubmit(e)"
+        class="flex flex-col items-stretch justify-center gap-8 dark:text-white"
+      >
+        <FormInputGroup>
+          <FormLabel>Cards</FormLabel>
+          <FormInput
+            name="cards"
+            :value="roomSettings.value?.cards"
+          />
+        </FormInputGroup>
+      </form>
+
+      <template #actions>
+        <FormButton
+          class="me-auto"
+          variant="primary"
+          type="submit"
+          form="settings-form"
+        >
+          <Icon
+            name="mdi:floppy"
+            ssr
+          />
+
+          Save
+        </FormButton>
+      </template>
+    </OffCanvasModal>
+
+    <OffCanvasModal ref="shareModalRef">
       <template #title>Share this room</template>
 
-      <div class="flex flex-col items-center justify-center gap-8">
+      <div
+        class="flex flex-col items-center justify-center gap-8 dark:text-white"
+      >
         <QrCode :data="url" />
 
         <span class="flex w-full flex-wrap items-center justify-center gap-4">
-          <p class="break-all text-center dark:text-white">{{ url }}</p>
+          <p class="break-all text-center">{{ url }}</p>
 
           <FormButton
             v-if="isSupported"
@@ -222,16 +283,30 @@ if (user && import.meta.client) {
     <div class="flex items-center justify-between">
       <TypographyHeading type="h1">Poker Room</TypographyHeading>
 
-      <FormButton
-        @click="modalRef?.open()"
-        title="Share this room"
-        size="square"
-      >
-        <Icon
-          name="mdi:qrcode"
-          ssr
-        />
-      </FormButton>
+      <div class="flex gap-4">
+        <FormButton
+          @click="settingsModalRef?.open()"
+          v-if="isAdmin"
+          title="Open room settings"
+          size="square"
+        >
+          <Icon
+            name="mdi:cog"
+            ssr
+          />
+        </FormButton>
+
+        <FormButton
+          @click="shareModalRef?.open()"
+          title="Share this room"
+          size="square"
+        >
+          <Icon
+            name="mdi:qrcode"
+            ssr
+          />
+        </FormButton>
+      </div>
     </div>
 
     <div class="my-4 flex flex-wrap justify-center gap-4">
@@ -249,12 +324,7 @@ if (user && import.meta.client) {
 
     <div
       class="m-auto mb-4 flex max-w-2xl justify-between"
-      v-if="
-        roomSettings.value &&
-        'admins' in roomSettings.value &&
-        (roomSettings.value.admins.includes(user.id) ||
-          roomSettings.value.owner === user.id)
-      "
+      v-if="isAdmin"
     >
       <FormButton
         size="sm"

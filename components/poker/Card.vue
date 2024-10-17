@@ -24,6 +24,11 @@ const cardClass = computed(() => {
       return "w-24 max-md:w-20 max-md:text-lg text-xl"
   }
 })
+
+const value = computed(() => {
+  if (!props.value.startsWith("i:")) return props.value
+  return props.value.replace(/^i:/, "")
+})
 </script>
 
 <template>
@@ -49,7 +54,16 @@ const cardClass = computed(() => {
         <p
           class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full leading-none"
         >
-          {{ props.value }}
+          <template v-if="$props.value.startsWith('i:')">
+            <Icon
+              :name="`mdi:${$props.value.replace(/^i:/, '')}`"
+              ssr
+            />
+          </template>
+
+          <template v-else>
+            {{ $props.value.substring(0, 3) }}
+          </template>
         </p>
       </div>
     </template>
@@ -66,7 +80,16 @@ const cardClass = computed(() => {
         <p
           class="absolute -m-1 rounded-full bg-white p-1 leading-none dark:bg-gray-200"
         >
-          {{ $props.value }}
+          <template v-if="$props.value.startsWith('i:')">
+            <Icon
+              :name="`mdi:${$props.value.replace(/^i:/, '')}`"
+              ssr
+            />
+          </template>
+
+          <template v-else>
+            {{ $props.value.substring(0, 3) }}
+          </template>
         </p>
 
         <NuxtImg
@@ -81,7 +104,16 @@ const cardClass = computed(() => {
           <p
             class="-m-1 inline-block rounded-full bg-white p-1 leading-none dark:bg-gray-200"
           >
-            {{ $props.value }}
+            <template v-if="$props.value.startsWith('i:')">
+              <Icon
+                :name="`mdi:${$props.value.replace(/^i:/, '')}`"
+                ssr
+              />
+            </template>
+
+            <template v-else>
+              {{ $props.value.substring(0, 3) }}
+            </template>
           </p>
         </div>
       </div>
