@@ -309,9 +309,15 @@ if (user && import.meta.client) {
       </div>
     </div>
 
-    <div class="my-4 flex flex-wrap justify-center gap-4">
+    <div
+      role="listbox"
+      aria-label="Cards"
+      class="my-4 flex flex-wrap justify-center gap-4"
+    >
       <PokerCard
         tabindex="0"
+        role="option"
+        :title="option.replace(/^i:/, '')"
         :value="option"
         v-for="option in cardOptions"
         @click="() => pickEstimate(option)"
@@ -401,6 +407,7 @@ if (user && import.meta.client) {
           <td class="p-4 max-sm:p-2">
             <FormButton
               variant="danger"
+              title="Clear estimate"
               @click="pickEstimate(undefined)"
               size="sm"
               :class="
@@ -419,7 +426,11 @@ if (user && import.meta.client) {
                 ssr
               />
 
-              <span class="max-sm:hidden">Clear</span>
+              <span
+                aria-hidden
+                class="max-sm:hidden"
+                >Clear</span
+              >
             </FormButton>
           </td>
         </tr>
