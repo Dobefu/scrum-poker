@@ -200,7 +200,7 @@ if (user && import.meta.client) {
         <QrCode :data="url" />
 
         <span class="flex w-full flex-wrap items-center justify-center gap-4">
-          <p class="break-all text-center">{{ url }}</p>
+          <p class="break-all text-center dark:text-white">{{ url }}</p>
 
           <FormButton
             v-if="isSupported"
