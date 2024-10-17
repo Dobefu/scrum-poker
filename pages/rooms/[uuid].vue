@@ -53,6 +53,98 @@ const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
 let wss: WebSocket
 
+const reconnect = async () => {
+  wss.close()
+  console.info("Connection lost. Reconnecting...")
+
+  setTimeout(async () => {
+    wss = new WebSocket(
+      `${window.location.origin}/api/v1/rooms/${route.params.uuid}`,
+    )
+    await connection(wss)
+
+    wss.onclose = async () => await reconnect()
+    wss.onmessage = async (e) => await onWebsocketMessage(e)
+
+    wss.send(JSON.stringify({ type: "init", data: user?.token }))
+  }, 1000)
+}
+
+const onWebsocketMessage = async (e: MessageEvent) => {
+  if (!user) return
+
+  let response
+
+  if (process.env.NODE_ENV === "production") response = JSON.parse(e.data)
+  else response = JSON.parse(await (e.data as Blob).text())
+
+  if ("type" in response && response.type === "init") {
+    userData.value = reactive(response.data)
+
+    uuid.value = (Object.entries(userData.value).find(([_, value]) => {
+      return value.user.id === user.id
+    }) ?? [""])[0]
+
+    return
+  }
+
+  if ("type" in response && response.type === "join") {
+    userData.value[response.user] = response.data
+    return
+  }
+
+  if ("type" in response && response.type === "leave") {
+    delete userData.value[response.data]
+    return
+  }
+
+  if ("type" in response && response.type === "estimate") {
+    if (userData.value[response.user].user.id !== user.id || !response.data) {
+      setTimeout(
+        () => (userData.value[response.user].estimate = response.data),
+        200,
+      )
+
+      if (response.data !== "<HIDDEN>") {
+        userData.value[response.user].estimate = response.data
+      }
+    }
+
+    return
+  }
+
+  if ("type" in response && response.type === "roomSettings") {
+    roomSettings.value = response.data
+
+    if (roomSettings.value?.owner === user.id) {
+      // Open the share dialog if there is no one else.
+      if (Object.keys(userData.value).length <= 1) shareModalRef.value?.open()
+    }
+
+    return
+  }
+
+  if (
+    "type" in response &&
+    response.type === "toggleCardVisibility" &&
+    roomSettings.value
+  ) {
+    roomSettings.value.showCards = !roomSettings.value.showCards
+    return
+  }
+
+  if (
+    "type" in response &&
+    response.type === "setCards" &&
+    roomSettings.value
+  ) {
+    roomSettings.value.cards = response.data
+    return
+  }
+
+  console.log(response)
+}
+
 const connection = async (socket: WebSocket, timeout = 10000) => {
   const isOpened = () => socket.readyState === WebSocket.OPEN
 
@@ -68,6 +160,8 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
     await new Promise((resolve) => setTimeout(resolve, intrasleep))
     tries++
   }
+
+  if (isOpened()) console.info("Websocket connected")
 
   return isOpened()
 }
@@ -127,81 +221,13 @@ const settingsFormSubmit = async (e: Event) => {
 }
 
 if (user && import.meta.client) {
-  wss = new WebSocket(`/api/v1/rooms/${route.params.uuid}`)
+  wss = new WebSocket(
+    `${window.location.origin}/api/v1/rooms/${route.params.uuid}`,
+  )
   await connection(wss)
 
-  wss.onmessage = async (e) => {
-    let response
-
-    if (process.env.NODE_ENV === "production") response = JSON.parse(e.data)
-    else response = JSON.parse(await (e.data as Blob).text())
-
-    if ("type" in response && response.type === "init") {
-      userData.value = reactive(response.data)
-
-      uuid.value = (Object.entries(userData.value).find(([_, value]) => {
-        return value.user.id === user.id
-      }) ?? [""])[0]
-
-      return
-    }
-
-    if ("type" in response && response.type === "join") {
-      userData.value[response.user] = response.data
-      return
-    }
-
-    if ("type" in response && response.type === "leave") {
-      delete userData.value[response.data]
-      return
-    }
-
-    if ("type" in response && response.type === "estimate") {
-      if (userData.value[response.user].user.id !== user.id || !response.data) {
-        setTimeout(
-          () => (userData.value[response.user].estimate = response.data),
-          200,
-        )
-
-        if (response.data !== "<HIDDEN>") {
-          userData.value[response.user].estimate = response.data
-        }
-      }
-
-      return
-    }
-
-    if ("type" in response && response.type === "roomSettings") {
-      roomSettings.value = response.data
-
-      if (roomSettings.value?.owner === user.id) {
-        // Open the share dialog if there is no one else.
-        if (Object.keys(userData.value).length <= 1) shareModalRef.value?.open()
-      }
-
-      return
-    }
-
-    if (
-      "type" in response &&
-      response.type === "toggleCardVisibility" &&
-      roomSettings.value
-    ) {
-      roomSettings.value.showCards = !roomSettings.value.showCards
-      return
-    }
-
-    if (
-      "type" in response &&
-      response.type === "setCards" &&
-      roomSettings.value
-    ) {
-      roomSettings.value.cards = response.data
-      return
-    }
-
-    console.log(response)
-  }
+  wss.onclose = async () => await reconnect()
+  wss.onmessage = async (e) => await onWebsocketMessage(e)
 
   wss.send(JSON.stringify({ type: "init", data: user.token }))
 }
