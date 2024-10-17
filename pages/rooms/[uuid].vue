@@ -323,11 +323,12 @@ if (user && import.meta.client) {
     </div>
 
     <div
-      class="m-auto mb-4 flex max-w-2xl justify-between"
+      class="m-auto mb-4 flex max-w-2xl flex-wrap justify-between gap-4"
       v-if="isAdmin"
     >
       <FormButton
         size="sm"
+        class="max-sm:w-full"
         :variant="hasEstimates ? 'danger' : 'ghost'"
         :disabled="!+hasEstimates"
         @click="clearEstimates"
@@ -342,9 +343,10 @@ if (user && import.meta.client) {
 
       <FormButton
         size="sm"
+        class="max-sm:w-full"
         @click="toggleCardVisibility"
       >
-        <template v-if="!roomSettings.value.showCards">
+        <template v-if="!roomSettings.value?.showCards">
           <Icon
             name="mdi:cards"
             ssr
@@ -368,16 +370,16 @@ if (user && import.meta.client) {
     >
       <thead>
         <tr>
-          <td class="p-4 font-medium">Name</td>
-          <td class="p-4 font-medium">Estimate</td>
+          <td class="p-4 font-medium max-sm:p-2">Name</td>
+          <td class="p-4 font-medium max-sm:p-2">Estimate</td>
         </tr>
       </thead>
 
       <tbody>
         <tr v-for="tableData of sortedUserData">
-          <td class="w-full p-4">{{ tableData.user.name }}</td>
+          <td class="w-full p-4 max-sm:p-2">{{ tableData.user.name }}</td>
           <td
-            class="w-full px-4"
+            class="w-full px-4 max-sm:px-2"
             :style="{
               perspective: '20rem',
             }"
@@ -396,14 +398,14 @@ if (user && import.meta.client) {
               "
             />
           </td>
-          <td class="p-4">
+          <td class="p-4 max-sm:p-2">
             <FormButton
               variant="danger"
               @click="pickEstimate(undefined)"
               size="sm"
               :class="
                 twMerge(
-                  'pointer-events-none scale-0 opacity-0 transition-all',
+                  'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
                   [
                     tableData.user.id === user.id &&
                       typeof tableData.estimate !== 'undefined' &&
@@ -417,7 +419,7 @@ if (user && import.meta.client) {
                 ssr
               />
 
-              Clear
+              <span class="max-sm:hidden">Clear</span>
             </FormButton>
           </td>
         </tr>
