@@ -61,6 +61,7 @@ export default defineNuxtConfig({
 
           gray: colors.zinc,
 
+          black: colors.black,
           slate: colors.slate,
           neutral: colors.neutral,
           zinc: colors.zinc,
