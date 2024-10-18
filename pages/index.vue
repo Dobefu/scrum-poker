@@ -1,4 +1,14 @@
 <script setup lang="ts">
+useHead({
+  title: "Create a room",
+  meta: [
+    {
+      name: "description",
+      content: "A Scrum Poker room",
+    },
+  ],
+})
+
 const { getUser } = useAuth()
 const user = await getUser()
 

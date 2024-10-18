@@ -23,6 +23,9 @@ export default defineNuxtConfig({
       id: "app",
       class: "flex flex-col flex-1",
     },
+    head: {
+      titleTemplate: "%s | Scrum Poker",
+    },
   },
 
   nitro: {

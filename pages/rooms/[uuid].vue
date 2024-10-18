@@ -4,6 +4,16 @@ import { type UserData } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
 import type { rooms } from "~/db/schema"
 
+useHead({
+  title: "Poker Room",
+  meta: [
+    {
+      name: "description",
+      content: "A Scrum Poker room",
+    },
+  ],
+})
+
 const route = useRoute()
 const url = useRequestURL()
 
@@ -25,6 +35,18 @@ if (error.value) {
 
 const { getUser } = useAuth()
 const user = await getUser()
+
+if (!user) {
+  useHead({
+    title: "Enter poker room",
+    meta: [
+      {
+        name: "description",
+        content: "Please enter your name to enter the poker room",
+      },
+    ],
+  })
+}
 
 const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
