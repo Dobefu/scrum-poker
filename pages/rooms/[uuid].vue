@@ -254,10 +254,22 @@ if (user && import.meta.client) {
       >
         <FormInputGroup>
           <FormLabel>Cards</FormLabel>
+
           <FormInput
             name="cards"
             :value="roomSettings.value?.cards"
           />
+
+          <span class="text-gray-600 dark:text-gray-400">
+            A comma separated list of cards to display. Icons can be used by
+            prefixing with <code>i:</code>. For example: <code>i:coffee</code>.
+            A list of all the usable icons can be found
+            <a
+              class="text-primary-500 dark:text-primary-400"
+              href="https://icon-sets.iconify.design/mdi"
+              >here</a
+            >.
+          </span>
         </FormInputGroup>
       </form>
 
