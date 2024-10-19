@@ -229,10 +229,11 @@ export default defineWebSocketHandler({
     }
 
     if (
-      payload.type === "setCards" &&
+      payload.type === "updateSettings" &&
       payload.data &&
       typeof payload.data === "object" &&
       "token" in payload.data &&
+      "name" in payload.data &&
       "cards" in payload.data
     ) {
       if (!currentUserData[roomUuid]) return
@@ -258,6 +259,7 @@ export default defineWebSocketHandler({
       )
         return
 
+      const name = (payload.data.name as string) ?? "Poker Room"
       const cardsMap: Map<string, boolean> = new Map()
       const cardsArray: string[] = []
 
@@ -275,16 +277,29 @@ export default defineWebSocketHandler({
       cards = cardsArray.join(",")
 
       db.update(rooms)
-        .set({ cards })
+        .set({ name, cards })
         .where(eq(rooms.id, roomSettings[roomUuid].id))
         .run()
 
+      roomSettings[roomUuid].name = name
       roomSettings[roomUuid].cards = cards
+
+      peer.send({
+        user: peer.toString(),
+        type: "setRoomName",
+        data: roomSettings[roomUuid].name,
+      })
 
       peer.send({
         user: peer.toString(),
         type: "setCards",
         data: roomSettings[roomUuid].cards,
+      })
+
+      peer.publish(`poker_${roomUuid}`, {
+        user: peer.toString(),
+        type: "setRoomName",
+        data: roomSettings[roomUuid].name,
       })
 
       peer.publish(`poker_${roomUuid}`, {

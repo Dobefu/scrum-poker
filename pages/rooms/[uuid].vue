@@ -4,16 +4,6 @@ import { type UserData } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
 import type { rooms } from "~/db/schema"
 
-useHead({
-  title: "Poker Room",
-  meta: [
-    {
-      name: "description",
-      content: "A Scrum Poker room",
-    },
-  ],
-})
-
 const route = useRoute()
 const url = useRequestURL()
 
@@ -54,6 +44,20 @@ const roomSettings = reactive<{
   value: (typeof rooms)["$inferSelect"] | undefined
 }>({
   value: undefined,
+})
+
+const roomName = computed(() => {
+  return roomSettings.value?.name || "Poker Room"
+})
+
+useHead({
+  title: roomName,
+  meta: [
+    {
+      name: "description",
+      content: "A Scrum Poker room",
+    },
+  ],
 })
 
 const cardOptions = computed(() => roomSettings.value?.cards.split(","))
@@ -157,6 +161,15 @@ const onWebsocketMessage = async (e: MessageEvent) => {
 
   if (
     "type" in response &&
+    response.type === "setRoomName" &&
+    roomSettings.value
+  ) {
+    roomSettings.value.name = response.data
+    return
+  }
+
+  if (
+    "type" in response &&
     response.type === "setCards" &&
     roomSettings.value
   ) {
@@ -232,11 +245,16 @@ const clearEstimates = async () => {
 const settingsFormSubmit = async (e: Event) => {
   const target = e.target as HTMLFormElement
 
+  const name =
+    target.querySelector<HTMLInputElement>('[name="name"]')?.value ?? ""
   const cards =
     target.querySelector<HTMLInputElement>('[name="cards"]')?.value ?? ""
 
   wss.send(
-    JSON.stringify({ type: "setCards", data: { token: user?.token, cards } }),
+    JSON.stringify({
+      type: "updateSettings",
+      data: { token: user?.token, name, cards },
+    }),
   )
 
   settingsModalRef.value?.close()
@@ -257,7 +275,9 @@ if (user && import.meta.client) {
 
 <template>
   <template v-if="!user">
-    <TypographyHeading type="h1">Poker Room</TypographyHeading>
+    <TypographyHeading type="h1">
+      {{ roomName }}
+    </TypographyHeading>
 
     <PokerSignupForm />
   </template>
@@ -274,6 +294,16 @@ if (user && import.meta.client) {
         @submit.prevent="(e) => settingsFormSubmit(e)"
         class="flex flex-col items-stretch justify-center gap-8 dark:text-white"
       >
+        <FormInputGroup>
+          <FormLabel required>Room name</FormLabel>
+
+          <FormInput
+            name="name"
+            :value="roomName"
+            required
+          />
+        </FormInputGroup>
+
         <FormInputGroup>
           <FormLabel>Cards</FormLabel>
 
@@ -341,7 +371,9 @@ if (user && import.meta.client) {
     </OffCanvasModal>
 
     <div class="flex items-center justify-between">
-      <TypographyHeading type="h1">Poker Room</TypographyHeading>
+      <TypographyHeading type="h1">
+        {{ roomName }}
+      </TypographyHeading>
 
       <div class="flex gap-4">
         <FormButton

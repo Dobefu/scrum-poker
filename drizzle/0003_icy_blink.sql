@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` ADD `name` text DEFAULT 'Poker Room' NOT NULL;

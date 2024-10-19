@@ -22,6 +22,13 @@
       "when": 1729167844017,
       "tag": "0002_woozy_apocalypse",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1729345250883,
+      "tag": "0003_icy_blink",
+      "breakpoints": true
     }
   ]
 }
