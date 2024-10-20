@@ -96,6 +96,8 @@ const reconnect = async () => {
   }, 1000)
 }
 
+const hasInitialised = ref(false)
+
 const onWebsocketMessage = async (e: MessageEvent) => {
   if (!user) return
 
@@ -142,9 +144,12 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   if ("type" in response && response.type === "roomSettings") {
     roomSettings.value = response.data
 
-    if (roomSettings.value?.owner === user.id) {
+    if (!hasInitialised.value && roomSettings.value?.owner === user.id) {
       // Open the share dialog if there is no one else.
-      if (Object.keys(userData.value).length <= 1) shareModalRef.value?.open()
+      if (Object.keys(userData.value).length <= 1) {
+        shareModalRef.value?.open()
+        hasInitialised.value = true
+      }
     }
 
     return
