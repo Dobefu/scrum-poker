@@ -7,7 +7,8 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build-nuxt:
+    name: "Build Nuxt Frontend"
     runs-on: ubuntu-latest
 
     strategy:
@@ -32,3 +33,26 @@ jobs:
       - run: pnpm i
       - run: pnpm lint
       - run: pnpm build
+
+  build-golang:
+    name: "Build Go Backend"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Install dependencies
+        run: go get .
+        working-directory: ./backend
+
+      - name: Build
+        run: go build
+        working-directory: ./backend
+
+      - name: Run tests
+        run: go test
+        working-directory: ./backend
