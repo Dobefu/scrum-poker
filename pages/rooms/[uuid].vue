@@ -85,7 +85,7 @@ const reconnect = async () => {
   console.info("Connection lost. Reconnecting...")
 
   setTimeout(async () => {
-    wss = new WebSocket(config.public.wsEndpoint)
+    wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
     await connection(wss)
 
     wss.onclose = async () => await reconnect()
@@ -265,7 +265,7 @@ const settingsFormSubmit = async (e: Event) => {
 }
 
 if (user && import.meta.client) {
-  wss = new WebSocket(config.public.wsEndpoint)
+  wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
   await connection(wss)
 
   wss.onclose = async () => await reconnect()

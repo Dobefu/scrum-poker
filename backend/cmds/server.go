@@ -1,17 +1,20 @@
 package cmds
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
+	"scrumpoker/database"
 	"slices"
 
 	"github.com/gorilla/websocket"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var upgrader = websocket.Upgrader{CheckOrigin: checkOrigin}
 
 func Server() (error) {
-	http.HandleFunc("/ws", ws)
+	http.HandleFunc("/api/v1/rooms/{roomUuid}", ws)
 
 	log.Println("Starting server on :4000")
 	log.Fatal(http.ListenAndServe(":4000", nil))
@@ -38,6 +41,22 @@ func ws(w http.ResponseWriter, r *http.Request) {
 
 	defer conn.Close()
 
+	db, err := sql.Open("sqlite3", "../db/db.sqlite")
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	room, err := getRoomDataByUuid(db, r.PathValue("roomUuid"))
+
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	log.Println(room.ID)
+
 	for {
 		mt, message, err := conn.ReadMessage()
 
@@ -54,4 +73,31 @@ func ws(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+}
+
+func getRoomDataByUuid(db *sql.DB, uuid string) (*database.Room, error) {
+	rows, err := db.Query(
+		"SELECT id FROM rooms WHERE token=?;",
+		uuid,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		room := database.Room{}
+
+		err = rows.Scan(&room.ID)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return &room, nil
+	}
+
+	return nil, nil
 }
