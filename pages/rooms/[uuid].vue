@@ -6,6 +6,7 @@ import type { rooms } from "~/db/schema"
 
 const route = useRoute()
 const url = useRequestURL()
+const config = useRuntimeConfig()
 
 const { error } = await useAsyncData(`room-${route.params.uuid}`, () =>
   $fetch("/api/v1/get-room", {
@@ -84,9 +85,7 @@ const reconnect = async () => {
   console.info("Connection lost. Reconnecting...")
 
   setTimeout(async () => {
-    wss = new WebSocket(
-      `${window.location.origin}/api/v1/rooms/${route.params.uuid}`,
-    )
+    wss = new WebSocket(config.public.wsEndpoint)
     await connection(wss)
 
     wss.onclose = async () => await reconnect()
@@ -104,7 +103,7 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   let response
 
   if (process.env.NODE_ENV === "production") response = JSON.parse(e.data)
-  else response = JSON.parse(await (e.data as Blob).text())
+  else response = JSON.parse(e.data)
 
   if ("type" in response && response.type === "init") {
     userData.value = reactive(response.data)
@@ -266,9 +265,7 @@ const settingsFormSubmit = async (e: Event) => {
 }
 
 if (user && import.meta.client) {
-  wss = new WebSocket(
-    `${window.location.origin}/api/v1/rooms/${route.params.uuid}`,
-  )
+  wss = new WebSocket(config.public.wsEndpoint)
   await connection(wss)
 
   wss.onclose = async () => await reconnect()

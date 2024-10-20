@@ -22,7 +22,11 @@ func main() {
 			fmt.Println(err)
 		}
 	case "server":
-		fmt.Println("server")
+		err := cmds.Server()
+
+		if err != nil {
+			fmt.Println(err)
+		}
 	default:
 		help()
 	}
