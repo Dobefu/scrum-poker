@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"scrumpoker/cmds"
 )
 
 func main() {
@@ -15,7 +16,7 @@ func main() {
 
   switch(os.Args[1]) {
   case "cron":
-    fmt.Println("cron")
+    cmds.Cron()
   case "server":
     fmt.Println("server")
   default:
@@ -28,4 +29,5 @@ func help() {
   fmt.Println("")
   fmt.Println("\tcron\tRun various cron tasks")
   fmt.Println("\tserver\tRun the Websocket server")
+  fmt.Println("")
 }
