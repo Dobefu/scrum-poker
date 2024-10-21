@@ -2,6 +2,8 @@ package cmds
 
 import (
 	"database/sql"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"scrumpoker/database"
@@ -65,7 +67,20 @@ func ws(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
+		var data map[string]interface{}
+		json.Unmarshal(message, &data)
+
 		log.Printf("recv: %s", message)
+
+		user, err := getUserByToken(db, fmt.Sprint(data["data"]))
+
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
+		log.Println(user.ID)
+
 		err = conn.WriteMessage(mt, message)
 
 		if err != nil {
@@ -92,11 +107,30 @@ func getRoomDataByUuid(db *sql.DB, uuid string) (*database.Room, error) {
 
 		err = rows.Scan(&room.ID)
 
-		if err != nil {
-			return nil, err
-		}
+		return &room, err
+	}
 
-		return &room, nil
+	return nil, nil
+}
+
+func getUserByToken(db *sql.DB, token string) (*database.User, error) {
+	rows, err := db.Query(
+		"SELECT id FROM users WHERE token=?;",
+		token,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		user := database.User{}
+
+		err = rows.Scan(&user.ID)
+
+		return &user, err
 	}
 
 	return nil, nil
