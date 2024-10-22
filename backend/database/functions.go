@@ -26,24 +26,16 @@ func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 }
 
 func GetUserByToken(db *sql.DB, token string) (*User, error) {
-	rows, err := db.Query(
+	user := User{}
+
+	err := db.QueryRow(
 		"SELECT id FROM users WHERE token=?;",
 		token,
-	)
+	).Scan(&user.ID)
 
 	if err != nil {
 		return nil, err
 	}
 
-	defer rows.Close()
-
-	for rows.Next() {
-		user := User{}
-
-		err = rows.Scan(&user.ID)
-
-		return &user, err
-	}
-
-	return nil, nil
+	return &user, err
 }
