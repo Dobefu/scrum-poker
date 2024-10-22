@@ -3,6 +3,7 @@ package cmds
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -50,14 +51,12 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	room, err := getRoomDataByUuid(db, r.PathValue("roomUuid"))
+	room, err := database.GetRoomDataByUuid(db, r.PathValue("roomUuid"))
 
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
-	log.Println(room.ID)
 
 	for {
 		mt, message, err := conn.ReadMessage()
@@ -70,16 +69,21 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		var data map[string]interface{}
 		json.Unmarshal(message, &data)
 
-		log.Printf("recv: %s", message)
-
-		user, err := getUserByToken(db, fmt.Sprint(data["data"]))
+		user, err := database.GetUserByToken(db, fmt.Sprint(data["data"]))
 
 		if err != nil {
 			log.Println(err)
 			return
 		}
 
-		log.Println(user.ID)
+		output, err := handleCommands(data, room, user)
+
+		if err != nil {
+			log.Println(err)
+			break
+		}
+
+		log.Println(output)
 
 		err = conn.WriteMessage(mt, message)
 
@@ -90,48 +94,21 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getRoomDataByUuid(db *sql.DB, uuid string) (*database.Room, error) {
-	rows, err := db.Query(
-		"SELECT id FROM rooms WHERE token=?;",
-		uuid,
-	)
+func handleCommands(payload map[string]interface{}, room *database.Room, user *database.User) (any, error) {
+	msgType, ok := payload["type"]
 
-	if err != nil {
-		return nil, err
+	if !ok {
+		return nil, errors.New("the payload does not provide a type")
 	}
 
-	defer rows.Close()
-
-	for rows.Next() {
-		room := database.Room{}
-
-		err = rows.Scan(&room.ID)
-
-		return &room, err
+	switch (msgType) {
+	case "init":
+		return handleInit(room, user)
 	}
 
-	return nil, nil
+	return nil, fmt.Errorf("invalid command: %s", msgType)
 }
 
-func getUserByToken(db *sql.DB, token string) (*database.User, error) {
-	rows, err := db.Query(
-		"SELECT id FROM users WHERE token=?;",
-		token,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-		user := database.User{}
-
-		err = rows.Scan(&user.ID)
-
-		return &user, err
-	}
-
+func handleInit(room *database.Room, user *database.User) (any, error) {
 	return nil, nil
 }
