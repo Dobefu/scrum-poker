@@ -3,26 +3,18 @@ package database
 import "database/sql"
 
 func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
-	rows, err := db.Query(
+	room := Room{}
+
+	err := db.QueryRow(
 		"SELECT id FROM rooms WHERE token=?;",
 		uuid,
-	)
+	).Scan(&room.ID)
 
 	if err != nil {
 		return nil, err
 	}
 
-	defer rows.Close()
-
-	for rows.Next() {
-		room := Room{}
-
-		err = rows.Scan(&room.ID)
-
-		return &room, err
-	}
-
-	return nil, nil
+	return &room, nil
 }
 
 func GetUserByToken(db *sql.DB, token string) (*User, error) {
@@ -37,5 +29,5 @@ func GetUserByToken(db *sql.DB, token string) (*User, error) {
 		return nil, err
 	}
 
-	return &user, err
+	return &user, nil
 }
