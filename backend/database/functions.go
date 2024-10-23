@@ -6,9 +6,9 @@ func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 	room := Room{}
 
 	err := db.QueryRow(
-		"SELECT id FROM rooms WHERE token=?;",
+		"SELECT id, token, owner, show_cards, name FROM rooms WHERE token=?;",
 		uuid,
-	).Scan(&room.ID)
+	).Scan(&room.ID, &room.UUID, &room.Owner, &room.ShowCards, &room.Name)
 
 	if err != nil {
 		return nil, err
@@ -21,9 +21,9 @@ func GetUserByToken(db *sql.DB, token string) (*User, error) {
 	user := User{}
 
 	err := db.QueryRow(
-		"SELECT id FROM users WHERE token=?;",
+		"SELECT id, name, room FROM users WHERE token=?;",
 		token,
-	).Scan(&user.ID)
+	).Scan(&user.ID, &user.Name, &user.Room)
 
 	if err != nil {
 		return nil, err
