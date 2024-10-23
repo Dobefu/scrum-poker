@@ -15,5 +15,5 @@ type RoomSettings struct {
 
 type RoomData struct {
 	RoomSettings RoomSettings
-	Users map[string]database.User
+	Users map[uint32]database.User
 }

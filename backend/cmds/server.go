@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"scrumpoker/database"
+	"scrumpoker/server"
 	"slices"
 
 	"github.com/gorilla/websocket"
@@ -15,6 +16,7 @@ import (
 )
 
 var upgrader = websocket.Upgrader{CheckOrigin: checkOrigin}
+var roomData = map[string]server.RoomData{}
 
 func Server() (error) {
 	http.HandleFunc("/api/v1/rooms/{roomUuid}", ws)
@@ -76,7 +78,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		output, err := handleCommands(data, room, user)
+		output, err := handleCommands(mt, conn, data, room, user)
 
 		if err != nil {
 			log.Println(err)
@@ -94,7 +96,13 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleCommands(payload map[string]interface{}, room *database.Room, user *database.User) (any, error) {
+func handleCommands(
+	mt int,
+	conn *websocket.Conn,
+	payload map[string]interface{},
+	room *database.Room,
+	user *database.User,
+	) (any, error) {
 	msgType, ok := payload["type"]
 
 	if !ok {
@@ -103,12 +111,44 @@ func handleCommands(payload map[string]interface{}, room *database.Room, user *d
 
 	switch (msgType) {
 	case "init":
-		return handleInit(room, user)
+		return handleInit(mt, conn, room, user)
 	}
 
 	return nil, fmt.Errorf("invalid command: %s", msgType)
 }
 
-func handleInit(room *database.Room, user *database.User) (any, error) {
+func handleInit(
+	mt int,
+	conn *websocket.Conn,
+	room *database.Room,
+	user *database.User,
+	) (any, error) {
+	if _, ok := roomData[room.UUID]; !ok {
+		roomData[room.UUID] = server.RoomData{
+			RoomSettings:server.RoomSettings{},
+			Users: map[uint32]database.User{},
+		}
+	}
+
+	if _, ok := roomData[room.UUID].Users[user.ID]; !ok {
+		roomData[room.UUID].Users[user.ID] = *user
+	}
+
+	response, err := json.Marshal(`{ user: "server", type: "init", data: undefined }`)
+
+	if err != nil {
+		log.Println("init:", err)
+		return nil, err
+	}
+
+	err = conn.WriteMessage(mt, response)
+
+	if err != nil {
+		log.Println("init:", err)
+		return nil, err
+	}
+
+	log.Println(roomData[room.UUID].Users[user.ID])
+
 	return nil, nil
 }
