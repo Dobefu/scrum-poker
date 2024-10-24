@@ -1,10 +1,12 @@
 package database
 
+import "database/sql"
+
 type User struct {
 	ID uint32
 	Name string
 	Token string
-	Room uint32
+	Room sql.NullInt32
 	CreatedAt uint32
 	LastActive uint32
 }
