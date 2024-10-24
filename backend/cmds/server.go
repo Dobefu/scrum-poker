@@ -74,8 +74,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		err = handleCommands(data, mt, conn, db, room)
 
 		if err != nil {
-			log.Println("handle command:", err)
-			break
+			log.Println("handle commands:", err)
 		}
 	}
 }
