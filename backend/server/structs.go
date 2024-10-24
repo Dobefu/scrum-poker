@@ -13,7 +13,12 @@ type RoomSettings struct {
     Cards string
 }
 
+type UserData struct {
+	User database.User
+	Estimate string
+}
+
 type RoomData struct {
 	RoomSettings RoomSettings
-	Users map[uint32]database.User
+	Users map[uint32]UserData
 }

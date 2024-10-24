@@ -64,11 +64,13 @@ useHead({
 const cardOptions = computed(() => roomSettings.value?.cards.split(","))
 
 const sortedUserData = computed<UserData>(() => {
-  let result: UserData = {}
+  let result: UserData = { Users: {} }
 
-  Object.entries(userData.value)
-    .toSorted((a, b) => a[1].user.name.localeCompare(b[1].user.name))
-    .forEach(([key, value]) => (result[key] = value))
+  if (!userData.value.Users) return result
+
+  Object.entries(userData.value.Users)
+    .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
+    .forEach(([key, value]) => (result.Users![key] = value))
 
   return result
 })
@@ -100,40 +102,49 @@ const hasInitialised = ref(false)
 const onWebsocketMessage = async (e: MessageEvent) => {
   if (!user) return
 
-  let response
-
-  if (process.env.NODE_ENV === "production") response = JSON.parse(e.data)
-  else response = JSON.parse(e.data)
+  const response = JSON.parse(e.data)
 
   if ("type" in response && response.type === "init") {
     userData.value = reactive(response.data)
 
-    uuid.value = (Object.entries(userData.value).find(([_, value]) => {
-      return value.user.id === user.id
-    }) ?? [""])[0]
+    uuid.value = (
+      Object.values(userData.value.Users ?? []).find((entry) => {
+        return entry.User.ID === user.id
+      }) ?? { User: { ID: "" } }
+    ).User.ID.toString()
 
     return
   }
 
   if ("type" in response && response.type === "join") {
-    userData.value[response.user] = response.data
+    if (!userData.value?.Users) return
+
+    userData.value.Users[response.user] = response.data
     return
   }
 
   if ("type" in response && response.type === "leave") {
-    delete userData.value[response.data]
+    if (!userData.value?.Users) return
+
+    delete userData.value.Users[response.data]
     return
   }
 
   if ("type" in response && response.type === "estimate") {
-    if (userData.value[response.user].user.id !== user.id || !response.data) {
-      setTimeout(
-        () => (userData.value[response.user].estimate = response.data),
-        200,
-      )
+    if (!userData.value?.Users) return
+
+    if (
+      userData.value.Users[response.user].User.ID !== user.id ||
+      !response.data
+    ) {
+      setTimeout(() => {
+        if (!userData.value?.Users) return
+
+        userData.value.Users[response.user].Estimate = response.data
+      }, 200)
 
       if (response.data !== "<HIDDEN>") {
-        userData.value[response.user].estimate = response.data
+        userData.value.Users[response.user].Estimate = response.data
       }
     }
 
@@ -206,8 +217,8 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
 }
 
 const hasEstimates = computed(() => {
-  for (let u of Object.values(userData.value)) {
-    if (!!u.estimate) return true
+  for (let u of Object.values(userData.value?.Users ?? [])) {
+    if (!!u.Estimate) return true
   }
 
   return false
@@ -225,15 +236,17 @@ const isAdmin = computed(() => {
 })
 
 const pickEstimate = async (value?: string) => {
-  if (userData.value[uuid.value].estimate === value)
-    userData.value[uuid.value].estimate = undefined
-  else userData.value[uuid.value].estimate = value
+  if (!userData.value?.Users) return
+
+  if (userData.value.Users[uuid.value].Estimate === value)
+    userData.value.Users[uuid.value].Estimate = undefined
+  else userData.value.Users[uuid.value].Estimate = value
 
   await connection(wss)
   wss.send(
     JSON.stringify({
       type: "estimate",
-      data: userData.value[uuid.value].estimate,
+      data: userData.value.Users[uuid.value].Estimate,
     }),
   )
 }
@@ -417,7 +430,10 @@ if (user && import.meta.client) {
         @click="() => pickEstimate(option)"
         @keydown.space="() => pickEstimate(option)"
         @keydown.enter="() => pickEstimate(option)"
-        :ariaSelected="sortedUserData[uuid]?.estimate === option"
+        :ariaSelected="
+          sortedUserData.Users &&
+          sortedUserData.Users[uuid]?.Estimate === option
+        "
         class="cursor-pointer"
       />
     </div>
@@ -476,8 +492,8 @@ if (user && import.meta.client) {
       </thead>
 
       <tbody>
-        <tr v-for="tableData of sortedUserData">
-          <td class="w-full p-4 max-sm:p-2">{{ tableData.user.name }}</td>
+        <tr v-for="tableData of sortedUserData.Users">
+          <td class="w-full p-4 max-sm:p-2">{{ tableData.User.Name }}</td>
           <td
             class="w-full px-4 max-sm:px-2"
             :style="{
@@ -486,14 +502,14 @@ if (user && import.meta.client) {
           >
             <PokerCard
               :value="
-                tableData.estimate !== '<HIDDEN>'
-                  ? (tableData.estimate ?? '-')
+                tableData.Estimate !== '<HIDDEN>'
+                  ? (tableData.Estimate ?? '-')
                   : ''
               "
               type="sm"
               :isHidden="
-                !!tableData.estimate &&
-                tableData.user.id !== user.id &&
+                !!tableData.Estimate &&
+                tableData.User.ID !== user.id &&
                 !roomSettings.value?.showCards
               "
             />
@@ -508,8 +524,8 @@ if (user && import.meta.client) {
                 twMerge(
                   'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
                   [
-                    tableData.user.id === user.id &&
-                      typeof tableData.estimate !== 'undefined' &&
+                    tableData.User.ID === user.id &&
+                      typeof tableData.Estimate !== 'undefined' &&
                       'pointer-events-auto scale-100 opacity-100',
                   ],
                 )

@@ -78,19 +78,10 @@ func ws(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		output, err := handleCommands(mt, conn, data, room, user)
+		err = handleCommands(mt, conn, data, room, user)
 
 		if err != nil {
 			log.Println(err)
-			break
-		}
-
-		log.Println(output)
-
-		err = conn.WriteMessage(mt, message)
-
-		if err != nil {
-			log.Println("write:", err)
 			break
 		}
 	}
@@ -102,11 +93,11 @@ func handleCommands(
 	payload map[string]interface{},
 	room *database.Room,
 	user *database.User,
-	) (any, error) {
+	) (error) {
 	msgType, ok := payload["type"]
 
 	if !ok {
-		return nil, errors.New("the payload does not provide a type")
+		return errors.New("the payload does not provide a type")
 	}
 
 	switch (msgType) {
@@ -114,7 +105,7 @@ func handleCommands(
 		return handleInit(mt, conn, room, user)
 	}
 
-	return nil, fmt.Errorf("invalid command: %s", msgType)
+	return fmt.Errorf("invalid command: %s", msgType)
 }
 
 func handleInit(
@@ -122,33 +113,36 @@ func handleInit(
 	conn *websocket.Conn,
 	room *database.Room,
 	user *database.User,
-	) (any, error) {
+	) (error) {
 	if _, ok := roomData[room.UUID]; !ok {
 		roomData[room.UUID] = server.RoomData{
 			RoomSettings:server.RoomSettings{},
-			Users: map[uint32]database.User{},
+			Users: map[uint32]server.UserData{},
 		}
 	}
 
 	if _, ok := roomData[room.UUID].Users[user.ID]; !ok {
-		roomData[room.UUID].Users[user.ID] = *user
+		roomData[room.UUID].Users[user.ID] = server.UserData{
+			User: *user,
+		}
 	}
 
-	response, err := json.Marshal(`{ user: "server", type: "init", data: undefined }`)
+	response := map[string]interface{}{"user": "server", "type": "init", "data": roomData[room.UUID]}
+	responseJson, err := json.Marshal(response)
 
 	if err != nil {
 		log.Println("init:", err)
-		return nil, err
+		return err
 	}
 
-	err = conn.WriteMessage(mt, response)
+	err = conn.WriteMessage(mt, responseJson)
 
 	if err != nil {
 		log.Println("init:", err)
-		return nil, err
+		return err
 	}
 
 	log.Println(roomData[room.UUID].Users[user.ID])
 
-	return nil, nil
+	return nil
 }
