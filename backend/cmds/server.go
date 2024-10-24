@@ -40,7 +40,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 
 	if err != nil {
-		log.Println(err)
+		log.Panicln("websocket upgrade:", err)
 		return
 	}
 
@@ -49,14 +49,14 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("sqlite3", "../db/db.sqlite")
 
 	if err != nil {
-		log.Println(err)
+		log.Panicln("database:", err)
 		return
 	}
 
 	room, err := database.GetRoomDataByUuid(db, r.PathValue("roomUuid"))
 
 	if err != nil {
-		log.Println(err)
+		log.Println("get room:", err)
 		return
 	}
 
@@ -64,7 +64,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		mt, message, err := conn.ReadMessage()
 
 		if err != nil {
-			log.Println("read:", err)
+			log.Println("websocket read:", err)
 			break
 		}
 
@@ -74,7 +74,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		err = handleCommands(data, mt, conn, db, room)
 
 		if err != nil {
-			log.Println(err)
+			log.Println("handle command:", err)
 			break
 		}
 	}
@@ -111,7 +111,7 @@ func handleInit(
 		user, err := database.GetUserByToken(db, fmt.Sprint(payload["data"]))
 
 		if err != nil {
-			log.Println(err)
+			log.Println("get user by token:", err)
 			return err
 		}
 
@@ -128,11 +128,16 @@ func handleInit(
 		}
 	}
 
-	response := map[string]interface{}{"user": "server", "type": "init", "data": roomData[room.UUID]}
+	response := map[string]interface{}{
+		"user": "server",
+		"type": "init",
+		"data": roomData[room.UUID],
+	}
+
 	responseJson, err := json.Marshal(response)
 
 	if err != nil {
-		log.Println("init:", err)
+		log.Println("encode JSON:", err)
 		return err
 	}
 
