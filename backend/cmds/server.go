@@ -71,14 +71,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		var data map[string]interface{}
 		json.Unmarshal(message, &data)
 
-		user, err := database.GetUserByToken(db, fmt.Sprint(data["data"]))
-
-		if err != nil {
-			log.Println(err)
-			return
-		}
-
-		err = handleCommands(mt, conn, data, room, user)
+		err = handleCommands(data, mt, conn, db, room)
 
 		if err != nil {
 			log.Println(err)
@@ -88,11 +81,11 @@ func ws(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCommands(
+	payload map[string]interface{},
 	mt int,
 	conn *websocket.Conn,
-	payload map[string]interface{},
+	db *sql.DB,
 	room *database.Room,
-	user *database.User,
 	) (error) {
 	msgType, ok := payload["type"]
 
@@ -102,18 +95,26 @@ func handleCommands(
 
 	switch (msgType) {
 	case "init":
-		return handleInit(mt, conn, room, user)
+		return handleInit(payload, mt, conn, db, room)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
 }
 
 func handleInit(
+	payload map[string]interface{},
 	mt int,
 	conn *websocket.Conn,
+	db *sql.DB,
 	room *database.Room,
-	user *database.User,
 	) (error) {
+		user, err := database.GetUserByToken(db, fmt.Sprint(payload["data"]))
+
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+
 	if _, ok := roomData[room.UUID]; !ok {
 		roomData[room.UUID] = server.RoomData{
 			RoomSettings:server.RoomSettings{},
