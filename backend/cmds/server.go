@@ -117,7 +117,7 @@ func handleInit(
 
 	if _, ok := roomData[room.UUID]; !ok {
 		roomData[room.UUID] = server.RoomData{
-			RoomSettings:server.RoomSettings{},
+			RoomSettings: server.RoomSettings{},
 			Users: map[uint32]server.UserData{},
 		}
 	}

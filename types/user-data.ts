@@ -19,7 +19,7 @@ export type UserData = {
         CreatedAt: number
         LastActive: number
       }
-      Estimate?: string
+      Estimate: string
     }
   >
 }

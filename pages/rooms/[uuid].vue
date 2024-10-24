@@ -235,11 +235,11 @@ const isAdmin = computed(() => {
   )
 })
 
-const pickEstimate = async (value?: string) => {
+const pickEstimate = async (value: string) => {
   if (!userData.value?.Users) return
 
   if (userData.value.Users[uuid.value].Estimate === value)
-    userData.value.Users[uuid.value].Estimate = undefined
+    userData.value.Users[uuid.value].Estimate = ""
   else userData.value.Users[uuid.value].Estimate = value
 
   await connection(wss)
@@ -431,6 +431,7 @@ if (user && import.meta.client) {
         @keydown.space="() => pickEstimate(option)"
         @keydown.enter="() => pickEstimate(option)"
         :ariaSelected="
+          !!option &&
           sortedUserData.Users &&
           sortedUserData.Users[uuid]?.Estimate === option
         "
@@ -503,7 +504,7 @@ if (user && import.meta.client) {
             <PokerCard
               :value="
                 tableData.Estimate !== '<HIDDEN>'
-                  ? (tableData.Estimate ?? '-')
+                  ? tableData.Estimate || '-'
                   : ''
               "
               type="sm"
@@ -518,14 +519,14 @@ if (user && import.meta.client) {
             <FormButton
               variant="danger"
               title="Clear estimate"
-              @click="pickEstimate(undefined)"
+              @click="pickEstimate('')"
               size="sm"
               :class="
                 twMerge(
                   'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
                   [
                     tableData.User.ID === user.id &&
-                      typeof tableData.Estimate !== 'undefined' &&
+                      !!tableData.Estimate &&
                       'pointer-events-auto scale-100 opacity-100',
                   ],
                 )
