@@ -6,9 +6,9 @@ func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 	room := Room{}
 
 	err := db.QueryRow(
-		"SELECT id, token, owner, show_cards, name FROM rooms WHERE token=?;",
+		"SELECT id, token, owner, cards, show_cards, name FROM rooms WHERE token=?;",
 		uuid,
-	).Scan(&room.ID, &room.UUID, &room.Owner, &room.ShowCards, &room.Name)
+	).Scan(&room.ID, &room.UUID, &room.Owner, &room.Cards, &room.ShowCards, &room.Name)
 
 	if err != nil {
 		return nil, err

@@ -2,7 +2,6 @@
 import type { OffCanvasModal } from "#build/components"
 import { type UserData } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
-import type { rooms } from "~/db/schema"
 
 const route = useRoute()
 const url = useRequestURL()
@@ -41,14 +40,9 @@ if (!user) {
 
 const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
-const roomSettings = reactive<{
-  value: (typeof rooms)["$inferSelect"] | undefined
-}>({
-  value: undefined,
-})
 
 const roomName = computed(() => {
-  return roomSettings.value?.name || "Poker Room"
+  return userData.value.RoomSettings?.Name || "Poker Room"
 })
 
 useHead({
@@ -61,12 +55,15 @@ useHead({
   ],
 })
 
-const cardOptions = computed(() => roomSettings.value?.cards.split(","))
+const cardOptions = computed(() =>
+  userData.value.RoomSettings?.Cards.split(","),
+)
 
 const sortedUserData = computed<UserData>(() => {
   let result: UserData = { Users: {} }
 
   if (!userData.value.Users) return result
+  console.log(userData.value.RoomSettings)
 
   Object.entries(userData.value.Users)
     .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
@@ -152,15 +149,15 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   }
 
   if ("type" in response && response.type === "roomSettings") {
-    roomSettings.value = response.data
+    // roomSettings.value = response.data
 
-    if (!hasInitialised.value && roomSettings.value?.owner === user.id) {
-      // Open the share dialog if there is no one else.
-      if (Object.keys(userData.value).length <= 1) {
-        shareModalRef.value?.open()
-        hasInitialised.value = true
-      }
-    }
+    // if (!hasInitialised.value && roomSettings.value?.owner === user.id) {
+    //   // Open the share dialog if there is no one else.
+    //   if (Object.keys(userData.value).length <= 1) {
+    //     shareModalRef.value?.open()
+    //     hasInitialised.value = true
+    //   }
+    // }
 
     return
   }
@@ -168,27 +165,28 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   if (
     "type" in response &&
     response.type === "toggleCardVisibility" &&
-    roomSettings.value
+    userData.value.RoomSettings
   ) {
-    roomSettings.value.showCards = !roomSettings.value.showCards
+    userData.value.RoomSettings.ShowCards =
+      !userData.value.RoomSettings.ShowCards
     return
   }
 
   if (
     "type" in response &&
     response.type === "setRoomName" &&
-    roomSettings.value
+    userData.value.RoomSettings
   ) {
-    roomSettings.value.name = response.data
+    userData.value.RoomSettings.Name = response.data
     return
   }
 
   if (
     "type" in response &&
     response.type === "setCards" &&
-    roomSettings.value
+    userData.value.RoomSettings
   ) {
-    roomSettings.value.cards = response.data
+    userData.value.RoomSettings.Cards = response.data
     return
   }
 
@@ -226,12 +224,12 @@ const hasEstimates = computed(() => {
 
 const isAdmin = computed(() => {
   if (!user) return false
-  if (!roomSettings.value) return false
+  if (!userData.value.RoomSettings) return false
 
   return (
-    "admins" in roomSettings.value &&
-    (roomSettings.value.admins.includes(user.id) ||
-      roomSettings.value.owner === user.id)
+    "admins" in userData.value.RoomSettings &&
+    (userData.value.RoomSettings.Admins?.includes(user.id.toString()) ||
+      userData.value.RoomSettings.Owner === user.id.toString())
   )
 })
 
@@ -324,7 +322,7 @@ if (user && import.meta.client) {
 
           <FormInput
             name="cards"
-            :value="roomSettings.value?.cards"
+            :value="userData.value.RoomSettings?.Cards"
           />
 
           <span class="text-gray-600 dark:text-gray-400">
@@ -463,7 +461,7 @@ if (user && import.meta.client) {
         class="max-sm:w-full"
         @click="toggleCardVisibility"
       >
-        <template v-if="!roomSettings.value?.showCards">
+        <template v-if="!userData.value.RoomSettings?.ShowCards">
           <Icon
             name="mdi:cards"
             ssr
@@ -511,7 +509,7 @@ if (user && import.meta.client) {
               :isHidden="
                 !!tableData.Estimate &&
                 tableData.User.ID !== user.id &&
-                !roomSettings.value?.showCards
+                !userData.value.RoomSettings?.ShowCards
               "
             />
           </td>
