@@ -63,7 +63,6 @@ const sortedUserData = computed<UserData>(() => {
   let result: UserData = { Users: {} }
 
   if (!userData.value.Users) return result
-  console.log(userData.value.RoomSettings)
 
   Object.entries(userData.value.Users)
     .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
