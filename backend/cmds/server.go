@@ -131,6 +131,8 @@ func handleCommands(
 	switch msgType {
 	case "init":
 		return handleInit(conn, room, user)
+	case "estimate":
+		return handleEstimate(conn, room, user, payload)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -188,6 +190,37 @@ func handleInit(
 		log.Println("join:", err)
 		return err
 	}
+
+	return nil
+}
+
+func handleEstimate(
+	conn *websocket.Conn,
+	room *database.Room,
+	user *database.User,
+	payload map[string]interface{},
+) error {
+	estimate := payload["data"].(string)
+
+	if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
+		estimate = "<HIDDEN>"
+	}
+
+	roomData[room.UUID].Users[user.ID] = server.UserData{
+		User:     *user,
+		Conn:     conn,
+		Estimate: estimate,
+	}
+
+	response := map[string]interface{}{
+		"type": "estimate",
+		"user": user.ID,
+		"data": estimate,
+	}
+
+	broadcast(room, user, response)
+
+	log.Println(roomData[room.UUID].Users[user.ID])
 
 	return nil
 }
