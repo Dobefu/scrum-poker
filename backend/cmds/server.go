@@ -39,6 +39,22 @@ func checkOrigin(r *http.Request) bool {
 	return slices.Contains(allowedOrigins, r.Header["Origin"][0])
 }
 
+func broadcast(
+	room *database.Room,
+	message interface{},
+) error {
+	for roomUser := range roomData[room.UUID].Users {
+		err := roomData[room.UUID].Users[roomUser].Conn.WriteJSON(message)
+
+		if err != nil {
+			log.Println("leave:", err)
+			return err
+		}
+	}
+
+	return nil
+}
+
 func ws(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 
@@ -170,13 +186,11 @@ func handleLeave(
 		"data": user.ID,
 	}
 
-	for roomUser := range roomData[room.UUID].Users {
-		err := roomData[room.UUID].Users[roomUser].Conn.WriteJSON(response)
+	err := broadcast(room, response)
 
-		if err != nil {
-			log.Println("leave:", err)
-			return err
-		}
+	if err != nil {
+		log.Println("leave:", err)
+		return err
 	}
 
 	return nil
