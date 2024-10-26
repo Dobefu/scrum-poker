@@ -15,10 +15,14 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var upgrader = websocket.Upgrader{CheckOrigin: checkOrigin}
 var roomData = map[string]server.RoomData{}
+var upgrader = websocket.Upgrader{
+	CheckOrigin:     checkOrigin,
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
-func Server() (error) {
+func Server() error {
 	http.HandleFunc("/api/v1/rooms/{roomUuid}", ws)
 
 	log.Println("Starting server on :4000")
@@ -27,7 +31,7 @@ func Server() (error) {
 	return nil
 }
 
-func checkOrigin (r *http.Request) bool {
+func checkOrigin(r *http.Request) bool {
 	allowedOrigins := []string{
 		"http://localhost:3000",
 		"https://scrum-poker.connor.nl",
@@ -60,18 +64,34 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	tokenCookie, err := r.Cookie("auth-token")
+
+	if err != nil {
+		log.Println("get auth-token cookie:", err)
+		return
+	}
+
+	token := tokenCookie.Value
+	user, err := database.GetUserByToken(db, token)
+
+	if err != nil {
+		log.Println("get user by token:", err)
+		return
+	}
+
 	for {
-		mt, message, err := conn.ReadMessage()
+		_, message, err := conn.ReadMessage()
 
 		if err != nil {
 			log.Println("websocket read:", err)
+			handleLeave(room, user)
 			break
 		}
 
 		var data map[string]interface{}
 		json.Unmarshal(message, &data)
 
-		err = handleCommands(data, mt, conn, db, room)
+		err = handleCommands(data, conn, room, user)
 
 		if err != nil {
 			log.Println("handle commands:", err)
@@ -81,50 +101,40 @@ func ws(w http.ResponseWriter, r *http.Request) {
 
 func handleCommands(
 	payload map[string]interface{},
-	mt int,
 	conn *websocket.Conn,
-	db *sql.DB,
 	room *database.Room,
-	) (error) {
+	user *database.User,
+) error {
 	msgType, ok := payload["type"]
 
 	if !ok {
 		return errors.New("the payload does not provide a type")
 	}
 
-	switch (msgType) {
+	switch msgType {
 	case "init":
-		return handleInit(payload, mt, conn, db, room)
+		return handleInit(conn, room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
 }
 
 func handleInit(
-	payload map[string]interface{},
-	mt int,
 	conn *websocket.Conn,
-	db *sql.DB,
 	room *database.Room,
-	) (error) {
-		user, err := database.GetUserByToken(db, fmt.Sprint(payload["data"]))
-
-		if err != nil {
-			log.Println("get user by token:", err)
-			return err
-		}
-
+	user *database.User,
+) error {
 	if _, ok := roomData[room.UUID]; !ok {
 		roomData[room.UUID] = server.RoomData{
 			RoomSettings: server.RoomSettings{
-				ID: room.ID,
-				UUID: room.UUID,
-				Owner: room.Owner,
-				Name: room.Name,
-				Admins: room.Admins,
+				ID:        room.ID,
+				UUID:      room.UUID,
+				Owner:     room.Owner,
+				Name:      room.Name,
+				Admins:    room.Admins,
 				CreatedAt: room.CreatedAt,
 				ShowCards: room.ShowCards,
-				Cards: room.Cards,
+				Cards:     room.Cards,
 			},
 			Users: map[uint32]server.UserData{},
 		}
@@ -133,11 +143,11 @@ func handleInit(
 	if _, ok := roomData[room.UUID].Users[user.ID]; !ok {
 		roomData[room.UUID].Users[user.ID] = server.UserData{
 			User: *user,
+			Conn: conn,
 		}
 	}
 
 	response := map[string]interface{}{
-		"user": "server",
 		"type": "init",
 		"data": roomData[room.UUID],
 	}
@@ -149,14 +159,45 @@ func handleInit(
 		return err
 	}
 
-	err = conn.WriteMessage(mt, responseJson)
+	err = conn.WriteMessage(1, responseJson)
 
 	if err != nil {
 		log.Println("init:", err)
 		return err
 	}
 
-	log.Println(roomData[room.UUID].Users[user.ID])
+	// log.Println(roomData[room.UUID].Users[user.ID])
+
+	return nil
+}
+
+func handleLeave(
+	room *database.Room,
+	user *database.User,
+) error {
+	delete(roomData[room.UUID].Users, user.ID)
+
+	response := map[string]interface{}{
+		"type": "leave",
+		"data": user.ID,
+	}
+
+	responseJson, err := json.Marshal(response)
+
+	if err != nil {
+		log.Println("encode JSON:", err)
+		return err
+	}
+	log.Println(responseJson)
+
+	for roomUser := range roomData[room.UUID].Users {
+		err = roomData[room.UUID].Users[roomUser].Conn.WriteMessage(1, responseJson)
+
+		if err != nil {
+			log.Println("leave:", err)
+			return err
+		}
+	}
 
 	return nil
 }
