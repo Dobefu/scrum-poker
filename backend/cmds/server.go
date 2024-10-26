@@ -2,7 +2,6 @@ package cmds
 
 import (
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -80,16 +79,14 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for {
-		_, message, err := conn.ReadMessage()
+		var data map[string]interface{}
+		err := conn.ReadJSON(&data)
 
 		if err != nil {
 			log.Println("websocket read:", err)
 			handleLeave(room, user)
 			break
 		}
-
-		var data map[string]interface{}
-		json.Unmarshal(message, &data)
 
 		err = handleCommands(data, conn, room, user)
 
@@ -152,21 +149,12 @@ func handleInit(
 		"data": roomData[room.UUID],
 	}
 
-	responseJson, err := json.Marshal(response)
-
-	if err != nil {
-		log.Println("encode JSON:", err)
-		return err
-	}
-
-	err = conn.WriteMessage(1, responseJson)
+	err := conn.WriteJSON(response)
 
 	if err != nil {
 		log.Println("init:", err)
 		return err
 	}
-
-	// log.Println(roomData[room.UUID].Users[user.ID])
 
 	return nil
 }
@@ -182,16 +170,8 @@ func handleLeave(
 		"data": user.ID,
 	}
 
-	responseJson, err := json.Marshal(response)
-
-	if err != nil {
-		log.Println("encode JSON:", err)
-		return err
-	}
-	log.Println(responseJson)
-
 	for roomUser := range roomData[room.UUID].Users {
-		err = roomData[room.UUID].Users[roomUser].Conn.WriteMessage(1, responseJson)
+		err := roomData[room.UUID].Users[roomUser].Conn.WriteJSON(response)
 
 		if err != nil {
 			log.Println("leave:", err)
