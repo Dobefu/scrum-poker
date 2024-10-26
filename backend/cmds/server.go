@@ -41,13 +41,17 @@ func checkOrigin(r *http.Request) bool {
 
 func broadcast(
 	room *database.Room,
+	user *database.User,
 	message interface{},
 ) error {
 	for roomUser := range roomData[room.UUID].Users {
+		if roomUser == user.ID {
+			continue
+		}
+
 		err := roomData[room.UUID].Users[roomUser].Conn.WriteJSON(message)
 
 		if err != nil {
-			log.Println("leave:", err)
 			return err
 		}
 	}
@@ -172,6 +176,18 @@ func handleInit(
 		return err
 	}
 
+	response = map[string]interface{}{
+		"type": "join",
+		"data": roomData[room.UUID].Users[user.ID],
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("join:", err)
+		return err
+	}
+
 	return nil
 }
 
@@ -186,7 +202,7 @@ func handleLeave(
 		"data": user.ID,
 	}
 
-	err := broadcast(room, response)
+	err := broadcast(room, user, response)
 
 	if err != nil {
 		log.Println("leave:", err)
