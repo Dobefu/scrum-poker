@@ -179,6 +179,7 @@ func handleInit(
 	response = map[string]interface{}{
 		"type": "join",
 		"data": roomData[room.UUID].Users[user.ID],
+		"user": user.ID,
 	}
 
 	err = broadcast(room, user, response)
