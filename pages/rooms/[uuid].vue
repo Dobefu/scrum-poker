@@ -103,6 +103,17 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   if ("type" in response && response.type === "init") {
     userData.value = reactive(response.data)
 
+    if (
+      !hasInitialised.value &&
+      userData.value.RoomSettings?.Owner === user.id
+    ) {
+      // Open the share dialog if there is no one else.
+      if (Object.keys(userData.value.Users ?? []).length <= 1) {
+        shareModalRef.value?.open()
+        hasInitialised.value = true
+      }
+    }
+
     uuid.value = (
       Object.values(userData.value.Users ?? []).find((entry) => {
         return entry.User.ID === user.id
@@ -143,20 +154,6 @@ const onWebsocketMessage = async (e: MessageEvent) => {
         userData.value.Users[response.user].Estimate = response.data
       }
     }
-
-    return
-  }
-
-  if ("type" in response && response.type === "roomSettings") {
-    // roomSettings.value = response.data
-
-    // if (!hasInitialised.value && roomSettings.value?.owner === user.id) {
-    //   // Open the share dialog if there is no one else.
-    //   if (Object.keys(userData.value).length <= 1) {
-    //     shareModalRef.value?.open()
-    //     hasInitialised.value = true
-    //   }
-    // }
 
     return
   }
