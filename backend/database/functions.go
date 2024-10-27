@@ -41,3 +41,18 @@ func GetUserByToken(db *sql.DB, token string) (*User, error) {
 
 	return &user, nil
 }
+
+func SetRoomCardVisibility(
+	db *sql.DB,
+	room *Room,
+	user *User,
+	show bool,
+) error {
+	_, err := db.Exec(
+		"UPDATE rooms SET show_cards = ? WHERE token=?;",
+		show,
+		room.UUID,
+	)
+
+	return err
+}

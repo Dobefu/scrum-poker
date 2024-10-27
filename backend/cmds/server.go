@@ -108,7 +108,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		err = handleCommands(data, conn, room, user)
+		err = handleCommands(db, data, conn, room, user)
 
 		if err != nil {
 			log.Println("handle commands:", err)
@@ -117,6 +117,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCommands(
+	db *sql.DB,
 	payload map[string]interface{},
 	conn *websocket.Conn,
 	room *database.Room,
@@ -133,6 +134,8 @@ func handleCommands(
 		return handleInit(conn, room, user)
 	case "estimate":
 		return handleEstimate(conn, room, user, payload)
+	case "toggleCardVisibility":
+		return handleToggleCardVisibility(db, room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -218,9 +221,52 @@ func handleEstimate(
 		"data": estimate,
 	}
 
-	broadcast(room, user, response)
+	err := broadcast(room, user, response)
 
-	log.Println(roomData[room.UUID].Users[user.ID])
+	if err != nil {
+		log.Println("estimate:", err)
+		return err
+	}
+
+	return nil
+}
+
+func handleToggleCardVisibility(
+	db *sql.DB,
+	room *database.Room,
+	user *database.User,
+) error {
+	roomData[room.UUID] = server.RoomData{
+		RoomSettings: server.RoomSettings{
+			ID:        room.ID,
+			UUID:      room.UUID,
+			Owner:     room.Owner,
+			Name:      room.Name,
+			Admins:    room.Admins,
+			CreatedAt: room.CreatedAt,
+			ShowCards: !roomData[room.UUID].RoomSettings.ShowCards,
+			Cards:     room.Cards,
+		},
+		Users: roomData[room.UUID].Users,
+	}
+
+	err := database.SetRoomCardVisibility(db, room, user, roomData[room.UUID].RoomSettings.ShowCards)
+
+	if err != nil {
+		log.Println("toggleCardVisibility:", err)
+		return err
+	}
+
+	response := map[string]interface{}{
+		"type": "toggleCardVisibility",
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("toggleCardVisibility: broadcast:", err)
+		return err
+	}
 
 	return nil
 }
