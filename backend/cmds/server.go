@@ -59,6 +59,14 @@ func broadcast(
 	return nil
 }
 
+func isAdmin(
+	room *database.Room,
+	user *database.User,
+) bool {
+	return user.ID == roomData[room.UUID].RoomSettings.Owner ||
+		slices.Contains(roomData[room.UUID].RoomSettings.Admins, user.ID)
+}
+
 func ws(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 
@@ -237,6 +245,10 @@ func handleToggleCardVisibility(
 	room *database.Room,
 	user *database.User,
 ) error {
+	if !isAdmin(room, user) {
+		return fmt.Errorf("estimate: permission denied")
+	}
+
 	roomData[room.UUID] = server.RoomData{
 		RoomSettings: server.RoomSettings{
 			ID:        room.ID,
