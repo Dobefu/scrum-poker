@@ -56,3 +56,19 @@ func SetRoomCardVisibility(
 
 	return err
 }
+
+func SetRoomSettings(
+	db *sql.DB,
+	room *Room,
+	name string,
+	cards string,
+) error {
+	_, err := db.Exec(
+		"UPDATE rooms SET name = ?, cards = ? WHERE token=?;",
+		name,
+		cards,
+		room.UUID,
+	)
+
+	return err
+}

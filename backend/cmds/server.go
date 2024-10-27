@@ -9,6 +9,7 @@ import (
 	"scrumpoker/database"
 	"scrumpoker/server"
 	"slices"
+	"strings"
 
 	"github.com/gorilla/websocket"
 	_ "github.com/mattn/go-sqlite3"
@@ -144,6 +145,8 @@ func handleCommands(
 		return handleEstimate(conn, room, user, payload)
 	case "toggleCardVisibility":
 		return handleToggleCardVisibility(conn, db, room, user)
+	case "updateSettings":
+		return handleUpdateSettings(conn, db, room, user, payload)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -304,6 +307,7 @@ func handleToggleCardVisibility(
 			err := conn.WriteJSON(response)
 
 			if err != nil {
+				log.Println("estimate: write:", err)
 				return err
 			}
 		}
@@ -311,9 +315,108 @@ func handleToggleCardVisibility(
 		err = broadcast(room, user, response)
 
 		if err != nil {
-			log.Println("estimate:", err)
+			log.Println("estimate: broadcast:", err)
 			return err
 		}
+	}
+
+	return nil
+}
+
+func handleUpdateSettings(
+	conn *websocket.Conn,
+	db *sql.DB,
+	room *database.Room,
+	user *database.User,
+	payload map[string]interface{},
+) error {
+	if !isAdmin(room, user) {
+		return fmt.Errorf("updateSettings: permission denied")
+	}
+
+	name := payload["data"].(map[string]interface{})["name"].(string)
+	cards := payload["data"].(map[string]interface{})["cards"].(string)
+
+	if name == "" {
+		name = "Poker Room"
+	}
+
+	cardsSlice := strings.Split(cards, ",")
+	cards = ""
+
+	for _, card := range cardsSlice {
+		if card == "" {
+			continue
+		}
+
+		if cards != "" {
+			cards += ","
+		}
+
+		cards += card
+	}
+
+	if cards == "" {
+		cards = "?,∞,0,1,2,3,5,8,13,20,40,100"
+	}
+
+	roomData[room.UUID] = server.RoomData{
+		RoomSettings: server.RoomSettings{
+			ID:        room.ID,
+			UUID:      room.UUID,
+			Owner:     room.Owner,
+			Name:      name,
+			Admins:    room.Admins,
+			CreatedAt: room.CreatedAt,
+			ShowCards: room.ShowCards,
+			Cards:     cards,
+		},
+		Users: roomData[room.UUID].Users,
+	}
+
+	err := database.SetRoomSettings(db, room, name, cards)
+
+	if err != nil {
+		log.Println("updateSettings", err)
+		return err
+	}
+
+	response := map[string]interface{}{
+		"type": "setRoomName",
+		"data": name,
+	}
+
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("updateSettings: write setRoomName:", err)
+		return err
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("updateSettings: broadcast setRoomName:", err)
+		return err
+	}
+
+	response = map[string]interface{}{
+		"type": "setCards",
+		"data": cards,
+	}
+
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("updateSettings: write setCards:", err)
+		return err
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("updateSettings: broadcast setCards:", err)
+		return err
 	}
 
 	return nil
