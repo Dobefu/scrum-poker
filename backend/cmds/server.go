@@ -135,7 +135,7 @@ func handleCommands(
 	case "estimate":
 		return handleEstimate(conn, room, user, payload)
 	case "toggleCardVisibility":
-		return handleToggleCardVisibility(db, room, user)
+		return handleToggleCardVisibility(conn, db, room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -205,14 +205,14 @@ func handleEstimate(
 ) error {
 	estimate := payload["data"].(string)
 
-	if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
-		estimate = "<HIDDEN>"
-	}
-
 	roomData[room.UUID].Users[user.ID] = server.UserData{
 		User:     *user,
 		Conn:     conn,
 		Estimate: estimate,
+	}
+
+	if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
+		estimate = "<HIDDEN>"
 	}
 
 	response := map[string]interface{}{
@@ -232,6 +232,7 @@ func handleEstimate(
 }
 
 func handleToggleCardVisibility(
+	conn *websocket.Conn,
 	db *sql.DB,
 	room *database.Room,
 	user *database.User,
@@ -261,11 +262,46 @@ func handleToggleCardVisibility(
 		"type": "toggleCardVisibility",
 	}
 
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		return err
+	}
+
 	err = broadcast(room, user, response)
 
 	if err != nil {
 		log.Println("toggleCardVisibility: broadcast:", err)
 		return err
+	}
+
+	for roomUser := range roomData[room.UUID].Users {
+		estimate := roomData[room.UUID].Users[roomUser].Estimate
+
+		if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
+			estimate = "<HIDDEN>"
+		}
+
+		response = map[string]interface{}{
+			"type": "estimate",
+			"data": estimate,
+			"user": roomUser,
+		}
+
+		if roomUser != user.ID {
+			err := conn.WriteJSON(response)
+
+			if err != nil {
+				return err
+			}
+		}
+
+		err = broadcast(room, user, response)
+
+		if err != nil {
+			log.Println("estimate:", err)
+			return err
+		}
 	}
 
 	return nil
