@@ -11,7 +11,7 @@ type RoomSettings struct {
 	UUID      string
 	Owner     uint32
 	Name      string
-	Admins    []string
+	Admins    []uint32
 	CreatedAt uint32
 	ShowCards bool
 	Cards     string

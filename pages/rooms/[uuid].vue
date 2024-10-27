@@ -226,9 +226,9 @@ const isAdmin = computed(() => {
   if (!userData.value.RoomSettings) return false
 
   return (
-    "admins" in userData.value.RoomSettings &&
-    (userData.value.RoomSettings.Admins?.includes(user.id.toString()) ||
-      userData.value.RoomSettings.Owner === user.id.toString())
+    "Admins" in userData.value.RoomSettings &&
+    (userData.value.RoomSettings.Admins?.includes(user.id) ||
+      userData.value.RoomSettings.Owner === user.id)
   )
 })
 

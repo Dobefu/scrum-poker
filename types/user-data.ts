@@ -1,11 +1,11 @@
 export type UserData = {
   RoomSettings?: {
-    Admins?: string[]
+    Admins?: number[]
     Cards: string
     CreatedAt: number
     ID: number
     Name: string
-    Owner: string
+    Owner: number
     ShowCards: boolean
     UUID: string
   }
