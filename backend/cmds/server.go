@@ -45,12 +45,12 @@ func broadcast(
 	user *database.User,
 	message interface{},
 ) error {
-	for roomUser := range roomData[room.UUID].Users {
-		if roomUser == user.ID {
+	for _, roomUser := range roomData[room.UUID].Users {
+		if roomUser.User.ID == user.ID {
 			continue
 		}
 
-		err := roomData[room.UUID].Users[roomUser].Conn.WriteJSON(message)
+		err := roomUser.Conn.WriteJSON(message)
 
 		if err != nil {
 			return err
@@ -147,6 +147,8 @@ func handleCommands(
 		return handleToggleCardVisibility(conn, db, room, user)
 	case "updateSettings":
 		return handleUpdateSettings(conn, db, room, user, payload)
+	case "clearEstimates":
+		return handleClearEstimates(room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -290,8 +292,8 @@ func handleToggleCardVisibility(
 		return err
 	}
 
-	for roomUser := range roomData[room.UUID].Users {
-		estimate := roomData[room.UUID].Users[roomUser].Estimate
+	for _, roomUser := range roomData[room.UUID].Users {
+		estimate := roomUser.Estimate
 
 		if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
 			estimate = "<HIDDEN>"
@@ -300,10 +302,10 @@ func handleToggleCardVisibility(
 		response = map[string]interface{}{
 			"type": "estimate",
 			"data": estimate,
-			"user": roomUser,
+			"user": roomUser.User.ID,
 		}
 
-		if roomUser != user.ID {
+		if roomUser.User.ID != user.ID {
 			err := conn.WriteJSON(response)
 
 			if err != nil {
@@ -417,6 +419,40 @@ func handleUpdateSettings(
 	if err != nil {
 		log.Println("updateSettings: broadcast setCards:", err)
 		return err
+	}
+
+	return nil
+}
+
+func handleClearEstimates(
+	room *database.Room,
+	user *database.User,
+) error {
+	if !isAdmin(room, user) {
+		return fmt.Errorf("clearEstimates: permission denied")
+	}
+
+	for _, roomUser := range roomData[room.UUID].Users {
+		response := map[string]interface{}{
+			"type": "estimate",
+			"user": roomUser.User.ID,
+			"data": "",
+		}
+
+		roomData[room.UUID].Users[roomUser.User.ID] = server.UserData{
+			User:     roomUser.User,
+			Conn:     roomUser.Conn,
+			Estimate: "",
+		}
+
+		err := roomUser.Conn.WriteJSON(response)
+
+		if err != nil {
+			log.Println("clearEstimates: write:", err)
+			return err
+		}
+
+		broadcast(room, &roomUser.User, response)
 	}
 
 	return nil
