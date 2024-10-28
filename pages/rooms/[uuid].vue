@@ -215,6 +215,10 @@ const hasEstimates = computed(() => {
     if (!!u.Estimate) return true
   }
 
+  if (userData.value.RoomSettings?.ShowCards) {
+    toggleCardVisibility()
+  }
+
   return false
 })
 
@@ -251,10 +255,6 @@ const toggleCardVisibility = async () => {
 
 const clearEstimates = async () => {
   wss.send(JSON.stringify({ type: "clearEstimates", data: user?.token }))
-
-  if (userData.value.RoomSettings?.ShowCards) {
-    await toggleCardVisibility()
-  }
 }
 
 const settingsFormSubmit = async (e: Event) => {
