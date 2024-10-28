@@ -9,7 +9,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func Cron() (error) {
+func Cron() error {
 	db, err := sql.Open("sqlite3", "../db/db.sqlite")
 
 	if err != nil {
@@ -31,7 +31,7 @@ func Cron() (error) {
 	return nil
 }
 
-func cleanupUsers(db *sql.DB) (error) {
+func cleanupUsers(db *sql.DB) error {
 	rows, err := db.Query(
 		"SELECT id FROM users WHERE last_active < ?;",
 		time.Now().Unix()-86400,
@@ -70,7 +70,7 @@ func cleanupUsers(db *sql.DB) (error) {
 	return nil
 }
 
-func cleanupRooms(db *sql.DB) (error) {
+func cleanupRooms(db *sql.DB) error {
 	rows, err := db.Query(
 		"SELECT rooms.id FROM rooms LEFT JOIN users ON users.id = rooms.owner WHERE users.id IS NULL;",
 	)
@@ -80,7 +80,6 @@ func cleanupRooms(db *sql.DB) (error) {
 	}
 
 	defer rows.Close()
-
 
 	roomIDs := []uint32{}
 
