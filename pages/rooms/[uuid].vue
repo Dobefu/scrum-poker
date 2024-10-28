@@ -251,6 +251,10 @@ const toggleCardVisibility = async () => {
 
 const clearEstimates = async () => {
   wss.send(JSON.stringify({ type: "clearEstimates", data: user?.token }))
+
+  if (userData.value.RoomSettings?.ShowCards) {
+    await toggleCardVisibility()
+  }
 }
 
 const settingsFormSubmit = async (e: Event) => {
