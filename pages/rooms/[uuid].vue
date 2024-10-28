@@ -460,6 +460,7 @@ if (user && import.meta.client) {
         size="sm"
         class="max-sm:w-full"
         @click="toggleCardVisibility"
+        :disabled="!+hasEstimates"
       >
         <template v-if="!userData.value.RoomSettings?.ShowCards">
           <Icon
