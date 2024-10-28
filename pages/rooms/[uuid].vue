@@ -89,7 +89,7 @@ const reconnect = async () => {
     wss.onclose = async () => await reconnect()
     wss.onmessage = async (e) => await onWebsocketMessage(e)
 
-    wss.send(JSON.stringify({ type: "init", data: user?.token }))
+    wss.send(JSON.stringify({ type: "init" }))
   }, 1000)
 }
 
@@ -250,11 +250,11 @@ const pickEstimate = async (value: string) => {
 }
 
 const toggleCardVisibility = async () => {
-  wss.send(JSON.stringify({ type: "toggleCardVisibility", data: user?.token }))
+  wss.send(JSON.stringify({ type: "toggleCardVisibility" }))
 }
 
 const clearEstimates = async () => {
-  wss.send(JSON.stringify({ type: "clearEstimates", data: user?.token }))
+  wss.send(JSON.stringify({ type: "clearEstimates" }))
 }
 
 const settingsFormSubmit = async (e: Event) => {
@@ -268,7 +268,7 @@ const settingsFormSubmit = async (e: Event) => {
   wss.send(
     JSON.stringify({
       type: "updateSettings",
-      data: { token: user?.token, name, cards },
+      data: { name, cards },
     }),
   )
 
@@ -282,7 +282,7 @@ if (user && import.meta.client) {
   wss.onclose = async () => await reconnect()
   wss.onmessage = async (e) => await onWebsocketMessage(e)
 
-  wss.send(JSON.stringify({ type: "init", data: user.token }))
+  wss.send(JSON.stringify({ type: "init" }))
 }
 </script>
 
