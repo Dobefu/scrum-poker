@@ -385,7 +385,9 @@ if (user && import.meta.client) {
 
     <div class="flex items-center justify-between">
       <TypographyHeading type="h1">
-        {{ roomName }}
+        <template v-if="userData.value.RoomSettings">
+          {{ roomName }}
+        </template>
       </TypographyHeading>
 
       <div class="flex gap-4">
