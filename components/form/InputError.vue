@@ -25,7 +25,6 @@ const props = withDefaults(
     "
   >
     <Icon
-      class="-mb-0.5"
       name="mdi:error-outline"
       ssr
     />

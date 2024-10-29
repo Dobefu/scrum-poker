@@ -12,7 +12,9 @@ useHead({
 const { getUser } = useAuth()
 const user = await getUser()
 
-const name = ref("")
+const nameInput = ref("")
+const roomInput = ref("")
+const hasRoomInputError = ref(false)
 
 const { data: room, error: roomError } = await useAsyncData(
   `user-room-${user?.token}`,
@@ -29,7 +31,7 @@ const createTmpAccount = async () => {
   const result = await $fetch("/api/v1/create-tmp-account", {
     method: "POST",
     body: {
-      name: name.value,
+      name: nameInput.value,
       withRoom: true,
     },
   })
@@ -54,6 +56,32 @@ const createRoom = async () => {
       external: true,
     })
   }
+}
+
+const enterRoom = async () => {
+  if (!import.meta.client) return
+
+  const roomUuid = roomInput.value.replace(
+    `${window.location.origin}/rooms/`,
+    "",
+  )
+
+  const room = await $fetch("/api/v1/get-room", {
+    method: "POST",
+    body: {
+      roomUuid,
+    },
+  })
+
+  if (room) {
+    navigateTo(`/rooms/${room.uuid}`, {
+      external: true,
+    })
+
+    return
+  }
+
+  hasRoomInputError.value = true
 }
 </script>
 
@@ -82,7 +110,7 @@ const createRoom = async () => {
         type="text"
         name="name"
         placeholder="John Doe"
-        v-model="name"
+        v-model="nameInput"
         required
       />
     </FormInputGroup>
@@ -119,6 +147,11 @@ const createRoom = async () => {
         :to="`/rooms/${room.uuid}`"
         variant="primary"
       >
+        <Icon
+          name="mdi:door"
+          ssr
+        />
+
         Enter room
       </FormButton>
     </div>
@@ -142,6 +175,54 @@ const createRoom = async () => {
         />
 
         Create a room
+      </FormButton>
+    </form>
+  </div>
+
+  <div
+    class="mx-auto my-8 flex w-full max-w-2xl flex-col gap-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-md max-sm:px-4 dark:border-gray-800 dark:bg-gray-900"
+  >
+    <TypographyHeading
+      type="h2"
+      class="text-center"
+    >
+      Enter a room
+    </TypographyHeading>
+
+    <form
+      @submit.prevent="enterRoom"
+      class="flex flex-col items-center gap-8"
+    >
+      <FormInputGroup class="w-full">
+        <FormLabel required>Room ID or URL</FormLabel>
+
+        <FormInput
+          autocomplete="off"
+          type="search"
+          name="room-uuid"
+          placeholder=""
+          v-model="roomInput"
+          @input="hasRoomInputError = false"
+          required
+        />
+
+        <FormInputError
+          v-if="hasRoomInputError"
+          message="This room does not exist"
+        />
+      </FormInputGroup>
+
+      <FormButton
+        type="submit"
+        variant="primary"
+        :disabled="!roomInput || hasRoomInputError"
+      >
+        <Icon
+          name="mdi:door"
+          ssr
+        />
+
+        Enter room
       </FormButton>
     </form>
   </div>
