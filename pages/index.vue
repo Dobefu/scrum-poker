@@ -136,6 +136,11 @@ const createRoom = async () => {
         type="submit"
         variant="primary"
       >
+        <Icon
+          name="mdi:plus"
+          ssr
+        />
+
         Create a room
       </FormButton>
     </form>
