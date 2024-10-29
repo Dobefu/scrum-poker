@@ -9,17 +9,16 @@ export type UserData = {
     ShowCards: boolean
     UUID: string
   }
-  Users?: Record<
-    string,
-    {
-      User: {
-        ID: number
-        Name: string
-        Room: number
-        CreatedAt: number
-        LastActive: number
-      }
-      Estimate: string
-    }
-  >
+  Users?: Record<string, UserDataUser>
+}
+
+export type UserDataUser = {
+  User: {
+    ID: number
+    Name: string
+    Room: number
+    CreatedAt: number
+    LastActive: number
+  }
+  Estimate: string
 }

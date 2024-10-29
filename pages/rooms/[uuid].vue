@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OffCanvasModal } from "#build/components"
-import { type UserData } from "@/types/user-data"
+import { type UserData, type UserDataUser } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
 
 const route = useRoute()
@@ -96,97 +96,138 @@ const reconnect = async () => {
 const hasInitialised = ref(false)
 
 const onWebsocketMessage = async (e: MessageEvent) => {
-  if (!user) return
-
   const response = JSON.parse(e.data)
 
-  if ("type" in response && response.type === "init") {
-    userData.value = reactive(response.data)
+  handleInit(response)
+  handleJoin(response)
+  handleLeave(response)
+  handleEstimate(response)
+  handleToggleCardVisibility(response)
+  handleSetRoomName(response)
+  handleSetCards(response)
+}
 
-    if (
-      !hasInitialised.value &&
-      userData.value.RoomSettings?.Owner === user.id
-    ) {
-      // Open the share dialog if there is no one else.
-      if (Object.keys(userData.value.Users ?? []).length <= 1) {
-        shareModalRef.value?.open()
-        hasInitialised.value = true
-      }
+const handleInit = (response: Record<string, unknown>) => {
+  if (
+    !("type" in response) ||
+    response.type !== "init" ||
+    !response.data ||
+    !user
+  ) {
+    return
+  }
+
+  userData.value = reactive(response.data)
+
+  if (!hasInitialised.value && userData.value.RoomSettings?.Owner === user.id) {
+    // Open the share dialog if there is no one else.
+    if (Object.keys(userData.value.Users ?? []).length <= 1) {
+      shareModalRef.value?.open()
+      hasInitialised.value = true
     }
+  }
 
-    uuid.value = (
-      Object.values(userData.value.Users ?? []).find((entry) => {
-        return entry.User.ID === user.id
-      }) ?? { User: { ID: "" } }
-    ).User.ID.toString()
+  uuid.value = (
+    Object.values(userData.value.Users ?? []).find((entry) => {
+      return entry.User.ID === user.id
+    }) ?? { User: { ID: "" } }
+  ).User.ID.toString()
+}
 
+const handleJoin = (response: Record<string, unknown>) => {
+  if (
+    !("type" in response) ||
+    response.type !== "join" ||
+    !userData.value?.Users ||
+    typeof response.user !== "number" ||
+    !response.data
+  ) {
     return
   }
 
-  if ("type" in response && response.type === "join") {
-    if (!userData.value?.Users) return
+  userData.value.Users[response.user] = response.data as UserDataUser
+}
 
-    userData.value.Users[response.user] = response.data
+const handleLeave = (response: Record<string, unknown>) => {
+  if (
+    !("type" in response) ||
+    response.type !== "leave" ||
+    !userData.value?.Users ||
+    typeof response.data !== "number"
+  ) {
     return
   }
 
-  if ("type" in response && response.type === "leave") {
-    if (!userData.value?.Users) return
+  delete userData.value.Users[response.data]
+}
 
-    delete userData.value.Users[response.data]
+const handleEstimate = (response: Record<string, unknown>) => {
+  if (
+    !("type" in response) ||
+    response.type !== "estimate" ||
+    !userData.value?.Users ||
+    typeof response.user !== "number"
+  ) {
     return
   }
 
-  if ("type" in response && response.type === "estimate") {
-    if (!userData.value?.Users) return
+  if (
+    userData.value.Users[response.user].User.ID !== user?.id ||
+    !response.data
+  ) {
+    setTimeout(() => {
+      if (
+        !userData.value?.Users ||
+        typeof response.user !== "number" ||
+        typeof response.data !== "string"
+      )
+        return
 
-    if (
-      userData.value.Users[response.user].User.ID !== user.id ||
-      !response.data
-    ) {
-      setTimeout(() => {
-        if (!userData.value?.Users) return
+      userData.value.Users[response.user].Estimate = response.data
+    }, 200)
 
-        userData.value.Users[response.user].Estimate = response.data
-      }, 200)
-
-      if (response.data !== "<HIDDEN>") {
-        userData.value.Users[response.user].Estimate = response.data
-      }
+    if (response.data !== "<HIDDEN>" && typeof response.data === "string") {
+      userData.value.Users[response.user].Estimate = response.data
     }
-
-    return
   }
+}
 
+const handleToggleCardVisibility = (response: Record<string, unknown>) => {
   if (
-    "type" in response &&
-    response.type === "toggleCardVisibility" &&
-    userData.value.RoomSettings
+    !("type" in response) ||
+    response.type !== "toggleCardVisibility" ||
+    !userData.value.RoomSettings
   ) {
-    userData.value.RoomSettings.ShowCards =
-      !userData.value.RoomSettings.ShowCards
     return
   }
 
+  userData.value.RoomSettings.ShowCards = !userData.value.RoomSettings.ShowCards
+}
+
+const handleSetRoomName = (response: Record<string, unknown>) => {
   if (
-    "type" in response &&
-    response.type === "setRoomName" &&
-    userData.value.RoomSettings
+    !("type" in response) ||
+    response.type !== "setRoomName" ||
+    !userData.value.RoomSettings ||
+    typeof response.data !== "string"
   ) {
-    userData.value.RoomSettings.Name = response.data
     return
   }
 
+  userData.value.RoomSettings.Name = response.data
+}
+
+const handleSetCards = (response: Record<string, unknown>) => {
   if (
-    "type" in response &&
-    response.type === "setCards" &&
-    userData.value.RoomSettings
+    !("type" in response) ||
+    response.type !== "setCards" ||
+    !userData.value.RoomSettings ||
+    typeof response.data !== "string"
   ) {
-    userData.value.RoomSettings.Cards = response.data
     return
   }
 
-  console.log(response)
+  userData.value.RoomSettings.Cards = response.data
 }
 
 const connection = async (socket: WebSocket, timeout = 10000) => {
