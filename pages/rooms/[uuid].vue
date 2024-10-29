@@ -212,7 +212,7 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
 
 const hasEstimates = computed(() => {
   for (let u of Object.values(userData.value?.Users ?? [])) {
-    if (!!u.Estimate) return true
+    if (u.Estimate) return true
   }
 
   if (userData.value.RoomSettings?.ShowCards) {
@@ -488,8 +488,8 @@ if (user && import.meta.client) {
     >
       <thead>
         <tr>
-          <td class="p-4 font-medium max-sm:p-2">Name</td>
-          <td class="p-4 font-medium max-sm:p-2">Estimate</td>
+          <th class="p-4 text-left font-medium max-sm:p-2">Name</th>
+          <th class="p-4 text-left font-medium max-sm:p-2">Estimate</th>
         </tr>
       </thead>
 

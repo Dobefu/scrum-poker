@@ -48,12 +48,9 @@ onMounted(() => {
 })
 
 const componentType = computed(() => {
-  switch (props.type) {
-    case "textarea":
-      return "textarea"
-    default:
-      return "input"
-  }
+  if (props.type === "textarea") return "textarea"
+
+  return "input"
 })
 </script>
 
