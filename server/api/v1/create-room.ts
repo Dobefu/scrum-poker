@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   const roomUuid = randomBytes(16).toString("hex")
 
-  const newRoom = await db
+  await db
     .insert(rooms)
     .values({
       uuid: roomUuid,

@@ -17,12 +17,9 @@ const props = withDefaults(
 )
 
 const cardClass = computed(() => {
-  switch (props.type) {
-    case "sm":
-      return "w-14 max-lg:text-md text-md"
-    default:
-      return "w-24 max-md:w-20 max-md:text-lg text-xl"
-  }
+  if (props.type === "sm") return "w-14 max-lg:text-md text-md"
+
+  return "w-24 max-md:w-20 max-md:text-lg text-xl"
 })
 
 const value = computed(() => {

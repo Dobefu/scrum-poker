@@ -30,7 +30,6 @@ const createTmpAccount = async () => {
       <FormLabel required>Your name</FormLabel>
 
       <FormInput
-        autocomplete="name"
         type="text"
         name="name"
         placeholder="John Doe"

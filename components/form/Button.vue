@@ -24,7 +24,7 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{ (emit: "click", e: PointerEvent): void }>()
+const emit = defineEmits<(emit: "click", e: PointerEvent) => void>()
 
 const buttonType = computed(() => {
   if (props.to) return "a"
