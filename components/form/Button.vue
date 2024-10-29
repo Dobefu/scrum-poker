@@ -27,7 +27,7 @@ const props = withDefaults(
 const emit = defineEmits<(emit: "click", e: PointerEvent) => void>()
 
 const buttonType = computed(() => {
-  if (props.to) return "a"
+  if (props.to) return resolveComponent("NuxtLink")
 
   return "button"
 })
@@ -75,7 +75,8 @@ const padding = computed(() => {
       )
     "
     :disabled="props.loading || props.disabled"
-    :href="to"
+    :external="typeof buttonType !== 'string' && buttonType.name === 'NuxtLink'"
+    :to="to"
     :type="type"
     @click="(e: PointerEvent) => emit('click', e)"
   >
