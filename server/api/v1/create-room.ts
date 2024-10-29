@@ -42,8 +42,6 @@ export default defineEventHandler(async (event) => {
     })
     .returning()
 
-  const roomId = newRoom[0].id
-
   return {
     success: true,
     room: roomUuid,
