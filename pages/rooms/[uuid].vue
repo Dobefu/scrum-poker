@@ -62,7 +62,7 @@ const cardOptions = computed(() =>
 const sortedUserData = computed<UserData>(() => {
   let result: UserData = { Users: {} }
 
-  if (!userData.value.Users) return result
+  if (!userData.value.Users) return {}
 
   Object.entries(userData.value.Users)
     .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
@@ -417,20 +417,20 @@ if (user && import.meta.client) {
     </div>
 
     <div
-      role="listbox"
       aria-label="Cards"
       class="my-4 flex flex-wrap justify-center gap-4"
     >
       <PokerCard
         tabindex="0"
-        role="option"
+        role="switch"
         :title="option.replace(/^i:/, '')"
         :value="option"
         v-for="option in cardOptions"
         @click="() => pickEstimate(option)"
         @keydown.space="() => pickEstimate(option)"
         @keydown.enter="() => pickEstimate(option)"
-        :ariaSelected="
+        aria-checked="mixed"
+        :ariaChecked="
           !!option &&
           sortedUserData.Users &&
           sortedUserData.Users[uuid]?.Estimate === option

@@ -32,7 +32,7 @@ const value = computed(() => {
   <div
     :class="
       twMerge(
-        'focus:outline-primary-500 dark:focus:outline-primary-300 dark:focus:aria-selected:outline-primary-300 focus:aria-selected:outline-primary-500 relative inline-block aspect-[2/3] shrink-0 origin-bottom select-none rounded-lg bg-white p-2 font-medium text-gray-800 shadow-md outline outline-0 outline-offset-2 outline-gray-100 transition-all focus:outline-2 aria-selected:scale-105 aria-selected:shadow-lg aria-selected:outline-2 aria-selected:outline-gray-300 dark:bg-gray-200 dark:aria-selected:outline-gray-500',
+        'focus:outline-primary-500 dark:focus:outline-primary-300 dark:focus:aria-checked:outline-primary-300 focus:aria-checked:outline-primary-500 relative inline-block aspect-[2/3] shrink-0 origin-bottom select-none rounded-lg bg-white p-2 font-medium text-gray-800 shadow-md outline outline-0 outline-offset-2 outline-gray-100 transition-all focus:outline-2 aria-checked:scale-105 aria-checked:shadow-lg aria-checked:outline-2 aria-checked:outline-gray-300 dark:bg-gray-200 dark:aria-checked:outline-gray-500',
         cardClass,
         $props.class,
       )
