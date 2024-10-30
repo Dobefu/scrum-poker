@@ -87,6 +87,7 @@ const reconnect = async () => {
     wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
     await connection(wss)
 
+    wss.onerror = async () => await reconnect()
     wss.onclose = async () => await reconnect()
     wss.onmessage = async (e) => await onWebsocketMessage(e)
 
@@ -346,6 +347,7 @@ if (user && import.meta.client) {
   wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
   await connection(wss)
 
+  wss.onerror = async () => await reconnect()
   wss.onclose = async () => await reconnect()
   wss.onmessage = async (e) => await onWebsocketMessage(e)
 
