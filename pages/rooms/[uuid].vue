@@ -373,6 +373,7 @@ if (user && import.meta.client) {
             <a
               class="text-primary-500 dark:text-primary-400"
               href="https://icon-sets.iconify.design/mdi"
+              target="_blank"
               >here</a
             >.
           </span>
