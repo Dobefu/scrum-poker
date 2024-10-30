@@ -366,16 +366,20 @@ if (user && import.meta.client) {
             :value="userData.value.RoomSettings?.Cards"
           />
 
-          <span class="text-gray-600 dark:text-gray-400">
-            A comma separated list of cards to display. Icons can be used by
-            prefixing with <code>i:</code>. For example: <code>i:coffee</code>.
-            A list of all the usable icons can be found
-            <a
-              class="text-primary-500 dark:text-primary-400"
-              href="https://icon-sets.iconify.design/mdi"
-              target="_blank"
-              >here</a
-            >.
+          <span class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+            <p>
+              A comma separated list of cards to display. Icons can be used by
+              prefixing with <code>i:</code>. For example:
+              <code>i:coffee</code>. A list of all the usable icons can be found
+              <a
+                class="text-primary-500 dark:text-primary-400"
+                href="https://icon-sets.iconify.design/mdi"
+                target="_blank"
+                >here</a
+              >.
+            </p>
+
+            <p>Alternatively, Emojis will also work. For example: ☕.</p>
           </span>
         </FormInputGroup>
       </form>
