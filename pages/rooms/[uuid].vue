@@ -77,6 +77,7 @@ const shareModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
 const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
 let wss: WebSocket
+let pingTimeout: NodeJS.Timeout
 
 const reconnect = async () => {
   wss.close()
@@ -105,6 +106,7 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   handleToggleCardVisibility(response)
   handleSetRoomName(response)
   handleSetCards(response)
+  handlePong(response)
 }
 
 const handleInit = (response: Record<string, unknown>) => {
@@ -132,6 +134,13 @@ const handleInit = (response: Record<string, unknown>) => {
       return entry.User.ID === user.id
     }) ?? { User: { ID: "" } }
   ).User.ID.toString()
+
+  wss.send(JSON.stringify({ type: "ping" }))
+
+  pingTimeout = setTimeout(() => {
+    console.info("No response received after 10 seconds. Closing WebSocket...")
+    wss.close()
+  }, 10000)
 }
 
 const handleJoin = (response: Record<string, unknown>) => {
@@ -228,6 +237,23 @@ const handleSetCards = (response: Record<string, unknown>) => {
   }
 
   userData.value.RoomSettings.Cards = response.data
+}
+
+const handlePong = (response: Record<string, unknown>) => {
+  if (!("type" in response) || response.type !== "pong") return
+
+  clearTimeout(pingTimeout)
+
+  setTimeout(() => {
+    wss.send(JSON.stringify({ type: "ping" }))
+
+    pingTimeout = setTimeout(() => {
+      console.info(
+        "No response received after 10 seconds. Closing WebSocket...",
+      )
+      wss.close()
+    }, 10000)
+  }, 10000)
 }
 
 const connection = async (socket: WebSocket, timeout = 10000) => {

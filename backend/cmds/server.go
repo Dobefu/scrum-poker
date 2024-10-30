@@ -141,6 +141,8 @@ func handleCommands(
 	switch msgType {
 	case "init":
 		return handleInit(conn, room, user)
+	case "ping":
+		return handlePing(conn)
 	case "estimate":
 		return handleEstimate(conn, room, user, payload)
 	case "toggleCardVisibility":
@@ -204,6 +206,23 @@ func handleInit(
 
 	if err != nil {
 		log.Println("join:", err)
+		return err
+	}
+
+	return nil
+}
+
+func handlePing(
+	conn *websocket.Conn,
+) error {
+	response := map[string]interface{}{
+		"type": "pong",
+	}
+
+	err := conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("pong:", err)
 		return err
 	}
 
