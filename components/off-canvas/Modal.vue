@@ -84,12 +84,12 @@ defineExpose({ open, close })
       >
         <div
           class="fixed inset-0 bg-black/20 backdrop-blur-sm"
-          @click="close"
+          @mousedown.prevent="close"
         />
 
         <div
           class="fixed inset-0 mx-auto flex w-full max-w-3xl flex-col justify-center px-8 max-sm:p-2 max-sm:px-4"
-          @click.self="close"
+          @mousedown.self.prevent="close"
         >
           <Transition
             appear
