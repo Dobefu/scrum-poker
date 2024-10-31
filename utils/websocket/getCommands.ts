@@ -137,12 +137,20 @@ export const getCommands = (
       !("type" in response) ||
       response.type !== "setCards" ||
       !userData.value.RoomSettings ||
-      typeof response.data !== "string"
+      typeof response.data !== "string" ||
+      !user
     ) {
       return
     }
 
     userData.value.RoomSettings.Cards = response.data
+
+    if (!userData.value.Users) return
+
+    const cardsArray = response.data.split(",")
+
+    if (!cardsArray.includes(userData.value.Users[user.id].Estimate))
+      userData.value.Users[user.id].Estimate = ""
   }
 
   return {
