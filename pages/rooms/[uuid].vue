@@ -26,7 +26,6 @@ if (error.value) {
 
 const { getUser } = useAuth()
 const user = await getUser()
-console.log(user)
 
 if (!user) {
   useHead({
