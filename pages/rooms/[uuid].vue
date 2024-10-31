@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { OffCanvasModal } from "#build/components"
-import { type UserData, type UserDataUser } from "@/types/user-data"
+import { type UserData } from "@/types/user-data"
 import { twMerge } from "tailwind-merge"
+import { getCommands } from "~/utils/websocket/getCommands"
 
 const route = useRoute()
 const url = useRequestURL()
@@ -25,6 +26,7 @@ if (error.value) {
 
 const { getUser } = useAuth()
 const user = await getUser()
+console.log(user)
 
 if (!user) {
   useHead({
@@ -38,7 +40,6 @@ if (!user) {
   })
 }
 
-const uuid = ref("")
 const userData = reactive<{ value: UserData }>({ value: {} })
 
 const roomName = computed(() => {
@@ -77,7 +78,7 @@ const shareModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
 const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
 let wss: WebSocket
-let pingTimeout: NodeJS.Timeout
+const hasInitialised = ref(false)
 
 const reconnect = async () => {
   wss.close()
@@ -95,166 +96,33 @@ const reconnect = async () => {
   }, 1000)
 }
 
-const hasInitialised = ref(false)
+let commands: ReturnType<typeof getCommands>
 
 const onWebsocketMessage = async (e: MessageEvent) => {
+  if (!user) return
+
   const response = JSON.parse(e.data)
 
-  handleInit(response)
-  handleJoin(response)
-  handleLeave(response)
-  handleEstimate(response)
-  handleToggleCardVisibility(response)
-  handleSetRoomName(response)
-  handleSetCards(response)
-  handlePong(response)
-}
-
-const handleInit = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "init" ||
-    !response.data ||
-    !user
-  ) {
-    return
-  }
-
-  userData.value = reactive(response.data)
-
-  if (!hasInitialised.value && userData.value.RoomSettings?.Owner === user.id) {
-    // Open the share dialog if there is no one else.
-    if (Object.keys(userData.value.Users ?? []).length <= 1) {
-      shareModalRef.value?.open()
-      hasInitialised.value = true
+  if (commands.handleInit(response)) {
+    if (
+      !hasInitialised.value &&
+      userData.value.RoomSettings?.Owner === user.id
+    ) {
+      // Open the share dialog if there is no one else.
+      if (Object.keys(userData.value.Users ?? []).length <= 1) {
+        shareModalRef.value?.open()
+        hasInitialised.value = true
+      }
     }
   }
 
-  uuid.value = (
-    Object.values(userData.value.Users ?? []).find((entry) => {
-      return entry.User.ID === user.id
-    }) ?? { User: { ID: "" } }
-  ).User.ID.toString()
-
-  wss.send(JSON.stringify({ type: "ping" }))
-
-  pingTimeout = setTimeout(() => {
-    console.info("No response received after 10 seconds. Closing WebSocket...")
-    wss.close()
-  }, 10000)
-}
-
-const handleJoin = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "join" ||
-    !userData.value?.Users ||
-    typeof response.user !== "number" ||
-    !response.data
-  ) {
-    return
-  }
-
-  userData.value.Users[response.user] = response.data as UserDataUser
-}
-
-const handleLeave = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "leave" ||
-    !userData.value?.Users ||
-    typeof response.data !== "number"
-  ) {
-    return
-  }
-
-  delete userData.value.Users[response.data]
-}
-
-const handleEstimate = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "estimate" ||
-    !userData.value?.Users ||
-    typeof response.user !== "number"
-  ) {
-    return
-  }
-
-  if (
-    userData.value.Users[response.user].User.ID !== user?.id ||
-    !response.data
-  ) {
-    setTimeout(() => {
-      if (
-        !userData.value?.Users ||
-        typeof response.user !== "number" ||
-        typeof response.data !== "string"
-      )
-        return
-
-      userData.value.Users[response.user].Estimate = response.data
-    }, 200)
-
-    if (response.data !== "<HIDDEN>" && typeof response.data === "string") {
-      userData.value.Users[response.user].Estimate = response.data
-    }
-  }
-}
-
-const handleToggleCardVisibility = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "toggleCardVisibility" ||
-    !userData.value.RoomSettings
-  ) {
-    return
-  }
-
-  userData.value.RoomSettings.ShowCards = !userData.value.RoomSettings.ShowCards
-}
-
-const handleSetRoomName = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "setRoomName" ||
-    !userData.value.RoomSettings ||
-    typeof response.data !== "string"
-  ) {
-    return
-  }
-
-  userData.value.RoomSettings.Name = response.data
-}
-
-const handleSetCards = (response: Record<string, unknown>) => {
-  if (
-    !("type" in response) ||
-    response.type !== "setCards" ||
-    !userData.value.RoomSettings ||
-    typeof response.data !== "string"
-  ) {
-    return
-  }
-
-  userData.value.RoomSettings.Cards = response.data
-}
-
-const handlePong = (response: Record<string, unknown>) => {
-  if (!("type" in response) || response.type !== "pong") return
-
-  clearTimeout(pingTimeout)
-
-  setTimeout(() => {
-    wss.send(JSON.stringify({ type: "ping" }))
-
-    pingTimeout = setTimeout(() => {
-      console.info(
-        "No response received after 10 seconds. Closing WebSocket...",
-      )
-      wss.close()
-    }, 10000)
-  }, 10000)
+  commands.handleJoin(response)
+  commands.handleLeave(response)
+  commands.handleEstimate(response)
+  commands.handleToggleCardVisibility(response)
+  commands.handleSetRoomName(response)
+  commands.handleSetCards(response)
+  commands.handlePong(response)
 }
 
 const connection = async (socket: WebSocket, timeout = 10000) => {
@@ -302,17 +170,18 @@ const isAdmin = computed(() => {
 })
 
 const pickEstimate = async (value: string) => {
+  if (!user) return
   if (!userData.value?.Users) return
 
-  if (userData.value.Users[uuid.value].Estimate === value)
-    userData.value.Users[uuid.value].Estimate = ""
-  else userData.value.Users[uuid.value].Estimate = value
+  if (userData.value.Users[user.id].Estimate === value)
+    userData.value.Users[user.id].Estimate = ""
+  else userData.value.Users[user.id].Estimate = value
 
   await connection(wss)
   wss.send(
     JSON.stringify({
       type: "estimate",
-      data: userData.value.Users[uuid.value].Estimate,
+      data: userData.value.Users[user.id].Estimate,
     }),
   )
 }
@@ -346,6 +215,8 @@ const settingsFormSubmit = async (e: Event) => {
 if (user && import.meta.client) {
   wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
   await connection(wss)
+
+  commands = getCommands(userData, wss, user)
 
   wss.onerror = async () => await reconnect()
   wss.onclose = async () => await reconnect()
@@ -507,7 +378,7 @@ if (user && import.meta.client) {
         :ariaChecked="
           !!option &&
           sortedUserData.Users &&
-          sortedUserData.Users[uuid]?.Estimate === option
+          sortedUserData.Users[user.id]?.Estimate === option
         "
         class="cursor-pointer"
       />

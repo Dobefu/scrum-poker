@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm"
-import { useDatabase } from "~/composables/useDatabase"
+import { useDatabase, User } from "~/composables/useDatabase"
 import { users } from "~/db/schema"
 
 export default defineEventHandler(async (event) => {
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
   if (usersWithToken.length !== 1) return false
 
-  const user = usersWithToken[0]
+  const user: User = usersWithToken[0]
 
   if (!user.id) return false
 
