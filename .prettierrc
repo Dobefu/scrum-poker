@@ -3,5 +3,6 @@
   "tailwindFunctions": ["twMerge"],
   "semi": false,
   "tabWidth": 2,
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "trailingComma": "all"
 }

@@ -371,6 +371,7 @@ if (user && import.meta.client) {
         :title="option.replace(/^i:/, '')"
         :value="option"
         v-for="option in cardOptions"
+        :key="option"
         @click="() => pickEstimate(option)"
         @keydown.space="() => pickEstimate(option)"
         @keydown.enter="() => pickEstimate(option)"
@@ -439,7 +440,10 @@ if (user && import.meta.client) {
       </thead>
 
       <tbody>
-        <tr v-for="tableData of sortedUserData.Users">
+        <tr
+          v-for="tableData of sortedUserData.Users"
+          :key="tableData.User.ID"
+        >
           <td class="w-full p-4 max-sm:p-2">{{ tableData.User.Name }}</td>
           <td
             class="w-full px-4 max-sm:px-2"
