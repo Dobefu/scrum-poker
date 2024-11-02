@@ -306,7 +306,9 @@ if (user && import.meta.client) {
       <div
         class="flex flex-col items-center justify-center gap-8 dark:text-white"
       >
-        <QrCode :data="url" />
+        <div v-auto-animate>
+          <QrCode :data="url" />
+        </div>
 
         <span class="flex w-full flex-wrap items-center justify-center gap-4">
           <p class="break-all text-center">{{ url }}</p>
@@ -451,7 +453,7 @@ if (user && import.meta.client) {
         <div
           class="w-full px-4 max-sm:px-2"
           :style="{
-            perspective: '20rem',
+            perspective: '10rem',
           }"
         >
           <PokerCard
