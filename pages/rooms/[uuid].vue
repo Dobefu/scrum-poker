@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { OffCanvasModal } from "#build/components"
 import { type UserData } from "@/types/user-data"
-import { twMerge } from "tailwind-merge"
 import { getCommands } from "~/utils/websocket/getCommands"
 
 const route = useRoute()
