@@ -368,24 +368,7 @@ func handleUpdateSettings(
 		name = "Poker Room"
 	}
 
-	cardsSlice := strings.Split(cards, ",")
-	cards = ""
-
-	for _, card := range cardsSlice {
-		if card == "" {
-			continue
-		}
-
-		if cards != "" {
-			cards += ","
-		}
-
-		cards += card
-	}
-
-	if cards == "" {
-		cards = "?,∞,0,1,2,3,5,8,13,20,40,100"
-	}
+	newCards := formatCards(cards)
 
 	roomData[room.UUID] = server.RoomData{
 		RoomSettings: server.RoomSettings{
@@ -396,14 +379,14 @@ func handleUpdateSettings(
 			Admins:      room.Admins,
 			CreatedAt:   room.CreatedAt,
 			ShowCards:   room.ShowCards,
-			Cards:       cards,
+			Cards:       newCards,
 			AllowShow:   allowShow,
 			AllowDelete: allowDelete,
 		},
 		Users: roomData[room.UUID].Users,
 	}
 
-	err := database.SetRoomSettings(db, room, name, cards, allowShow, allowDelete)
+	err := database.SetRoomSettings(db, room, name, newCards, allowShow, allowDelete)
 
 	if err != nil {
 		log.Println("updateSettings", err)
@@ -431,7 +414,7 @@ func handleUpdateSettings(
 
 	response = map[string]interface{}{
 		"type": "setCards",
-		"data": cards,
+		"data": newCards,
 	}
 
 	err = conn.WriteJSON(response)
@@ -553,4 +536,27 @@ func handleLeave(
 	}
 
 	return nil
+}
+
+func formatCards(cards string) string {
+	cardsSlice := strings.Split(cards, ",")
+	newCards := ""
+
+	for _, card := range cardsSlice {
+		if card == "" {
+			continue
+		}
+
+		if newCards != "" {
+			newCards += ","
+		}
+
+		newCards += card
+	}
+
+	if newCards == "" {
+		newCards = "?,∞,0,1,2,3,5,8,13,20,40,100"
+	}
+
+	return newCards
 }
