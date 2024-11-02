@@ -439,7 +439,7 @@ if (user && import.meta.client) {
 
     <div
       v-auto-animate="{ duration: 50 }"
-      class="relative mx-auto flex min-h-80 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md max-sm:py-16"
+      class="relative mx-auto flex min-h-72 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md"
     >
       <div
         class="pointer-events-none absolute inset-8 rounded-full border-2 border-yellow-300"
@@ -448,7 +448,8 @@ if (user && import.meta.client) {
       <div
         v-for="tableData of sortedUserData.Users"
         :key="tableData.User.ID"
-        class="flex flex-col items-center gap-4 text-center sm:-mb-6"
+        class="flex min-w-28 flex-col items-center gap-4 text-center"
+        v-auto-animate
       >
         <div
           class="w-full px-4 max-sm:px-2"
@@ -475,31 +476,21 @@ if (user && import.meta.client) {
           {{ tableData.User.Name }}
         </p>
 
-        <div>
-          <FormButton
-            variant="danger"
-            title="Clear estimate"
-            @click="pickEstimate('')"
-            size="sm"
-            :class="
-              twMerge(
-                'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
-                [
-                  tableData.User.ID === user.id &&
-                    !!tableData.Estimate &&
-                    'pointer-events-auto scale-100 opacity-100',
-                ],
-              )
-            "
-          >
-            <Icon
-              name="mdi:do-not-disturb-alt"
-              ssr
-            />
+        <FormButton
+          variant="danger"
+          title="Clear estimate"
+          @click="pickEstimate('')"
+          v-if="tableData.User.ID === user.id && !!tableData.Estimate"
+          size="sm"
+        >
+          <Icon
+            name="mdi:do-not-disturb-alt"
+            v-auto-animate
+            ssr
+          />
 
-            Clear
-          </FormButton>
-        </div>
+          Clear
+        </FormButton>
       </div>
     </div>
   </template>
