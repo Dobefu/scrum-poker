@@ -150,7 +150,7 @@ func handleCommands(
 	case "updateSettings":
 		return handleUpdateSettings(conn, db, room, user, payload)
 	case "clearEstimates":
-		return handleClearEstimates(room, user)
+		return handleClearEstimates(conn, db, room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -164,14 +164,16 @@ func handleInit(
 	if _, ok := roomData[room.UUID]; !ok {
 		roomData[room.UUID] = server.RoomData{
 			RoomSettings: server.RoomSettings{
-				ID:        room.ID,
-				UUID:      room.UUID,
-				Owner:     room.Owner,
-				Name:      room.Name,
-				Admins:    room.Admins,
-				CreatedAt: room.CreatedAt,
-				ShowCards: room.ShowCards,
-				Cards:     room.Cards,
+				ID:          room.ID,
+				UUID:        room.UUID,
+				Owner:       room.Owner,
+				Name:        room.Name,
+				Admins:      room.Admins,
+				CreatedAt:   room.CreatedAt,
+				ShowCards:   room.ShowCards,
+				Cards:       room.Cards,
+				AllowShow:   room.AllowShow,
+				AllowDelete: room.AllowDelete,
 			},
 			Users: map[uint32]server.UserData{},
 		}
@@ -269,20 +271,22 @@ func handleToggleCardVisibility(
 	room *database.Room,
 	user *database.User,
 ) error {
-	if !isAdmin(room, user) {
-		return fmt.Errorf("estimate: permission denied")
+	if !isAdmin(room, user) && !roomData[room.UUID].RoomSettings.AllowShow {
+		return fmt.Errorf("toggleCardVisibility: permission denied")
 	}
 
 	roomData[room.UUID] = server.RoomData{
 		RoomSettings: server.RoomSettings{
-			ID:        room.ID,
-			UUID:      room.UUID,
-			Owner:     room.Owner,
-			Name:      room.Name,
-			Admins:    room.Admins,
-			CreatedAt: room.CreatedAt,
-			ShowCards: !roomData[room.UUID].RoomSettings.ShowCards,
-			Cards:     room.Cards,
+			ID:          room.ID,
+			UUID:        room.UUID,
+			Owner:       room.Owner,
+			Name:        room.Name,
+			Admins:      room.Admins,
+			CreatedAt:   room.CreatedAt,
+			ShowCards:   !roomData[room.UUID].RoomSettings.ShowCards,
+			Cards:       room.Cards,
+			AllowShow:   room.AllowShow,
+			AllowDelete: room.AllowDelete,
 		},
 		Users: roomData[room.UUID].Users,
 	}
@@ -357,6 +361,8 @@ func handleUpdateSettings(
 
 	name := payload["data"].(map[string]interface{})["name"].(string)
 	cards := payload["data"].(map[string]interface{})["cards"].(string)
+	allowShow := payload["data"].(map[string]interface{})["allowShow"].(bool)
+	allowDelete := payload["data"].(map[string]interface{})["allowDelete"].(bool)
 
 	if name == "" {
 		name = "Poker Room"
@@ -383,19 +389,21 @@ func handleUpdateSettings(
 
 	roomData[room.UUID] = server.RoomData{
 		RoomSettings: server.RoomSettings{
-			ID:        room.ID,
-			UUID:      room.UUID,
-			Owner:     room.Owner,
-			Name:      name,
-			Admins:    room.Admins,
-			CreatedAt: room.CreatedAt,
-			ShowCards: room.ShowCards,
-			Cards:     cards,
+			ID:          room.ID,
+			UUID:        room.UUID,
+			Owner:       room.Owner,
+			Name:        name,
+			Admins:      room.Admins,
+			CreatedAt:   room.CreatedAt,
+			ShowCards:   room.ShowCards,
+			Cards:       cards,
+			AllowShow:   allowShow,
+			AllowDelete: allowDelete,
 		},
 		Users: roomData[room.UUID].Users,
 	}
 
-	err := database.SetRoomSettings(db, room, name, cards)
+	err := database.SetRoomSettings(db, room, name, cards, allowShow, allowDelete)
 
 	if err != nil {
 		log.Println("updateSettings", err)
@@ -440,14 +448,54 @@ func handleUpdateSettings(
 		return err
 	}
 
+	response = map[string]interface{}{
+		"type": "setAllowShow",
+		"data": allowShow,
+	}
+
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("updateSettings: write setAllowShow:", err)
+		return err
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("updateSettings: broadcast setAllowShow:", err)
+		return err
+	}
+
+	response = map[string]interface{}{
+		"type": "setAllowDelete",
+		"data": allowDelete,
+	}
+
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("updateSettings: write setAllowDelete:", err)
+		return err
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("updateSettings: broadcast setAllowDelete:", err)
+		return err
+	}
+
 	return nil
 }
 
 func handleClearEstimates(
+	conn *websocket.Conn,
+	db *sql.DB,
 	room *database.Room,
 	user *database.User,
 ) error {
-	if !isAdmin(room, user) {
+	if !isAdmin(room, user) && !roomData[room.UUID].RoomSettings.AllowDelete {
 		return fmt.Errorf("clearEstimates: permission denied")
 	}
 
@@ -471,7 +519,16 @@ func handleClearEstimates(
 			return err
 		}
 
-		broadcast(room, &roomUser.User, response)
+		err = broadcast(room, &roomUser.User, response)
+
+		if err != nil {
+			log.Println("clearEstimates: broadcast:", err)
+			return err
+		}
+
+		if roomData[room.UUID].RoomSettings.ShowCards {
+			handleToggleCardVisibility(conn, db, room, user)
+		}
 	}
 
 	return nil

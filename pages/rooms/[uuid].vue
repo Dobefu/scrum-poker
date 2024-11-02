@@ -45,6 +45,14 @@ const roomName = computed(() => {
   return userData.value.RoomSettings?.Name || "Poker Room"
 })
 
+const allowShow = computed(() => {
+  return userData.value.RoomSettings?.AllowShow ?? false
+})
+
+const allowDelete = computed(() => {
+  return userData.value.RoomSettings?.AllowDelete ?? false
+})
+
 useHead({
   title: roomName,
   meta: [
@@ -121,6 +129,8 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   commands.handleToggleCardVisibility(response)
   commands.handleSetRoomName(response)
   commands.handleSetCards(response)
+  commands.handleSetAllowShow(response)
+  commands.handleSetAllowDelete(response)
   commands.handlePong(response)
 }
 
@@ -148,10 +158,6 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
 const hasEstimates = computed(() => {
   for (let u of Object.values(userData.value?.Users ?? [])) {
     if (u.Estimate) return true
-  }
-
-  if (userData.value.RoomSettings?.ShowCards) {
-    toggleCardVisibility()
   }
 
   return false
@@ -200,11 +206,17 @@ const settingsFormSubmit = async (e: Event) => {
     target.querySelector<HTMLInputElement>('[name="name"]')?.value ?? ""
   const cards =
     target.querySelector<HTMLInputElement>('[name="cards"]')?.value ?? ""
+  const allowShow =
+    target.querySelector<HTMLInputElement>('[name="allow-show"]')?.checked ??
+    false
+  const allowDelete =
+    target.querySelector<HTMLInputElement>('[name="allow-delete"]')?.checked ??
+    false
 
   wss.send(
     JSON.stringify({
       type: "updateSettings",
-      data: { name, cards },
+      data: { name, cards, allowShow, allowDelete },
     }),
   )
 
@@ -280,6 +292,32 @@ if (user && import.meta.client) {
 
             <p>Alternatively, Emojis will also work. For example: ☕.</p>
           </span>
+        </FormInputGroup>
+
+        <FormInputGroup>
+          <FormLabel class="flex gap-4">
+            <FormInput
+              name="allow-delete"
+              :checked="allowDelete"
+              type="checkbox"
+              title="tEt"
+            />
+
+            Allow others to delete estimates
+          </FormLabel>
+        </FormInputGroup>
+
+        <FormInputGroup>
+          <FormLabel class="flex gap-4">
+            <FormInput
+              name="allow-show"
+              :checked="allowShow"
+              type="checkbox"
+              title="tEt"
+            />
+
+            Allow others to show estimates
+          </FormLabel>
         </FormInputGroup>
       </form>
 
@@ -392,16 +430,14 @@ if (user && import.meta.client) {
       />
     </div>
 
-    <div
-      class="m-auto mb-4 flex max-w-2xl flex-wrap justify-between gap-4"
-      v-if="isAdmin"
-    >
+    <div class="m-auto mb-4 flex max-w-2xl flex-wrap justify-between gap-4">
       <FormButton
         size="sm"
         class="max-sm:w-full"
         :variant="hasEstimates ? 'danger' : 'ghost'"
         :disabled="!+hasEstimates"
         @click="clearEstimates"
+        v-if="isAdmin || allowDelete"
       >
         <Icon
           name="mdi:do-not-disturb-alt"
@@ -413,10 +449,11 @@ if (user && import.meta.client) {
 
       <FormButton
         size="sm"
-        class="max-sm:w-full"
+        class="ms-auto max-sm:w-full"
         @click="toggleCardVisibility"
         :disabled="!+hasEstimates"
         :variant="hasEstimates ? 'default' : 'ghost'"
+        v-if="isAdmin || allowShow"
       >
         <template v-if="!userData.value.RoomSettings?.ShowCards">
           <Icon

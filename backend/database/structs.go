@@ -12,12 +12,14 @@ type User struct {
 }
 
 type Room struct {
-	ID        uint32
-	UUID      string
-	Owner     uint32
-	Admins    []uint32
-	CreatedAt uint32
-	ShowCards bool
-	Cards     string
-	Name      string
+	ID          uint32
+	UUID        string
+	Owner       uint32
+	Admins      []uint32
+	CreatedAt   uint32
+	ShowCards   bool
+	Cards       string
+	Name        string
+	AllowShow   bool
+	AllowDelete bool
 }

@@ -19,4 +19,6 @@ export const rooms = sqliteTable("rooms", {
   showCards: integer("show_cards", { mode: "boolean" }).default(false),
   cards: text("cards").default("?,∞,0,1,2,3,5,8,13,20,40,100").notNull(),
   name: text("name").default("Poker Room").notNull(),
+  allowShow: integer("allow_show", { mode: "boolean" }).default(false),
+  allowDelete: integer("allow_delete", { mode: "boolean" }).default(false),
 })

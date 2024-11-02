@@ -153,6 +153,32 @@ export const getCommands = (
       userData.value.Users[user.id].Estimate = ""
   }
 
+  const handleSetAllowDelete = (response: Record<string, unknown>) => {
+    if (
+      !("type" in response) ||
+      response.type !== "setAllowDelete" ||
+      !userData.value.RoomSettings ||
+      typeof response.data !== "boolean"
+    ) {
+      return
+    }
+
+    userData.value.RoomSettings.AllowDelete = response.data
+  }
+
+  const handleSetAllowShow = (response: Record<string, unknown>) => {
+    if (
+      !("type" in response) ||
+      response.type !== "setAllowShow" ||
+      !userData.value.RoomSettings ||
+      typeof response.data !== "boolean"
+    ) {
+      return
+    }
+
+    userData.value.RoomSettings.AllowShow = response.data
+  }
+
   return {
     handlePong,
     handleInit,
@@ -162,5 +188,7 @@ export const getCommands = (
     handleToggleCardVisibility,
     handleSetRoomName,
     handleSetCards,
+    handleSetAllowShow,
+    handleSetAllowDelete,
   }
 }

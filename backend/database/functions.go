@@ -10,9 +10,9 @@ func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 	var admins []uint8
 
 	err := db.QueryRow(
-		"SELECT id, token, owner, json, cards, show_cards, name FROM rooms WHERE token=?;",
+		"SELECT id, token, owner, json, cards, show_cards, name, allow_show, allow_delete FROM rooms WHERE token=?;",
 		uuid,
-	).Scan(&room.ID, &room.UUID, &room.Owner, &admins, &room.Cards, &room.ShowCards, &room.Name)
+	).Scan(&room.ID, &room.UUID, &room.Owner, &admins, &room.Cards, &room.ShowCards, &room.Name, &room.AllowShow, &room.AllowDelete)
 
 	if err != nil {
 		return nil, err
@@ -62,11 +62,15 @@ func SetRoomSettings(
 	room *Room,
 	name string,
 	cards string,
+	allowShow bool,
+	allowDelete bool,
 ) error {
 	_, err := db.Exec(
-		"UPDATE rooms SET name = ?, cards = ? WHERE token=?;",
+		"UPDATE rooms SET name = ?, cards = ?, allow_show = ?, allow_delete = ? WHERE token=?;",
 		name,
 		cards,
+		allowShow,
+		allowDelete,
 		room.UUID,
 	)
 
