@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "@nuxt/icon",
     "@nuxt/image",
+    "@formkit/auto-animate",
   ],
 
   tailwindcss: {

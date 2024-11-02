@@ -329,7 +329,10 @@ if (user && import.meta.client) {
     </OffCanvasModal>
 
     <div class="flex items-center justify-between">
-      <TypographyHeading type="h1">
+      <TypographyHeading
+        type="h1"
+        v-auto-animate
+      >
         <template v-if="userData.value.RoomSettings">
           {{ roomName }}
         </template>
@@ -337,6 +340,7 @@ if (user && import.meta.client) {
 
       <div class="flex gap-4">
         <FormButton
+          v-auto-animate
           @click="settingsModalRef?.open()"
           v-if="isAdmin"
           title="Open room settings"
@@ -364,6 +368,7 @@ if (user && import.meta.client) {
     <div
       aria-label="Cards"
       class="my-4 flex flex-wrap justify-center gap-4"
+      v-auto-animate
     >
       <PokerCard
         tabindex="0"
@@ -431,6 +436,7 @@ if (user && import.meta.client) {
     </div>
 
     <div
+      v-auto-animate="{ duration: 50 }"
       class="relative mx-auto flex min-h-80 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md max-sm:py-16"
     >
       <div
@@ -440,7 +446,7 @@ if (user && import.meta.client) {
       <div
         v-for="tableData of sortedUserData.Users"
         :key="tableData.User.ID"
-        class="-mb-6 flex flex-col items-center gap-4 text-center"
+        class="flex flex-col items-center gap-4 text-center sm:-mb-6"
       >
         <div
           class="w-full px-4 max-sm:px-2"
