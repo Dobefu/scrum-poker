@@ -430,73 +430,69 @@ if (user && import.meta.client) {
       </FormButton>
     </div>
 
-    <table
-      class="mx-auto w-full max-w-2xl border-separate rounded-xl border border-gray-200 bg-white p-2 shadow-md dark:border-gray-950 dark:bg-gray-900"
+    <div
+      class="relative mx-auto flex min-h-80 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md max-sm:py-16"
     >
-      <thead>
-        <tr>
-          <th class="p-4 text-left font-medium max-sm:p-2">Name</th>
-          <th class="p-4 text-left font-medium max-sm:p-2">Estimate</th>
-        </tr>
-      </thead>
+      <div
+        class="pointer-events-none absolute inset-8 rounded-full border-2 border-yellow-300"
+      />
 
-      <tbody>
-        <tr
-          v-for="tableData of sortedUserData.Users"
-          :key="tableData.User.ID"
+      <div
+        v-for="tableData of sortedUserData.Users"
+        :key="tableData.User.ID"
+        class="-mb-6 flex flex-col items-center gap-4 text-center"
+      >
+        <div
+          class="w-full px-4 max-sm:px-2"
+          :style="{
+            perspective: '20rem',
+          }"
         >
-          <td class="w-full p-4 max-sm:p-2">{{ tableData.User.Name }}</td>
-          <td
-            class="w-full px-4 max-sm:px-2"
-            :style="{
-              perspective: '20rem',
-            }"
-          >
-            <PokerCard
-              :value="
-                tableData.Estimate !== '<HIDDEN>'
-                  ? tableData.Estimate || '-'
-                  : ''
-              "
-              type="sm"
-              :isHidden="
-                !!tableData.Estimate &&
-                tableData.User.ID !== user.id &&
-                !userData.value.RoomSettings?.ShowCards
-              "
-            />
-          </td>
-          <td class="p-4 max-sm:p-2">
-            <FormButton
-              variant="danger"
-              title="Clear estimate"
-              @click="pickEstimate('')"
-              size="sm"
-              :class="
-                twMerge(
-                  'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
-                  [
-                    tableData.User.ID === user.id &&
-                      !!tableData.Estimate &&
-                      'pointer-events-auto scale-100 opacity-100',
-                  ],
-                )
-              "
-            >
-              <Icon
-                name="mdi:do-not-disturb-alt"
-                ssr
-              />
+          <PokerCard
+            :value="
+              tableData.Estimate !== '<HIDDEN>' ? tableData.Estimate || '-' : ''
+            "
+            type="sm"
+            :isHidden="
+              !!tableData.Estimate &&
+              tableData.User.ID !== user.id &&
+              !userData.value.RoomSettings?.ShowCards
+            "
+          />
+        </div>
 
-              <span
-                aria-hidden
-                class="max-sm:hidden"
-                >Clear</span
-              >
-            </FormButton>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <p
+          class="rounded-full bg-black/20 p-1 px-4 text-lg font-medium shadow-md"
+        >
+          {{ tableData.User.Name }}
+        </p>
+
+        <div>
+          <FormButton
+            variant="danger"
+            title="Clear estimate"
+            @click="pickEstimate('')"
+            size="sm"
+            :class="
+              twMerge(
+                'pointer-events-none scale-0 opacity-0 transition-all max-sm:px-3 max-sm:py-3',
+                [
+                  tableData.User.ID === user.id &&
+                    !!tableData.Estimate &&
+                    'pointer-events-auto scale-100 opacity-100',
+                ],
+              )
+            "
+          >
+            <Icon
+              name="mdi:do-not-disturb-alt"
+              ssr
+            />
+
+            Clear
+          </FormButton>
+        </div>
+      </div>
+    </div>
   </template>
 </template>
