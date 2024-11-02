@@ -315,35 +315,7 @@ func handleToggleCardVisibility(
 		return err
 	}
 
-	for _, roomUser := range roomData[room.UUID].Users {
-		estimate := roomUser.Estimate
-
-		if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
-			estimate = "<HIDDEN>"
-		}
-
-		response = map[string]interface{}{
-			"type": "estimate",
-			"data": estimate,
-			"user": roomUser.User.ID,
-		}
-
-		if roomUser.User.ID != user.ID {
-			err := conn.WriteJSON(response)
-
-			if err != nil {
-				log.Println("estimate: write:", err)
-				return err
-			}
-		}
-
-		err = broadcast(room, user, response)
-
-		if err != nil {
-			log.Println("estimate: broadcast:", err)
-			return err
-		}
-	}
+	sendEstimates(conn, room, user)
 
 	return nil
 }
@@ -559,4 +531,42 @@ func formatCards(cards string) string {
 	}
 
 	return newCards
+}
+
+func sendEstimates(
+	conn *websocket.Conn,
+	room *database.Room,
+	user *database.User,
+) error {
+	for _, roomUser := range roomData[room.UUID].Users {
+		estimate := roomUser.Estimate
+
+		if !roomData[room.UUID].RoomSettings.ShowCards && estimate != "" {
+			estimate = "<HIDDEN>"
+		}
+
+		response := map[string]interface{}{
+			"type": "estimate",
+			"data": estimate,
+			"user": roomUser.User.ID,
+		}
+
+		if roomUser.User.ID != user.ID {
+			err := conn.WriteJSON(response)
+
+			if err != nil {
+				log.Println("estimate: write:", err)
+				return err
+			}
+		}
+
+		err := broadcast(room, user, response)
+
+		if err != nil {
+			log.Println("estimate: broadcast:", err)
+			return err
+		}
+	}
+
+	return nil
 }
