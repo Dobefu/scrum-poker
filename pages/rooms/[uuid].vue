@@ -429,7 +429,10 @@ if (user && import.meta.client) {
       />
     </div>
 
-    <div class="m-auto mb-4 flex max-w-2xl flex-wrap justify-between gap-4">
+    <div
+      class="m-auto mb-4 flex max-w-2xl flex-wrap justify-between gap-4"
+      v-auto-animate
+    >
       <FormButton
         size="sm"
         class="max-sm:w-full"
@@ -443,7 +446,7 @@ if (user && import.meta.client) {
           ssr
         />
 
-        Clear all estimates
+        Clear&nbsp;all&nbsp;estimates
       </FormButton>
 
       <FormButton
@@ -460,7 +463,7 @@ if (user && import.meta.client) {
             ssr
           />
 
-          Show cards
+          Show&nbsp;cards
         </template>
         <template v-else>
           <Icon
