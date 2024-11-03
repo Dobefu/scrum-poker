@@ -36,7 +36,11 @@ function open() {
 }
 
 function close() {
-  isInnerOpen.value = false
+  const e = new Event("close", { cancelable: true })
+
+  emit("onClose", e, window)
+
+  if (!e?.defaultPrevented) isInnerOpen.value = false
 }
 
 async function onModalOpened() {
@@ -58,8 +62,6 @@ async function onModalClosed() {
   /* v8 ignore start */
   if (process.env.NODE_ENV !== "test") ftDeactivate()
   /* v8 ignore stop */
-
-  emit("onClose")
 }
 
 defineExpose({ open, close })

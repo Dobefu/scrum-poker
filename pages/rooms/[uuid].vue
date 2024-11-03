@@ -79,7 +79,56 @@ const sortedUserData = computed<UserData>(() => {
 })
 
 const settingsModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+const settingsFormRef = ref<typeof OffCanvasModal | undefined>(undefined)
 const shareModalRef = ref<typeof OffCanvasModal | undefined>(undefined)
+
+let settingsFormValues: Record<string, string | boolean> = {}
+let settingsFormValuesNew: Record<string, string | boolean> = {}
+
+function onSettingsFormInputChanged(e: Event) {
+  const target = e.target as HTMLInputElement
+
+  if (target.type === "checkbox" || target.type === "radio")
+    settingsFormValuesNew[target.name] = target.checked
+  else settingsFormValuesNew[target.name] = target.value
+}
+
+watchEffect(() => {
+  if (!settingsFormRef.value) return
+
+  settingsFormRef.value
+    .querySelectorAll("input")
+    .forEach((input: HTMLInputElement) => {
+      if (input.type === "checkbox" || input.type === "radio")
+        settingsFormValues[input.name] = input.checked
+      else settingsFormValues[input.name] = input.value
+
+      input.addEventListener("input", onSettingsFormInputChanged)
+    })
+
+  settingsFormValuesNew = { ...settingsFormValues }
+})
+
+function onSettingsModalClose(e: Event, window: Window) {
+  const valuesOld = JSON.stringify(settingsFormValues)
+  const valuesNew = JSON.stringify(settingsFormValuesNew)
+
+  if (
+    valuesOld !== valuesNew &&
+    !window.confirm(
+      "You have unsaved changes! Are you sure you want to discard your changes?",
+    )
+  ) {
+    e.preventDefault()
+    return
+  }
+
+  settingsFormRef.value
+    .querySelectorAll("input")
+    .forEach((input: HTMLInputElement) => {
+      input.removeEventListener("input", onSettingsFormInputChanged)
+    })
+}
 
 const { copy, copied, isSupported } = useClipboard({ source: url.toString() })
 
@@ -200,6 +249,7 @@ const clearEstimates = async () => {
 
 const settingsFormSubmit = async (e: Event) => {
   const target = e.target as HTMLFormElement
+  settingsFormValuesNew = { ...settingsFormValues }
 
   const name =
     target.querySelector<HTMLInputElement>('[name="name"]')?.value ?? ""
@@ -249,12 +299,14 @@ if (user && import.meta.client) {
     <OffCanvasModal
       class="w-full max-w-2xl"
       ref="settingsModalRef"
+      @onClose="(e, window) => onSettingsModalClose(e, window)"
     >
       <template #title>Room Settings</template>
 
       <form
         id="settings-form"
         @submit.prevent="(e) => settingsFormSubmit(e)"
+        ref="settingsFormRef"
         class="flex flex-col items-stretch justify-center gap-8 dark:text-white"
       >
         <FormInputGroup>
@@ -471,7 +523,7 @@ if (user && import.meta.client) {
             ssr
           />
 
-          Hide cards
+          Hide&nbsp;cards
         </template>
       </FormButton>
     </div>
