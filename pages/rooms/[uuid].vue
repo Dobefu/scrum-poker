@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { OffCanvasModal } from "#build/components"
-import { type UserData } from "@/types/user-data"
+import { type UserData, type UserDataUser } from "@/types/user-data"
 import { getCommands } from "~/utils/websocket/getCommands"
 
 const route = useRoute()
@@ -123,6 +123,8 @@ function onSettingsModalClose(e: Event, window: Window) {
     return
   }
 
+  if (!settingsFormRef.value) return
+
   settingsFormRef.value
     .querySelectorAll("input")
     .forEach((input: HTMLInputElement) => {
@@ -204,7 +206,7 @@ const connection = async (socket: WebSocket, timeout = 10000) => {
 }
 
 const hasEstimates = computed(() => {
-  for (let u of Object.values(userData.value?.Users ?? [])) {
+  for (const u of Object.values<UserDataUser>(userData.value?.Users ?? [])) {
     if (u.Estimate) return true
   }
 
