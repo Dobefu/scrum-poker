@@ -45,11 +45,19 @@ const roomName = computed(() => {
 })
 
 const allowShow = computed(() => {
-  return userData.value.RoomSettings?.AllowShow ?? false
+  if (
+    userData.value?.RoomSettings &&
+    "AllowShow" in userData.value.RoomSettings
+  )
+    return userData.value.RoomSettings?.AllowShow ?? false
 })
 
 const allowDelete = computed(() => {
-  return userData.value.RoomSettings?.AllowDelete ?? false
+  if (
+    userData.value?.RoomSettings &&
+    "AllowDelete" in userData.value.RoomSettings
+  )
+    return userData.value.RoomSettings?.AllowDelete ?? false
 })
 
 useHead({

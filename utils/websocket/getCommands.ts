@@ -158,7 +158,8 @@ export const getCommands = (
       !("type" in response) ||
       response.type !== "setAllowDelete" ||
       !userData.value.RoomSettings ||
-      typeof response.data !== "boolean"
+      typeof response.data !== "boolean" ||
+      !("AllowDelete" in userData.value.RoomSettings)
     ) {
       return
     }
@@ -171,7 +172,8 @@ export const getCommands = (
       !("type" in response) ||
       response.type !== "setAllowShow" ||
       !userData.value.RoomSettings ||
-      typeof response.data !== "boolean"
+      typeof response.data !== "boolean" ||
+      !("AllowShow" in userData.value.RoomSettings)
     ) {
       return
     }

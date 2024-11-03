@@ -24,6 +24,8 @@ const props = withDefaults(
       | "text"
       | "url"
       | "textarea"
+      | "checkbox"
+      | "radio"
   }>(),
   {
     autocomplete: undefined,

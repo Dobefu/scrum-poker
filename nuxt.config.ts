@@ -1,3 +1,4 @@
+// @ts-expect-error No types are available for this package.
 import colors from "tailwindcss/colors"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config

@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm"
-import { useDatabase, User } from "~/composables/useDatabase"
+import { useDatabase, type User } from "~/composables/useDatabase"
 import { users } from "~/db/schema"
 
 export default defineEventHandler(async (event) => {
