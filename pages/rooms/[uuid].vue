@@ -150,7 +150,12 @@ const reconnect = async () => {
   console.info("Connection lost. Reconnecting...")
 
   setTimeout(async () => {
-    wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
+    let proto = "ws"
+    if (config.public.https) proto = "wss"
+
+    wss = new WebSocket(
+      `${proto}://${config.public.backendEndpoint}/rooms/${route.params.uuid}`,
+    )
     await connection(wss)
 
     wss.onerror = async () => await reconnect()
@@ -283,7 +288,12 @@ const settingsFormSubmit = async (e: Event) => {
 }
 
 if (user && import.meta.client) {
-  wss = new WebSocket(`${config.public.wsEndpoint}/${route.params.uuid}`)
+  let proto = "ws"
+  if (config.public.https) proto = "wss"
+
+  wss = new WebSocket(
+    `${proto}://${config.public.backendEndpoint}/rooms/${route.params.uuid}`,
+  )
   await connection(wss)
 
   commands = getCommands(userData, wss, user)

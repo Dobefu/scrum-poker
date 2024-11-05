@@ -15,8 +15,8 @@ export default defineNuxtConfig({
     public: {
       siteName: "Scrum Poker",
       version: "v1.2.0",
-      https: !!process.env.HTTPS,
-      wsEndpoint: process.env.WS_ENDPOINT,
+      https: !!+(process.env.HTTPS ?? 0),
+      backendEndpoint: process.env.BACKEND_ENDPOINT,
     },
   },
 
