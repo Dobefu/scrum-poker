@@ -7,14 +7,17 @@ const route = useRoute()
 const url = useRequestURL()
 const config = useRuntimeConfig()
 
-const { error } = await useAsyncData(`room-${route.params.uuid}`, () =>
-  $fetch("/api/v1/get-room", {
-    method: "POST",
-    body: {
-      roomUuid: route.params.uuid,
+const { error } = await useAsyncData(`room-${route.params.uuid}`, () => {
+  let proto = "http"
+  if (config.public.https) proto = "https"
+
+  return $fetch(
+    `${proto}://${config.public.backendEndpoint}/get-room/${route.params.uuid}`,
+    {
+      method: "GET",
     },
-  }),
-)
+  )
+})
 
 if (error.value) {
   throw createError({
