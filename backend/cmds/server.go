@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 	"scrumpoker/cmds/routes"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func Server() error {
