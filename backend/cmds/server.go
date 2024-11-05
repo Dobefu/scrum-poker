@@ -3,7 +3,7 @@ package cmds
 import (
 	"log"
 	"net/http"
-	"scrumpoker/cmds/routes"
+	"scrumpoker/server/routes"
 )
 
 func Server() error {
