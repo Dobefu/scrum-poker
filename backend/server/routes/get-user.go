@@ -33,6 +33,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user.Token = body["token"]
 	result, err := json.Marshal(user)
 
 	if err != nil {

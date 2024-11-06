@@ -4,10 +4,15 @@ export function useAuth() {
       const { ssrContext } = useNuxtApp()
       const token = ssrContext?.event.context.authToken
 
-      return $fetch("/api/v1/get-user", {
+      const config = useRuntimeConfig()
+
+      let proto = "http"
+      if (config.public.https) proto = "https"
+
+      return $fetch(`${proto}://${config.public.backendEndpoint}/get-user`, {
         method: "POST",
         body: {
-          token: token,
+          token,
         },
       })
     })
@@ -16,9 +21,9 @@ export function useAuth() {
     if (!data.value) return
 
     return {
-      ...data.value,
-      createdAt: new Date(Date.parse(data.value.createdAt)),
-      lastActive: new Date(Date.parse(data.value.lastActive)),
+      ...JSON.parse(data.value),
+      CreatedAt: new Date(data.value.CreatedAt),
+      LastActive: new Date(data.value.LastActive),
     } satisfies User
   }
 

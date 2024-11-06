@@ -38,7 +38,7 @@ const logout = async () => {
       <button
         @click="logout()"
         class="flex items-center gap-2"
-        v-if="user?.id"
+        v-if="user?.ID"
       >
         <Icon
           name="mdi:logout"

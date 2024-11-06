@@ -28,7 +28,7 @@ if (error.value) {
 
 const { getUser } = useAuth()
 const user = await getUser()
-
+console.log(user)
 if (!user) {
   useHead({
     title: "Enter poker room",
@@ -179,7 +179,7 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   if (commands.handleInit(response)) {
     if (
       !hasInitialised.value &&
-      userData.value.RoomSettings?.Owner === user.id
+      userData.value.RoomSettings?.Owner === user.ID
     ) {
       // Open the share dialog if there is no one else.
       if (Object.keys(userData.value.Users ?? []).length <= 1) {
@@ -235,8 +235,8 @@ const isAdmin = computed(() => {
 
   return (
     "Admins" in userData.value.RoomSettings &&
-    (userData.value.RoomSettings.Admins?.includes(user.id) ||
-      userData.value.RoomSettings.Owner === user.id)
+    (userData.value.RoomSettings.Admins?.includes(user.ID) ||
+      userData.value.RoomSettings.Owner === user.ID)
   )
 })
 
@@ -244,15 +244,15 @@ const pickEstimate = async (value: string) => {
   if (!user) return
   if (!userData.value?.Users) return
 
-  if (userData.value.Users[user.id].Estimate === value)
-    userData.value.Users[user.id].Estimate = ""
-  else userData.value.Users[user.id].Estimate = value
+  if (userData.value.Users[user.ID].Estimate === value)
+    userData.value.Users[user.ID].Estimate = ""
+  else userData.value.Users[user.ID].Estimate = value
 
   await connection(wss)
   wss.send(
     JSON.stringify({
       type: "estimate",
-      data: userData.value.Users[user.id].Estimate,
+      data: userData.value.Users[user.ID].Estimate,
     }),
   )
 }
@@ -498,7 +498,7 @@ if (user && import.meta.client) {
         :ariaChecked="
           !!option &&
           sortedUserData.Users &&
-          sortedUserData.Users[user.id]?.Estimate === option
+          sortedUserData.Users[user.ID]?.Estimate === option
         "
         class="cursor-pointer"
       />
@@ -578,7 +578,7 @@ if (user && import.meta.client) {
             type="sm"
             :isHidden="
               !!tableData.Estimate &&
-              tableData.User.ID !== user.id &&
+              tableData.User.ID !== user.ID &&
               !userData.value.RoomSettings?.ShowCards
             "
           />
@@ -594,7 +594,7 @@ if (user && import.meta.client) {
           variant="danger"
           title="Clear estimate"
           @click="pickEstimate('')"
-          v-if="tableData.User.ID === user.id && !!tableData.Estimate"
+          v-if="tableData.User.ID === user.ID && !!tableData.Estimate"
           size="sm"
         >
           <Icon

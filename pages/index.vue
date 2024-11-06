@@ -11,18 +11,18 @@ useHead({
 
 const { getUser } = useAuth()
 const user = await getUser()
-
+console.log(user)
 const nameInput = ref("")
 const roomInput = ref("")
 const hasRoomInputError = ref(false)
 
 const { data: room, error: roomError } = await useAsyncData(
-  `user-room-${user?.token}`,
+  `user-room-${user?.Token}`,
   () =>
     $fetch("/api/v1/get-user-room", {
       method: "POST",
       body: {
-        token: user?.token,
+        token: user?.Token,
       },
     }),
 )
@@ -131,7 +131,7 @@ const enterRoom = async () => {
       type="h2"
       class="text-center"
     >
-      Hi {{ user.name }}!
+      Hi {{ user.Name }}!
     </TypographyHeading>
 
     <div
