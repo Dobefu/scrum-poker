@@ -11,7 +11,7 @@ useHead({
 
 const { getUser } = useAuth()
 const user = await getUser()
-console.log(user)
+
 const nameInput = ref("")
 const roomInput = ref("")
 const hasRoomInputError = ref(false)

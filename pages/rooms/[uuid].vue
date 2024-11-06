@@ -28,7 +28,7 @@ if (error.value) {
 
 const { getUser } = useAuth()
 const user = await getUser()
-console.log(user)
+
 if (!user) {
   useHead({
     title: "Enter poker room",
@@ -566,7 +566,7 @@ if (user && import.meta.client) {
         v-auto-animate
       >
         <div
-          class="w-full px-4 max-sm:px-2"
+          class="relative"
           :style="{
             perspective: '10rem',
           }"
@@ -582,6 +582,24 @@ if (user && import.meta.client) {
               !userData.value.RoomSettings?.ShowCards
             "
           />
+
+          <FormButton
+            variant="danger"
+            title="Clear estimate"
+            @click="pickEstimate('')"
+            size="square"
+            class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all"
+            :class="
+              tableData.User.ID === user.ID &&
+              !!tableData.Estimate &&
+              'pointer-events-auto scale-100 opacity-100'
+            "
+          >
+            <Icon
+              name="mdi:do-not-disturb-alt"
+              ssr
+            />
+          </FormButton>
         </div>
 
         <p
@@ -589,22 +607,6 @@ if (user && import.meta.client) {
         >
           {{ tableData.User.Name }}
         </p>
-
-        <FormButton
-          variant="danger"
-          title="Clear estimate"
-          @click="pickEstimate('')"
-          v-if="tableData.User.ID === user.ID && !!tableData.Estimate"
-          size="sm"
-        >
-          <Icon
-            name="mdi:do-not-disturb-alt"
-            v-auto-animate
-            ssr
-          />
-
-          Clear
-        </FormButton>
       </div>
     </div>
   </template>
