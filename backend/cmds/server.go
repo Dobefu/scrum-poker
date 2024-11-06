@@ -8,6 +8,7 @@ import (
 
 func Server() error {
 	http.HandleFunc("/api/v1/get-room/{roomUuid}", routes.GetRoom)
+	http.HandleFunc("/api/v1/get-user", routes.GetUser)
 
 	http.HandleFunc("/api/v1/rooms/{roomUuid}", routes.Ws)
 
