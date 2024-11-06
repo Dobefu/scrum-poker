@@ -49,7 +49,7 @@ const value = computed(() => {
         />
 
         <p
-          class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full leading-none"
+          class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full leading-none rtl:translate-x-1/2"
         >
           <template v-if="$props.value.startsWith('i:')">
             <Icon
@@ -94,7 +94,7 @@ const value = computed(() => {
           src="/logo.svg"
           :height="80"
           :width="80"
-          class="absolute inset-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14"
+          class="absolute inset-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 transition-all max-lg:h-14 max-lg:w-14 rtl:translate-x-1/2"
         />
 
         <div class="h-full rotate-180 leading-none">
@@ -128,7 +128,7 @@ const value = computed(() => {
         src="/logo.svg"
         :height="80"
         :width="80"
-        class="absolute inset-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 transition-all"
+        class="absolute inset-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 transition-all rtl:translate-x-1/2"
       />
     </div>
   </div>

@@ -588,7 +588,7 @@ if (user && import.meta.client) {
             title="Clear estimate"
             @click="pickEstimate('')"
             size="square"
-            class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all"
+            class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all rtl:-translate-x-1/2"
             :class="
               tableData.User.ID === user.ID &&
               !!tableData.Estimate &&
