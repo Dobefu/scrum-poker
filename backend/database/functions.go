@@ -10,7 +10,7 @@ func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 	var admins []uint8
 
 	err := db.QueryRow(
-		"SELECT id, token, owner, json, cards, show_cards, name, allow_show, allow_delete FROM rooms WHERE token=?;",
+		"SELECT id, token, owner, admins, cards, show_cards, name, allow_show, allow_delete FROM rooms WHERE token=?;",
 		uuid,
 	).Scan(&room.ID, &room.UUID, &room.Owner, &admins, &room.Cards, &room.ShowCards, &room.Name, &room.AllowShow, &room.AllowDelete)
 

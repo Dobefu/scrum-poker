@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
         uuid: roomUuid,
         admins: [],
         createdAt: new Date(),
+        spectators: [],
       })
       .returning()
 

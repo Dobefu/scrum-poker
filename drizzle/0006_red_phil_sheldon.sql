@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` RENAME COLUMN `json` TO `admins`;

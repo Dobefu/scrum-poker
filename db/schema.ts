@@ -13,7 +13,7 @@ export const rooms = sqliteTable("rooms", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   uuid: text("token").notNull(),
   owner: integer("owner"),
-  admins: blob("json", { mode: "json" }).$type<number[]>().notNull(),
+  admins: blob("admins", { mode: "json" }).$type<number[]>().notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
 
   showCards: integer("show_cards", { mode: "boolean" }).default(false),
