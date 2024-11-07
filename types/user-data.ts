@@ -19,6 +19,7 @@ export type UserDataUser = {
     Room: number
     CreatedAt: number
     LastActive: number
+    Token?: string
   }
   Estimate: string
 }

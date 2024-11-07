@@ -12,5 +12,3 @@ export function useDatabase() {
     db,
   }
 }
-
-export type User = typeof schema.users.$inferSelect

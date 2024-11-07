@@ -11,6 +11,7 @@ useHead({
 
 const { getUser } = useAuth()
 const user = await getUser()
+const config = useRuntimeConfig()
 
 const nameInput = ref("")
 const roomInput = ref("")
@@ -47,7 +48,7 @@ const createRoom = async () => {
   const result = await $fetch("/api/v1/create-room", {
     method: "POST",
     body: {
-      token: user!.token,
+      token: user!.Token,
     },
   })
 
@@ -66,15 +67,23 @@ const enterRoom = async () => {
     "",
   )
 
-  const room = await $fetch("/api/v1/get-room", {
-    method: "POST",
-    body: {
-      roomUuid,
-    },
-  })
+  const { data: room } = await useAsyncData<{ UUID: string }>(
+    `get-room-${roomUuid}`,
+    () => {
+      let proto = "http"
+      if (config.public.https) proto = "https"
 
-  if (room) {
-    navigateTo(`/rooms/${room.uuid}`, {
+      return $fetch(
+        `${proto}://${config.public.backendEndpoint}/get-room/${roomUuid}`,
+        {
+          method: "GET",
+        },
+      )
+    },
+  )
+
+  if (room.value) {
+    navigateTo(`/rooms/${room.value.UUID}`, {
       external: true,
     })
 
