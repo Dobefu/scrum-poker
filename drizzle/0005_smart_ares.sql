@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` ADD `spectators` blob NOT NULL;

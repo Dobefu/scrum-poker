@@ -21,4 +21,5 @@ export const rooms = sqliteTable("rooms", {
   name: text("name").default("Poker Room").notNull(),
   allowShow: integer("allow_show", { mode: "boolean" }).default(false),
   allowDelete: integer("allow_delete", { mode: "boolean" }).default(false),
+  spectators: blob("spectators", { mode: "json" }).$type<number[]>().notNull(),
 })

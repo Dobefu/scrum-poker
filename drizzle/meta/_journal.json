@@ -36,6 +36,13 @@
       "when": 1730560954525,
       "tag": "0004_big_shiva",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1730993550746,
+      "tag": "0005_smart_ares",
+      "breakpoints": true
     }
   ]
 }
