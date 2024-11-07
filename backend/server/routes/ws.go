@@ -165,6 +165,7 @@ func handleInit(
 				Cards:       room.Cards,
 				AllowShow:   room.AllowShow,
 				AllowDelete: room.AllowDelete,
+				Spectators:  room.Spectators,
 			},
 			Users: map[uint32]server.UserData{},
 		}
@@ -278,6 +279,7 @@ func handleToggleCardVisibility(
 			Cards:       room.Cards,
 			AllowShow:   room.AllowShow,
 			AllowDelete: room.AllowDelete,
+			Spectators:  room.Spectators,
 		},
 		Users: roomData[room.UUID].Users,
 	}
@@ -345,6 +347,7 @@ func handleUpdateSettings(
 			Cards:       newCards,
 			AllowShow:   allowShow,
 			AllowDelete: allowDelete,
+			Spectators:  room.Spectators,
 		},
 		Users: roomData[room.UUID].Users,
 	}

@@ -8,17 +8,24 @@ import (
 func GetRoomDataByUuid(db *sql.DB, uuid string) (*Room, error) {
 	room := Room{}
 	var admins []uint8
+	var spectators []uint8
 
 	err := db.QueryRow(
-		"SELECT id, token, owner, admins, cards, show_cards, name, allow_show, allow_delete FROM rooms WHERE token=?;",
+		"SELECT id, token, owner, admins, cards, show_cards, name, allow_show, allow_delete, spectators FROM rooms WHERE token=?;",
 		uuid,
-	).Scan(&room.ID, &room.UUID, &room.Owner, &admins, &room.Cards, &room.ShowCards, &room.Name, &room.AllowShow, &room.AllowDelete)
+	).Scan(&room.ID, &room.UUID, &room.Owner, &admins, &room.Cards, &room.ShowCards, &room.Name, &room.AllowShow, &room.AllowDelete, &spectators)
 
 	if err != nil {
 		return nil, err
 	}
 
 	err = json.Unmarshal(admins, &room.Admins)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(spectators, &room.Spectators)
 
 	if err != nil {
 		return nil, err

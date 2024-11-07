@@ -8,6 +8,7 @@ export type UserData = {
     Owner: number
     ShowCards: boolean
     UUID: string
+    Spectators?: number[]
   }
   Users?: Record<string, UserDataUser>
 }

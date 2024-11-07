@@ -17,6 +17,7 @@ type RoomSettings struct {
 	Cards       string
 	AllowShow   bool
 	AllowDelete bool
+	Spectators  []uint32
 }
 
 type UserData struct {

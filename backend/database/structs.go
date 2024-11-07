@@ -22,4 +22,5 @@ type Room struct {
 	Name        string
 	AllowShow   bool
 	AllowDelete bool
+	Spectators  []uint32
 }
