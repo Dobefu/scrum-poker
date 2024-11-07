@@ -3,7 +3,7 @@ import type { UserData, UserDataUser } from "~/types/user-data"
 export const getCommands = (
   userData: { value: UserData },
   wss?: WebSocket,
-  user?: User,
+  user?: UserDataUser["User"],
 ) => {
   let pingTimeout: NodeJS.Timeout
 
@@ -86,7 +86,7 @@ export const getCommands = (
     }
 
     if (
-      userData.value.Users[response.user].User.ID !== user?.id ||
+      userData.value.Users[response.user].User.ID !== user?.ID ||
       !response.data
     ) {
       setTimeout(() => {
@@ -149,8 +149,11 @@ export const getCommands = (
 
     const cardsArray = response.data.split(",")
 
-    if (!cardsArray.includes(userData.value.Users[user.id].Estimate))
-      userData.value.Users[user.id].Estimate = ""
+    if (
+      userData.value.Users[user.ID] &&
+      !cardsArray.includes(userData.value.Users[user.ID].Estimate)
+    )
+      userData.value.Users[user.ID].Estimate = ""
   }
 
   const handleSetAllowDelete = (response: Record<string, unknown>) => {
