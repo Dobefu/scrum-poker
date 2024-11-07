@@ -51,16 +51,35 @@ const allowShow = computed(() => {
   if (
     userData.value?.RoomSettings &&
     "AllowShow" in userData.value.RoomSettings
-  )
+  ) {
     return userData.value.RoomSettings?.AllowShow ?? false
+  }
+
+  return false
 })
 
 const allowDelete = computed(() => {
   if (
     userData.value?.RoomSettings &&
     "AllowDelete" in userData.value.RoomSettings
-  )
+  ) {
     return userData.value.RoomSettings?.AllowDelete ?? false
+  }
+
+  return false
+})
+
+const isSpectator = computed(() => {
+  if (
+    userData.value?.RoomSettings &&
+    "AllowDelete" in userData.value.RoomSettings
+  ) {
+    const spectators = userData.value.RoomSettings?.Spectators ?? []
+
+    return spectators.includes(user?.ID)
+  }
+
+  return false
 })
 
 useHead({
