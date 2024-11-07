@@ -83,7 +83,7 @@ const enterRoom = async () => {
   )
 
   if (room.value) {
-    navigateTo(`/rooms/${room.value.UUID}`, {
+    navigateTo(`/rooms/${roomUuid}`, {
       external: true,
     })
 
