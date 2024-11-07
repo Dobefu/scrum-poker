@@ -128,6 +128,11 @@ const enterRoom = async () => {
       variant="primary"
       class="m-auto"
     >
+      <Icon
+        name="mdi:plus"
+        ssr
+      />
+
       Create a poker room
     </FormButton>
   </form>
