@@ -104,7 +104,11 @@ const sortedUserData = computed<UserData>(() => {
 
   Object.entries(userData.value.Users)
     .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
-    .forEach(([key, value]) => (result.Users![key] = value))
+    .forEach(([key, value]) => {
+      if (userData.value.RoomSettings.Spectators.includes(value.User.ID)) return
+
+      result.Users![key] = value
+    })
 
   return result
 })
