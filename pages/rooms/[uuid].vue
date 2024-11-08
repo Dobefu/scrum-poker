@@ -2,6 +2,7 @@
 import type { OffCanvasModal } from "#build/components"
 import { type UserData, type UserDataUser } from "@/types/user-data"
 import { getCommands } from "~/utils/websocket/getCommands"
+import { twMerge } from "tailwind-merge"
 
 const route = useRoute()
 const url = useRequestURL()
@@ -504,22 +505,23 @@ if (user && import.meta.client) {
       v-auto-animate
     >
       <PokerCard
-        tabindex="0"
+        :tabindex="isSpectator ? -1 : 0"
         role="switch"
         :title="option.replace(/^i:/, '')"
         :value="option"
         v-for="option in cardOptions"
         :key="option"
-        @click="() => pickEstimate(option)"
-        @keydown.space="() => pickEstimate(option)"
-        @keydown.enter="() => pickEstimate(option)"
+        @click="() => !isSpectator && pickEstimate(option)"
+        :disabled="isSpectator"
+        @keydown.space="() => !isSpectator && pickEstimate(option)"
+        @keydown.enter="() => !isSpectator && pickEstimate(option)"
         aria-checked="mixed"
         :ariaChecked="
           !!option &&
           sortedUserData.Users &&
           sortedUserData.Users[user.ID]?.Estimate === option
         "
-        class="cursor-pointer"
+        :class="twMerge(isSpectator ? 'pointer-events-none' : 'cursor-pointer')"
       />
     </div>
 
