@@ -8,11 +8,13 @@ const props = withDefaults(
     value: string
     type?: "md" | "sm"
     isHidden?: boolean
+    disabled?: boolean
   }>(),
   {
     class: undefined,
     type: "md",
     isHidden: false,
+    disabled: false,
   },
 )
 
@@ -32,11 +34,13 @@ const value = computed(() => {
   <div
     :class="
       twMerge(
-        'focus:outline-primary-500 dark:focus:outline-primary-300 dark:focus:aria-checked:outline-primary-300 focus:aria-checked:outline-primary-500 relative inline-block aspect-[2/3] shrink-0 origin-bottom select-none rounded-lg bg-white p-2 align-bottom font-medium text-gray-800 shadow-md outline outline-0 outline-offset-2 outline-gray-100 transition-all focus:outline-2 aria-checked:scale-105 aria-checked:shadow-lg aria-checked:outline-2 aria-checked:outline-gray-300 dark:bg-gray-200 dark:aria-checked:outline-gray-500',
+        'focus:outline-primary-500 dark:focus:outline-primary-300 dark:focus:aria-checked:outline-primary-300 focus:aria-checked:outline-primary-500 group relative inline-block aspect-[2/3] shrink-0 origin-bottom select-none rounded-lg bg-white p-2 align-bottom font-medium text-gray-800 shadow-md outline outline-0 outline-offset-2 outline-gray-100 transition-all focus:outline-2 aria-checked:scale-105 aria-checked:shadow-lg aria-checked:outline-2 aria-checked:outline-gray-300 aria-disabled:bg-gray-100 aria-disabled:opacity-80 dark:bg-gray-200 dark:aria-checked:outline-gray-500 dark:aria-disabled:bg-gray-300',
         cardClass,
         $props.class,
       )
     "
+    :disabled="props.disabled"
+    :aria-disabled="props.disabled"
     :style="{
       transformStyle: 'preserve-3d',
       transform: props.isHidden ? 'rotateY(180deg)' : '',
@@ -75,7 +79,7 @@ const value = computed(() => {
         />
 
         <p
-          class="absolute -m-1 rounded-full bg-white p-1 leading-none dark:bg-gray-200"
+          class="absolute -m-1 rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
         >
           <template v-if="$props.value.startsWith('i:')">
             <Icon
@@ -99,7 +103,7 @@ const value = computed(() => {
 
         <div class="h-full rotate-180 leading-none">
           <p
-            class="-m-1 inline-block rounded-full bg-white p-1 leading-none dark:bg-gray-200"
+            class="-m-1 inline-block rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
           >
             <template v-if="$props.value.startsWith('i:')">
               <Icon
