@@ -692,9 +692,9 @@ if (user && import.meta.client) {
       <div
         class="absolute bottom-0 start-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-4"
       >
-        <div class="flex w-full items-center justify-around px-32">
+        <div class="flex w-full items-center justify-around gap-4 px-32">
           <div
-            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center"
+            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center max-sm:hidden"
           >
             Avg: {{ averageEstimate }}
           </div>
@@ -714,7 +714,7 @@ if (user && import.meta.client) {
           </FormButton>
 
           <div
-            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center"
+            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center max-sm:hidden"
           >
             Max: {{ maxEstimate }}
           </div>
