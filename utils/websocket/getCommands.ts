@@ -195,7 +195,7 @@ export const getCommands = (
       return
     }
 
-    userData.value.RoomSettings.Spectators = response.data
+    userData.value.RoomSettings.Spectators = response.data as number[]
   }
 
   return {

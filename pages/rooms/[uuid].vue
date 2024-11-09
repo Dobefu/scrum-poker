@@ -77,7 +77,11 @@ const isSpectator = computed(() => {
   ) {
     const spectators = userData.value.RoomSettings?.Spectators ?? []
 
-    return spectators.includes(user?.ID)
+    const result = spectators.includes(user?.ID)
+
+    if (result) userData.value.Users[user?.ID].Estimate = ""
+
+    return result
   }
 
   return false

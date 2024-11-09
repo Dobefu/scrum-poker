@@ -503,6 +503,16 @@ func handleToggleSpectate(
 		}
 	} else {
 		spectators = append(spectators, user.ID)
+
+		err := handleEstimate(conn, room, user, map[string]interface{}{
+			"type": "estimate",
+			"data": "",
+		})
+
+		if err != nil {
+			log.Println("handleToggleSpectate: handleEstimate:", err)
+			return err
+		}
 	}
 
 	room.Spectators = spectators
