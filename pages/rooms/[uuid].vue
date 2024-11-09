@@ -588,7 +588,7 @@ if (user && import.meta.client) {
     <div class="relative mb-4">
       <div
         v-auto-animate="{ duration: 50 }"
-        class="relative mx-auto flex min-h-72 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md"
+        class="relative mx-auto flex min-h-[19rem] w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md"
       >
         <div
           class="pointer-events-none absolute inset-8 rounded-full border-2 border-yellow-300"
