@@ -184,6 +184,20 @@ export const getCommands = (
     userData.value.RoomSettings.AllowShow = response.data
   }
 
+  const handleSetSpectators = (response: Record<string, unknown>) => {
+    if (
+      !("type" in response) ||
+      response.type !== "setSpectators" ||
+      !userData.value.RoomSettings ||
+      typeof response.data !== "object" ||
+      !("Spectators" in userData.value.RoomSettings)
+    ) {
+      return
+    }
+
+    userData.value.RoomSettings.Spectators = response.data
+  }
+
   return {
     handlePong,
     handleInit,
@@ -195,5 +209,6 @@ export const getCommands = (
     handleSetCards,
     handleSetAllowShow,
     handleSetAllowDelete,
+    handleSetSpectators,
   }
 }

@@ -221,6 +221,7 @@ const onWebsocketMessage = async (e: MessageEvent) => {
   commands.handleSetCards(response)
   commands.handleSetAllowShow(response)
   commands.handleSetAllowDelete(response)
+  commands.handleSetSpectators(response)
   commands.handlePong(response)
 }
 
@@ -283,6 +284,10 @@ const pickEstimate = async (value: string) => {
 
 const toggleCardVisibility = async () => {
   wss.send(JSON.stringify({ type: "toggleCardVisibility" }))
+}
+
+const toggleSpectate = async (value: string) => {
+  wss.send(JSON.stringify({ type: "toggleSpectate" }))
 }
 
 const clearEstimates = async () => {
@@ -576,62 +581,80 @@ if (user && import.meta.client) {
       </FormButton>
     </div>
 
-    <div
-      v-auto-animate="{ duration: 50 }"
-      class="relative mx-auto flex min-h-72 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md"
-    >
+    <div class="relative mb-4">
       <div
-        class="pointer-events-none absolute inset-8 rounded-full border-2 border-yellow-300"
-      />
-
-      <div
-        v-for="tableData of sortedUserData.Users"
-        :key="tableData.User.ID"
-        class="flex min-w-28 flex-col items-center gap-4 text-center"
-        v-auto-animate
+        v-auto-animate="{ duration: 50 }"
+        class="relative mx-auto flex min-h-72 w-full max-w-2xl flex-wrap justify-evenly gap-8 rounded-full border-4 border-yellow-800 bg-green-700 px-16 py-20 text-white shadow-md"
       >
         <div
-          class="relative"
-          :style="{
-            perspective: '10rem',
-          }"
-        >
-          <PokerCard
-            :value="
-              tableData.Estimate !== '<HIDDEN>' ? tableData.Estimate || '-' : ''
-            "
-            type="sm"
-            :isHidden="
-              !!tableData.Estimate &&
-              tableData.User.ID !== user.ID &&
-              !userData.value.RoomSettings?.ShowCards
-            "
-          />
+          class="pointer-events-none absolute inset-8 rounded-full border-2 border-yellow-300"
+        />
 
-          <FormButton
-            variant="danger"
-            title="Clear estimate"
-            @click="pickEstimate('')"
-            size="square"
-            class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all rtl:-translate-x-1/2"
-            :class="
-              tableData.User.ID === user.ID &&
-              !!tableData.Estimate &&
-              'pointer-events-auto scale-100 opacity-100'
-            "
+        <div
+          v-for="tableData of sortedUserData.Users"
+          :key="tableData.User.ID"
+          class="flex min-w-28 flex-col items-center gap-4 text-center"
+          v-auto-animate
+        >
+          <div
+            class="relative"
+            :style="{
+              perspective: '10rem',
+            }"
           >
-            <Icon
-              name="mdi:do-not-disturb-alt"
-              ssr
+            <PokerCard
+              :value="
+                tableData.Estimate !== '<HIDDEN>'
+                  ? tableData.Estimate || '-'
+                  : ''
+              "
+              type="sm"
+              :isHidden="
+                !!tableData.Estimate &&
+                tableData.User.ID !== user.ID &&
+                !userData.value.RoomSettings?.ShowCards
+              "
             />
-          </FormButton>
-        </div>
 
-        <p
-          class="rounded-full bg-black/20 p-1 px-4 text-lg font-medium shadow-md"
+            <FormButton
+              variant="danger"
+              title="Clear estimate"
+              @click="pickEstimate('')"
+              size="square"
+              class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all rtl:-translate-x-1/2"
+              :class="
+                tableData.User.ID === user.ID &&
+                !!tableData.Estimate &&
+                'pointer-events-auto scale-100 opacity-100'
+              "
+            >
+              <Icon
+                name="mdi:do-not-disturb-alt"
+                ssr
+              />
+            </FormButton>
+          </div>
+
+          <p
+            class="rounded-full bg-black/20 p-1 px-4 text-lg font-medium shadow-md"
+          >
+            {{ tableData.User.Name }}
+          </p>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 start-1/2 -translate-x-1/2 -translate-y-4">
+        <FormButton
+          variant="primary"
+          :title="isSpectator ? 'Stop spectating' : 'Spectate this room'"
+          @click="toggleSpectate()"
+          size="square"
         >
-          {{ tableData.User.Name }}
-        </p>
+          <Icon
+            :name="isSpectator ? 'mdi:ghost-off-outline' : 'mdi:ghost-outline'"
+            ssr
+          />
+        </FormButton>
       </div>
     </div>
   </template>
