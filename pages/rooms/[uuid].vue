@@ -73,7 +73,9 @@ const allowDelete = computed(() => {
 const isSpectator = computed(() => {
   if (
     userData.value?.RoomSettings &&
-    "AllowDelete" in userData.value.RoomSettings
+    "AllowDelete" in userData.value.RoomSettings &&
+    userData.value.Users &&
+    user
   ) {
     const spectators = userData.value.RoomSettings?.Spectators ?? []
 
@@ -109,6 +111,7 @@ const sortedUserData = computed<UserData>(() => {
   Object.entries(userData.value.Users)
     .toSorted((a, b) => a[1].User.Name.localeCompare(b[1].User.Name))
     .forEach(([key, value]) => {
+      if (!userData.value.RoomSettings?.Spectators) return
       if (userData.value.RoomSettings.Spectators.includes(value.User.ID)) return
 
       result.Users![key] = value
@@ -290,7 +293,7 @@ const toggleCardVisibility = async () => {
   wss.send(JSON.stringify({ type: "toggleCardVisibility" }))
 }
 
-const toggleSpectate = async (value: string) => {
+const toggleSpectate = async () => {
   wss.send(JSON.stringify({ type: "toggleSpectate" }))
 }
 
@@ -647,7 +650,9 @@ if (user && import.meta.client) {
         </div>
       </div>
 
-      <div class="absolute bottom-0 start-1/2 -translate-x-1/2 -translate-y-4">
+      <div
+        class="absolute bottom-0 start-1/2 flex -translate-x-1/2 -translate-y-4 items-center"
+      >
         <FormButton
           variant="primary"
           :title="isSpectator ? 'Stop spectating' : 'Spectate this room'"

@@ -39,6 +39,7 @@ export default defineEventHandler(async (event) => {
       owner: user.id,
       admins: [user.id],
       createdAt: new Date(),
+      spectators: [],
     })
     .returning()
 
