@@ -290,9 +290,25 @@ const averageEstimate = computed(() => {
     }
   }
 
-  if (total <= 0) return "-"
+  if (validEstimates <= 0) return 0
 
   return Math.round((total / validEstimates) * 100) / 100
+})
+
+const maxEstimate = computed(() => {
+  if (!userData.value.RoomSettings?.ShowCards) return "-"
+
+  let max = 0
+
+  for (const u of Object.values(userData.value?.Users ?? [])) {
+    if (u.Estimate === "∞") {
+      return "∞"
+    }
+
+    max = Math.max(max, parseInt(u.Estimate) || 0)
+  }
+
+  return max
 })
 
 const pickEstimate = async (value: string) => {
@@ -678,7 +694,7 @@ if (user && import.meta.client) {
       >
         <div class="flex w-full items-center justify-around px-32">
           <div
-            class="min-w-24 rounded-xl border-2 border-yellow-300 bg-green-700 px-4 py-2 text-center"
+            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center"
           >
             Avg: {{ averageEstimate }}
           </div>
@@ -696,6 +712,12 @@ if (user && import.meta.client) {
               ssr
             />
           </FormButton>
+
+          <div
+            class="min-w-28 rounded-xl border-2 border-yellow-300 bg-green-700 p-2 text-center"
+          >
+            Max: {{ maxEstimate }}
+          </div>
         </div>
       </div>
     </div>
