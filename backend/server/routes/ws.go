@@ -142,6 +142,8 @@ func handleCommands(
 		return handleUpdateSettings(conn, db, room, user, payload)
 	case "clearEstimates":
 		return handleClearEstimates(conn, db, room, user)
+	case "toggleSpectate":
+		return handleToggleSpectate(conn, db, room, user)
 	}
 
 	return fmt.Errorf("invalid command: %s", msgType)
@@ -478,6 +480,74 @@ func handleClearEstimates(
 		if roomData[room.UUID].RoomSettings.ShowCards {
 			handleToggleCardVisibility(conn, db, room, user)
 		}
+	}
+
+	return nil
+}
+
+func handleToggleSpectate(
+	conn *websocket.Conn,
+	db *sql.DB,
+	room *database.Room,
+	user *database.User,
+) error {
+	spectators := roomData[room.UUID].RoomSettings.Spectators
+
+	if slices.Contains(room.Spectators, user.ID) {
+		for index, uid := range spectators {
+			if uid != user.ID {
+				continue
+			}
+
+			spectators = slices.Delete(spectators, index, index+1)
+		}
+	} else {
+		spectators = append(spectators, user.ID)
+	}
+
+	room.Spectators = spectators
+
+	err := database.SetRoomSpectators(db, room, spectators)
+
+	if err != nil {
+		log.Println("toggleSpectate: setRoomSpectators:", err)
+		return err
+	}
+
+	roomData[room.UUID] = server.RoomData{
+		RoomSettings: server.RoomSettings{
+			ID:          room.ID,
+			UUID:        room.UUID,
+			Owner:       room.Owner,
+			Name:        room.Name,
+			Admins:      room.Admins,
+			CreatedAt:   room.CreatedAt,
+			ShowCards:   room.ShowCards,
+			Cards:       room.Cards,
+			AllowShow:   room.AllowShow,
+			AllowDelete: room.AllowDelete,
+			Spectators:  spectators,
+		},
+		Users: roomData[room.UUID].Users,
+	}
+
+	response := map[string]interface{}{
+		"type": "setSpectators",
+		"data": room.Spectators,
+	}
+
+	err = conn.WriteJSON(response)
+
+	if err != nil {
+		log.Println("setSpectators: write:", err)
+		return err
+	}
+
+	err = broadcast(room, user, response)
+
+	if err != nil {
+		log.Println("setSpectators: broadcast:", err)
+		return err
 	}
 
 	return nil
