@@ -83,3 +83,23 @@ func SetRoomSettings(
 
 	return err
 }
+
+func SetRoomSpectators(
+	db *sql.DB,
+	room *Room,
+	spectators []uint32,
+) error {
+	spectatorsJson, err := json.Marshal(spectators)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(
+		"UPDATE rooms SET spectators = ? WHERE token=?;",
+		spectatorsJson,
+		room.UUID,
+	)
+
+	return err
+}
