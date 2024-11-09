@@ -272,6 +272,29 @@ const isAdmin = computed(() => {
   )
 })
 
+const averageEstimate = computed(() => {
+  if (!userData.value.RoomSettings?.ShowCards) return "-"
+
+  let validEstimates = 0
+  let total = 0
+
+  for (const u of Object.values(userData.value?.Users ?? [])) {
+    if (userData.value.RoomSettings.Spectators?.includes(u.User.ID)) continue
+    if (u.Estimate === "" || u.Estimate === "-") continue
+
+    const estimate = parseInt(u.Estimate) || 0
+
+    if (+u.Estimate === estimate || estimate > 0) {
+      total += estimate
+      validEstimates += 1
+    }
+  }
+
+  if (total <= 0) return "-"
+
+  return Math.round((total / validEstimates) * 100) / 100
+})
+
 const pickEstimate = async (value: string) => {
   if (!user) return
   if (!userData.value?.Users) return
@@ -651,19 +674,29 @@ if (user && import.meta.client) {
       </div>
 
       <div
-        class="absolute bottom-0 start-1/2 flex -translate-x-1/2 -translate-y-4 items-center"
+        class="absolute bottom-0 start-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-4"
       >
-        <FormButton
-          variant="primary"
-          :title="isSpectator ? 'Stop spectating' : 'Spectate this room'"
-          @click="toggleSpectate()"
-          size="square"
-        >
-          <Icon
-            :name="isSpectator ? 'mdi:ghost-off-outline' : 'mdi:ghost-outline'"
-            ssr
-          />
-        </FormButton>
+        <div class="flex w-full items-center justify-around px-32">
+          <div
+            class="min-w-24 rounded-xl border-2 border-yellow-300 bg-green-700 px-4 py-2 text-center"
+          >
+            Avg: {{ averageEstimate }}
+          </div>
+
+          <FormButton
+            variant="primary"
+            :title="isSpectator ? 'Stop spectating' : 'Spectate this room'"
+            @click="toggleSpectate()"
+            size="square"
+          >
+            <Icon
+              :name="
+                isSpectator ? 'mdi:ghost-off-outline' : 'mdi:ghost-outline'
+              "
+              ssr
+            />
+          </FormButton>
+        </div>
       </div>
     </div>
   </template>
