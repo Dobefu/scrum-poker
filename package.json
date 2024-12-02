@@ -38,7 +38,7 @@
     "@types/qrcode": "^1.5.5",
     "@vueuse/nuxt": "^11.2.0",
     "drizzle-kit": "^0.28.1",
-    "nuxt-security": "^2.1.4",
+    "nuxt-security": "^2.1.5",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8"
   }
