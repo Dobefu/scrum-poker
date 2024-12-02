@@ -73,8 +73,8 @@ importers:
         specifier: ^0.28.1
         version: 0.28.1
       nuxt-security:
-        specifier: ^2.1.4
-        version: 2.1.4(magicast@0.3.5)(rollup@4.25.0)
+        specifier: ^2.1.5
+        version: 2.1.5(magicast@0.3.5)(rollup@4.25.0)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -3289,8 +3289,8 @@ packages:
   nuxt-schema-org@3.4.1:
     resolution: {integrity: sha512-RBtmWXUYihI2USRM77mwx/wPnRVPhYeK25dOFTk2BMeAvdvdCJRSP5LvMTe3C/YB5rnaeB69l6BVgw8j03C6ww==}
 
-  nuxt-security@2.1.4:
-    resolution: {integrity: sha512-OWIC9JiguvXb3jC5QD+8mMBOKSoGBdNzOafrh14GxxirW1Psi+jYSFtR1/sTNAGEmHtNCxLaCqC6OwWY7vvg2Q==}
+  nuxt-security@2.1.5:
+    resolution: {integrity: sha512-2nrkEsj1tS7RqqFq+sdmYatsAtISHt/o91w8xfMPeUz95CYxZ+HPbodKf+oAGdOmmCJcgYs6e+5XNba45M6BIw==}
     engines: {node: '>=18.0.0'}
 
   nuxt-seo-experiments@4.0.1:
@@ -8211,7 +8211,7 @@ snapshots:
       - vue
       - webpack-sources
 
-  nuxt-security@2.1.4(magicast@0.3.5)(rollup@4.25.0):
+  nuxt-security@2.1.5(magicast@0.3.5)(rollup@4.25.0):
     dependencies:
       '@nuxt/kit': 3.14.159(magicast@0.3.5)(rollup@4.25.0)
       basic-auth: 2.0.1
