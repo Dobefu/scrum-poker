@@ -34,7 +34,7 @@
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/seo": "2.0.2",
     "@nuxtjs/tailwindcss": "^6.12.2",
-    "@types/better-sqlite3": "^7.6.11",
+    "@types/better-sqlite3": "^7.6.12",
     "@types/qrcode": "^1.5.5",
     "@vueuse/nuxt": "^12.0.0",
     "drizzle-kit": "^0.29.1",
