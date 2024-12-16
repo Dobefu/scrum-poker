@@ -70,8 +70,8 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0(magicast@0.3.5)(nuxt@3.14.159(@parcel/watcher@2.5.0)(@types/node@22.9.0)(better-sqlite3@11.7.0)(drizzle-orm@0.33.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.0))(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.25.0)(terser@5.36.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.0)(terser@5.36.0)))(rollup@4.25.0)(typescript@5.6.3)
       drizzle-kit:
-        specifier: ^0.29.1
-        version: 0.29.1
+        specifier: ^0.30.1
+        version: 0.30.1
       nuxt-security:
         specifier: ^2.1.5
         version: 2.1.5(magicast@0.3.5)(rollup@4.25.0)
@@ -2264,8 +2264,8 @@ packages:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
-  drizzle-kit@0.29.1:
-    resolution: {integrity: sha512-OvHL8RVyYiPR3LLRE3SHdcON8xGXl+qMfR9uTTnFWBPIqVk/3NWYZPb7nfpM1Bhix3H+BsxqPyyagG7YZ+Z63A==}
+  drizzle-kit@0.30.1:
+    resolution: {integrity: sha512-HmA/NeewvHywhJ2ENXD3KvOuM/+K2dGLJfxVfIHsGwaqKICJnS+Ke2L6UcSrSrtMJLJaT0Im1Qv4TFXfaZShyw==}
     hasBin: true
 
   drizzle-orm@0.33.0:
@@ -7051,7 +7051,7 @@ snapshots:
 
   dotenv@16.4.5: {}
 
-  drizzle-kit@0.29.1:
+  drizzle-kit@0.30.1:
     dependencies:
       '@drizzle-team/brocli': 0.10.2
       '@esbuild-kit/esm-loader': 2.6.5
