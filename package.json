@@ -22,7 +22,7 @@
     "focus-trap": "^7.6.2",
     "nuxt": "^3.14.159",
     "qrcode": "^1.5.4",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "^2.5.5",
     "vue": "latest",
     "vue-router": "latest"
   },
