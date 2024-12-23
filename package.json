@@ -36,7 +36,7 @@
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@types/better-sqlite3": "^7.6.12",
     "@types/qrcode": "^1.5.5",
-    "@vueuse/nuxt": "^12.0.0",
+    "@vueuse/nuxt": "^12.1.0",
     "drizzle-kit": "^0.30.1",
     "nuxt-security": "^2.1.5",
     "prettier": "^3.3.3",
