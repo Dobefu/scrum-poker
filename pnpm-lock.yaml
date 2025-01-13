@@ -13,7 +13,7 @@ importers:
         version: 12.4.0(typescript@5.6.3)
       '@vueuse/integrations':
         specifier: ^12.4.0
-        version: 12.4.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)
+        version: 12.4.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)
       better-sqlite3:
         specifier: ^11.7.2
         version: 11.7.2
@@ -24,8 +24,8 @@ importers:
         specifier: ^0.38.3
         version: 0.38.3(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.2)
       focus-trap:
-        specifier: ^7.6.2
-        version: 7.6.2
+        specifier: ^7.6.4
+        version: 7.6.4
       nuxt:
         specifier: ^3.15.1
         version: 3.15.1(@parcel/watcher@2.5.0)(@types/node@22.10.2)(better-sqlite3@11.7.2)(db0@0.2.1(better-sqlite3@11.7.2)(drizzle-orm@0.38.3(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.2)))(drizzle-orm@0.38.3(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.2))(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.29.1)(terser@5.37.0)(typescript@5.6.3)(vite@6.0.7(@types/node@22.10.2)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(yaml@2.6.1)
@@ -2527,8 +2527,8 @@ packages:
   flatted@3.3.2:
     resolution: {integrity: sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==}
 
-  focus-trap@7.6.2:
-    resolution: {integrity: sha512-9FhUxK1hVju2+AiQIDJ5Dd//9R2n2RAfJ0qfhF4IHGHgcoEUTMpbTeG/zbEuwaiYXfuAH6XE0/aCyxDdRM+W5w==}
+  focus-trap@7.6.4:
+    resolution: {integrity: sha512-xx560wGBk7seZ6y933idtjJQc1l+ck+pI3sKvhKozdBV1dRZoKhkW5xoCaFv9tQiX5RH1xfSxjuNu6g+lmN/gw==}
 
   foreground-child@3.3.0:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
@@ -6445,14 +6445,14 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.4.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)':
+  '@vueuse/integrations@12.4.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)':
     dependencies:
       '@vueuse/core': 12.4.0(typescript@5.6.3)
       '@vueuse/shared': 12.4.0(typescript@5.6.3)
       vue: 3.5.13(typescript@5.6.3)
     optionalDependencies:
       change-case: 5.4.4
-      focus-trap: 7.6.2
+      focus-trap: 7.6.4
       fuse.js: 7.0.0
       qrcode: 1.5.4
     transitivePeerDependencies:
@@ -7375,7 +7375,7 @@ snapshots:
 
   flatted@3.3.2: {}
 
-  focus-trap@7.6.2:
+  focus-trap@7.6.4:
     dependencies:
       tabbable: 6.2.0
 
