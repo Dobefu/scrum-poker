@@ -31,7 +31,7 @@
     "@formkit/auto-animate": "^0.8.2",
     "@iconify-json/mdi": "^1.2.2",
     "@nuxt/icon": "^1.10.3",
-    "@nuxt/image": "^1.8.1",
+    "@nuxt/image": "^1.9.0",
     "@nuxtjs/seo": "2.0.2",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@types/better-sqlite3": "^7.6.12",
