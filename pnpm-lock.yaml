@@ -12,8 +12,8 @@ importers:
         specifier: ^12.3.0
         version: 12.3.0(typescript@5.6.3)
       '@vueuse/integrations':
-        specifier: ^12.3.0
-        version: 12.3.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)
+        specifier: ^12.4.0
+        version: 12.4.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)
       better-sqlite3:
         specifier: ^11.7.2
         version: 11.7.2
@@ -1577,8 +1577,11 @@ packages:
   '@vueuse/core@12.3.0':
     resolution: {integrity: sha512-cnV8QDKZrsyKC7tWjPbeEUz2cD9sa9faxF2YkR8QqNwfofgbOhmfIgvSYmkp+ttSvfOw4E6hLcQx15mRPr0yBA==}
 
-  '@vueuse/integrations@12.3.0':
-    resolution: {integrity: sha512-Ha42DSxc87BIf4JONUNammWod5X7iaUVqpYohMgzpDYBjAxhmhWtsMCcFpfUMXZYiMaS2xltUEiRldSXC9kmGw==}
+  '@vueuse/core@12.4.0':
+    resolution: {integrity: sha512-XnjQYcJwCsyXyIafyA6SvyN/OBtfPnjvJmbxNxQjCcyWD198urwm5TYvIUUyAxEAN0K7HJggOgT15cOlWFyLeA==}
+
+  '@vueuse/integrations@12.4.0':
+    resolution: {integrity: sha512-EZm+TLoZMeEwDnccnEqB54CvvcVKbVnJubOF380HqdyZAxWfQ8egnFCESdlXWEIbxFgjfhcGfZUvQx5Nqw9Ofw==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -1621,6 +1624,9 @@ packages:
   '@vueuse/metadata@12.3.0':
     resolution: {integrity: sha512-M/iQHHjMffOv2npsw2ihlUx1CTiBwPEgb7DzByLq7zpg1+Ke8r7s9p5ybUWc5OIeGewtpY4Xy0R2cKqFqM8hFg==}
 
+  '@vueuse/metadata@12.4.0':
+    resolution: {integrity: sha512-AhPuHs/qtYrKHUlEoNO6zCXufu8OgbR8S/n2oMw1OQuBQJ3+HOLQ+EpvXs+feOlZMa0p8QVvDWNlmcJJY8rW2g==}
+
   '@vueuse/nuxt@12.3.0':
     resolution: {integrity: sha512-xlpYIroHvdrwyZRHvXKekdFLH0IIPaOLKkt8VcVFZLHC3CgPiiwqGDK2Uvea8Hb51zhTWodYpd5Y2jCcsjZmBw==}
     peerDependencies:
@@ -1628,6 +1634,9 @@ packages:
 
   '@vueuse/shared@12.3.0':
     resolution: {integrity: sha512-X3YD35GUeW0d5Gajcwv9jdLAJTV2Jdb/Ll6Ii2JIYcKLYZqv5wxyLeKtiQkqWmHg3v0J0ZWjDUMVOw2E7RCXfA==}
+
+  '@vueuse/shared@12.4.0':
+    resolution: {integrity: sha512-9yLgbHVIF12OSCojnjTIoZL1+UA10+O4E1aD6Hpfo/DKVm5o3SZIwz6CupqGy3+IcKI8d6Jnl26EQj/YucnW0Q==}
 
   abbrev@2.0.0:
     resolution: {integrity: sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==}
@@ -3912,6 +3921,7 @@ packages:
   rollup-plugin-visualizer@5.13.1:
     resolution: {integrity: sha512-vMg8i6BprL8aFm9DKvL2c8AwS8324EgymYQo9o6E26wgVvwMhsJxS37aNL6ZsU7X9iAcMYwdME7gItLfG5fwJg==}
     engines: {node: '>=18'}
+    deprecated: Contains unintended breaking changes
     hasBin: true
     peerDependencies:
       rolldown: 1.x
@@ -6426,10 +6436,19 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.3.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)':
+  '@vueuse/core@12.4.0(typescript@5.6.3)':
     dependencies:
-      '@vueuse/core': 12.3.0(typescript@5.6.3)
-      '@vueuse/shared': 12.3.0(typescript@5.6.3)
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 12.4.0
+      '@vueuse/shared': 12.4.0(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@vueuse/integrations@12.4.0(change-case@5.4.4)(focus-trap@7.6.2)(fuse.js@7.0.0)(qrcode@1.5.4)(typescript@5.6.3)':
+    dependencies:
+      '@vueuse/core': 12.4.0(typescript@5.6.3)
+      '@vueuse/shared': 12.4.0(typescript@5.6.3)
       vue: 3.5.13(typescript@5.6.3)
     optionalDependencies:
       change-case: 5.4.4
@@ -6440,6 +6459,8 @@ snapshots:
       - typescript
 
   '@vueuse/metadata@12.3.0': {}
+
+  '@vueuse/metadata@12.4.0': {}
 
   '@vueuse/nuxt@12.3.0(magicast@0.3.5)(nuxt@3.15.1(@parcel/watcher@2.5.0)(@types/node@22.10.2)(better-sqlite3@11.7.2)(db0@0.2.1(better-sqlite3@11.7.2)(drizzle-orm@0.38.3(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.2)))(drizzle-orm@0.38.3(@types/better-sqlite3@7.6.12)(better-sqlite3@11.7.2))(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.29.1)(terser@5.37.0)(typescript@5.6.3)(vite@6.0.7(@types/node@22.10.2)(jiti@2.4.2)(terser@5.37.0)(yaml@2.6.1))(yaml@2.6.1))(rollup@4.29.1)(typescript@5.6.3)':
     dependencies:
@@ -6456,6 +6477,12 @@ snapshots:
       - typescript
 
   '@vueuse/shared@12.3.0(typescript@5.6.3)':
+    dependencies:
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
+
+  '@vueuse/shared@12.4.0(typescript@5.6.3)':
     dependencies:
       vue: 3.5.13(typescript@5.6.3)
     transitivePeerDependencies:
