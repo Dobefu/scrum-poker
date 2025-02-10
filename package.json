@@ -39,7 +39,7 @@
     "@vueuse/nuxt": "^12.4.0",
     "drizzle-kit": "^0.30.4",
     "nuxt-security": "^2.1.5",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.0",
     "prettier-plugin-tailwindcss": "^0.6.11"
   }
 }
