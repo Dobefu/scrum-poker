@@ -14,7 +14,7 @@
     "migrate:db": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@vueuse/core": "^12.5.0",
+    "@vueuse/core": "^12.7.0",
     "@vueuse/integrations": "^12.5.0",
     "better-sqlite3": "^11.8.1",
     "bun": "^1.2.2",
