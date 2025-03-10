@@ -67,8 +67,8 @@ importers:
         specifier: ^1.5.5
         version: 1.5.5
       '@vueuse/nuxt':
-        specifier: ^12.7.0
-        version: 12.7.0(magicast@0.3.5)(nuxt@3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0))(typescript@5.6.3)
+        specifier: ^13.0.0
+        version: 13.0.0(magicast@0.3.5)(nuxt@3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3))
       drizzle-kit:
         specifier: ^0.30.5
         version: 0.30.5
@@ -1359,9 +1359,6 @@ packages:
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
 
-  '@types/web-bluetooth@0.0.20':
-    resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
-
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
 
@@ -1503,9 +1500,6 @@ packages:
   '@vue/shared@3.5.13':
     resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
 
-  '@vueuse/core@12.7.0':
-    resolution: {integrity: sha512-jtK5B7YjZXmkGNHjviyGO4s3ZtEhbzSgrbX+s5o+Lr8i2nYqNyHuPVOeTdM1/hZ5Tkxg/KktAuAVDDiHMraMVA==}
-
   '@vueuse/core@12.8.2':
     resolution: {integrity: sha512-HbvCmZdzAu3VGi/pWYm5Ut+Kd9mn1ZHnn4L5G8kOQTPs/IwIAmJoBrmYk2ckLArgMXZj0AW3n5CAejLUO+PhdQ==}
 
@@ -1556,22 +1550,17 @@ packages:
       universal-cookie:
         optional: true
 
-  '@vueuse/metadata@12.7.0':
-    resolution: {integrity: sha512-4VvTH9mrjXqFN5LYa5YfqHVRI6j7R00Vy4995Rw7PQxyCL3z0Lli86iN4UemWqixxEvYfRjG+hF9wL8oLOn+3g==}
-
   '@vueuse/metadata@12.8.2':
     resolution: {integrity: sha512-rAyLGEuoBJ/Il5AmFHiziCPdQzRt88VxR+Y/A/QhJ1EWtWqPBBAxTAFaSkviwEuOEZNtW8pvkPgoCZQ+HxqW1A==}
 
   '@vueuse/metadata@13.0.0':
     resolution: {integrity: sha512-TRNksqmvtvqsuHf7bbgH9OSXEV2b6+M3BSN4LR5oxWKykOFT9gV78+C2/0++Pq9KCp9KQ1OQDPvGlWNQpOb2Mw==}
 
-  '@vueuse/nuxt@12.7.0':
-    resolution: {integrity: sha512-JG1yjJifcIZkFr+X1VmfNsdNZyHia/wXcpUHqVI2gwax5+bgmUlybqh9nStNGbX9NLUuPvPNNq043es5DlSJKg==}
+  '@vueuse/nuxt@13.0.0':
+    resolution: {integrity: sha512-tVb57PW0aUGMHwvzp4uH2mo8ut3D/3c7DA936E4ValhQq2VMZMCMxaKGz1nE8etFC7p18fVypyzpe8o6CBAYFw==}
     peerDependencies:
-      nuxt: ^3.0.0
-
-  '@vueuse/shared@12.7.0':
-    resolution: {integrity: sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==}
+      nuxt: ^3.0.0 || ^4.0.0-0
+      vue: ^3.5.0
 
   '@vueuse/shared@12.8.2':
     resolution: {integrity: sha512-dznP38YzxZoNloI0qpEfpkms8knDtaoQ6Y/sfS0L7Yki4zh40LFHEhur0odJC6xTHG5dxWVPiUWBXn+wCG2s5w==}
@@ -3038,10 +3027,6 @@ packages:
 
   local-pkg@0.5.1:
     resolution: {integrity: sha512-9rrA30MRRP3gBD3HTGnC6cDFpaE1kVDWxWgqWJUN0RvDNAo+Nz/9GxB+nHOH0ifbVFy0hSA1V6vFDvnx54lTEQ==}
-    engines: {node: '>=14'}
-
-  local-pkg@1.0.0:
-    resolution: {integrity: sha512-bbgPw/wmroJsil/GgL4qjDzs5YLTBMQ99weRsok1XCDccQeehbHA/I1oRvk2NPtr7KGZgT/Y5tPRnAtMqeG2Kg==}
     engines: {node: '>=14'}
 
   local-pkg@1.1.1:
@@ -5760,7 +5745,7 @@ snapshots:
     dependencies:
       consola: 3.3.3
       defu: 6.1.4
-      pathe: 2.0.3
+      pathe: 2.0.0
       std-env: 3.8.0
 
   '@nuxt/schema@3.15.2':
@@ -5768,7 +5753,7 @@ snapshots:
       consola: 3.4.0
       defu: 6.1.4
       pathe: 2.0.3
-      std-env: 3.8.0
+      std-env: 3.8.1
 
   '@nuxt/schema@3.15.4':
     dependencies:
@@ -6282,8 +6267,6 @@ snapshots:
 
   '@types/resolve@1.20.2': {}
 
-  '@types/web-bluetooth@0.0.20': {}
-
   '@types/web-bluetooth@0.0.21': {}
 
   '@unhead/addons@1.11.19(rollup@4.34.6)':
@@ -6410,7 +6393,7 @@ snapshots:
     dependencies:
       '@vue/compiler-sfc': 3.5.13
       ast-kit: 1.4.0
-      local-pkg: 1.0.0
+      local-pkg: 1.1.1
       magic-string-ast: 0.7.0
       pathe: 2.0.3
       picomatch: 4.0.2
@@ -6529,15 +6512,6 @@ snapshots:
 
   '@vue/shared@3.5.13': {}
 
-  '@vueuse/core@12.7.0(typescript@5.6.3)':
-    dependencies:
-      '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 12.7.0
-      '@vueuse/shared': 12.7.0(typescript@5.6.3)
-      vue: 3.5.13(typescript@5.6.3)
-    transitivePeerDependencies:
-      - typescript
-
   '@vueuse/core@12.8.2(typescript@5.6.3)':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -6565,30 +6539,20 @@ snapshots:
       fuse.js: 7.1.0
       qrcode: 1.5.4
 
-  '@vueuse/metadata@12.7.0': {}
-
   '@vueuse/metadata@12.8.2': {}
 
   '@vueuse/metadata@13.0.0': {}
 
-  '@vueuse/nuxt@12.7.0(magicast@0.3.5)(nuxt@3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0))(typescript@5.6.3)':
+  '@vueuse/nuxt@13.0.0(magicast@0.3.5)(nuxt@3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3))':
     dependencies:
-      '@nuxt/kit': 3.15.4(magicast@0.3.5)
-      '@vueuse/core': 12.7.0(typescript@5.6.3)
-      '@vueuse/metadata': 12.7.0
-      local-pkg: 1.0.0
+      '@nuxt/kit': 3.16.0(magicast@0.3.5)
+      '@vueuse/core': 13.0.0(vue@3.5.13(typescript@5.6.3))
+      '@vueuse/metadata': 13.0.0
+      local-pkg: 1.1.1
       nuxt: 3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0)
       vue: 3.5.13(typescript@5.6.3)
     transitivePeerDependencies:
       - magicast
-      - supports-color
-      - typescript
-
-  '@vueuse/shared@12.7.0(typescript@5.6.3)':
-    dependencies:
-      vue: 3.5.13(typescript@5.6.3)
-    transitivePeerDependencies:
-      - typescript
 
   '@vueuse/shared@12.8.2(typescript@5.6.3)':
     dependencies:
@@ -7636,7 +7600,7 @@ snapshots:
       defu: 6.1.4
       node-fetch-native: 1.6.6
       nypm: 0.5.4
-      ohash: 1.1.4
+      ohash: 1.1.6
       pathe: 2.0.3
       tar: 6.2.1
 
@@ -8163,11 +8127,6 @@ snapshots:
   local-pkg@0.5.1:
     dependencies:
       mlly: 1.7.3
-      pkg-types: 1.3.1
-
-  local-pkg@1.0.0:
-    dependencies:
-      mlly: 1.7.4
       pkg-types: 1.3.1
 
   local-pkg@1.1.1:
@@ -9716,7 +9675,7 @@ snapshots:
   terser@5.38.1:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.14.1
+      acorn: 8.14.0
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -9825,7 +9784,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
       fast-glob: 3.3.3
-      local-pkg: 1.0.0
+      local-pkg: 1.1.1
       magic-string: 0.30.17
       mlly: 1.7.4
       pathe: 2.0.3
@@ -9843,7 +9802,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
       fast-glob: 3.3.3
-      local-pkg: 1.0.0
+      local-pkg: 1.1.1
       magic-string: 0.30.17
       mlly: 1.7.4
       pathe: 2.0.3
@@ -9914,7 +9873,7 @@ snapshots:
       chokidar: 3.6.0
       fast-glob: 3.3.3
       json5: 2.2.3
-      local-pkg: 1.0.0
+      local-pkg: 1.1.1
       magic-string: 0.30.17
       mlly: 1.7.4
       pathe: 2.0.3
