@@ -12,8 +12,8 @@ importers:
         specifier: ^12.7.0
         version: 12.7.0(typescript@5.6.3)
       '@vueuse/integrations':
-        specifier: ^12.7.0
-        version: 12.7.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.1.0)(qrcode@1.5.4)(typescript@5.6.3)
+        specifier: ^13.0.0
+        version: 13.0.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.1.0)(qrcode@1.5.4)(vue@3.5.13(typescript@5.6.3))
       better-sqlite3:
         specifier: ^11.8.1
         version: 11.8.1
@@ -1388,6 +1388,9 @@ packages:
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
 
+  '@types/web-bluetooth@0.0.21':
+    resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
+
   '@unhead/addons@1.11.19':
     resolution: {integrity: sha512-lnWuZ8pI9lGmiDIVNt5VNRT8n3CQ3zVgxNO6LyyCsE6+BiOMHh3Xd21btIKiF6n0LuJj5aG2vuNlrc0BqbEZTA==}
 
@@ -1529,8 +1532,13 @@ packages:
   '@vueuse/core@12.7.0':
     resolution: {integrity: sha512-jtK5B7YjZXmkGNHjviyGO4s3ZtEhbzSgrbX+s5o+Lr8i2nYqNyHuPVOeTdM1/hZ5Tkxg/KktAuAVDDiHMraMVA==}
 
-  '@vueuse/integrations@12.7.0':
-    resolution: {integrity: sha512-IEq7K4bCl7mn3uKJaWtNXnd1CAPaHLUMuyj5K1/k/pVcItt0VONZW8xiGxdIovJcQjkzOHjImhX5t6gija+0/g==}
+  '@vueuse/core@13.0.0':
+    resolution: {integrity: sha512-rkgb4a8/0b234lMGCT29WkCjPfsX0oxrIRR7FDndRoW3FsaC9NBzefXg/9TLhAgwM11f49XnutshM4LzJBrQ5g==}
+    peerDependencies:
+      vue: ^3.5.0
+
+  '@vueuse/integrations@13.0.0':
+    resolution: {integrity: sha512-PXARslYRWf4u0xjdW6N5eC5kVQj2z/dxfZ7ildI1okLm2AwmhL+wiWzaNMSJMxTKX4ew7kNe70yJg1QjnWmE5w==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -1544,6 +1552,7 @@ packages:
       qrcode: ^1.5
       sortablejs: ^1
       universal-cookie: ^7
+      vue: ^3.5.0
     peerDependenciesMeta:
       async-validator:
         optional: true
@@ -1573,6 +1582,9 @@ packages:
   '@vueuse/metadata@12.7.0':
     resolution: {integrity: sha512-4VvTH9mrjXqFN5LYa5YfqHVRI6j7R00Vy4995Rw7PQxyCL3z0Lli86iN4UemWqixxEvYfRjG+hF9wL8oLOn+3g==}
 
+  '@vueuse/metadata@13.0.0':
+    resolution: {integrity: sha512-TRNksqmvtvqsuHf7bbgH9OSXEV2b6+M3BSN4LR5oxWKykOFT9gV78+C2/0++Pq9KCp9KQ1OQDPvGlWNQpOb2Mw==}
+
   '@vueuse/nuxt@12.7.0':
     resolution: {integrity: sha512-JG1yjJifcIZkFr+X1VmfNsdNZyHia/wXcpUHqVI2gwax5+bgmUlybqh9nStNGbX9NLUuPvPNNq043es5DlSJKg==}
     peerDependencies:
@@ -1580,6 +1592,11 @@ packages:
 
   '@vueuse/shared@12.7.0':
     resolution: {integrity: sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==}
+
+  '@vueuse/shared@13.0.0':
+    resolution: {integrity: sha512-9MiHhAPw+sqCF/RLo8V6HsjRqEdNEWVpDLm2WBRW2G/kSQjb8X901sozXpSCaeLG0f7TEfMrT4XNaA5m1ez7Dg==}
+    peerDependencies:
+      vue: ^3.5.0
 
   abbrev@3.0.0:
     resolution: {integrity: sha512-+/kfrslGQ7TNV2ecmQwMJj/B65g5KVq1/L3SGVZ3tCYGqlzFuFCGBZJtMP99wH3NpEUyAjn0zPdPUg0D+DwrOA==}
@@ -6267,6 +6284,8 @@ snapshots:
 
   '@types/web-bluetooth@0.0.20': {}
 
+  '@types/web-bluetooth@0.0.21': {}
+
   '@unhead/addons@1.11.19(rollup@4.34.6)':
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.34.6)
@@ -6519,20 +6538,27 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.7.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.1.0)(qrcode@1.5.4)(typescript@5.6.3)':
+  '@vueuse/core@13.0.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
-      '@vueuse/core': 12.7.0(typescript@5.6.3)
-      '@vueuse/shared': 12.7.0(typescript@5.6.3)
+      '@types/web-bluetooth': 0.0.21
+      '@vueuse/metadata': 13.0.0
+      '@vueuse/shared': 13.0.0(vue@3.5.13(typescript@5.6.3))
+      vue: 3.5.13(typescript@5.6.3)
+
+  '@vueuse/integrations@13.0.0(change-case@5.4.4)(focus-trap@7.6.4)(fuse.js@7.1.0)(qrcode@1.5.4)(vue@3.5.13(typescript@5.6.3))':
+    dependencies:
+      '@vueuse/core': 13.0.0(vue@3.5.13(typescript@5.6.3))
+      '@vueuse/shared': 13.0.0(vue@3.5.13(typescript@5.6.3))
       vue: 3.5.13(typescript@5.6.3)
     optionalDependencies:
       change-case: 5.4.4
       focus-trap: 7.6.4
       fuse.js: 7.1.0
       qrcode: 1.5.4
-    transitivePeerDependencies:
-      - typescript
 
   '@vueuse/metadata@12.7.0': {}
+
+  '@vueuse/metadata@13.0.0': {}
 
   '@vueuse/nuxt@12.7.0(magicast@0.3.5)(nuxt@3.15.4(@parcel/watcher@2.5.1)(@types/node@22.13.5)(better-sqlite3@11.8.1)(db0@0.2.3(better-sqlite3@11.8.1)(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0)))(drizzle-orm@0.40.0(@types/better-sqlite3@7.6.12)(better-sqlite3@11.8.1)(gel@2.0.0))(ioredis@5.5.0)(magicast@0.3.5)(rollup@4.34.6)(terser@5.38.1)(typescript@5.6.3)(vite@6.1.0(@types/node@22.13.5)(jiti@2.4.2)(terser@5.38.1)(yaml@2.7.0))(yaml@2.7.0))(typescript@5.6.3)':
     dependencies:
@@ -6552,6 +6578,10 @@ snapshots:
       vue: 3.5.13(typescript@5.6.3)
     transitivePeerDependencies:
       - typescript
+
+  '@vueuse/shared@13.0.0(vue@3.5.13(typescript@5.6.3))':
+    dependencies:
+      vue: 3.5.13(typescript@5.6.3)
 
   abbrev@3.0.0: {}
 
