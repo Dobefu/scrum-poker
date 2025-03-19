@@ -5,12 +5,21 @@
     <p>
       By
       <a
-        class="text-primary-700 dark:text-primary-500"
+        class="text-primary-700 dark:text-primary-400"
         href="https://cv.connor.nl"
         target="_blank"
-        >Connor van Spronssen</a
       >
+        Connor van Spronssen
+      </a>
     </p>
     <span>{{ $config.public.version }}</span>
+
+    <a
+      class="text-primary-700 dark:text-primary-400"
+      href="https://cv.connor.nl/en/projects/scrum-poker"
+      target="_blank"
+    >
+      About this project
+    </a>
   </footer>
 </template>
