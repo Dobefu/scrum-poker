@@ -4,9 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: 'friday'
-      time: '00:00'
+      day: "friday"
+      time: "00:00"
     assignees:
-      - 'Dobefu'
+      - "Dobefu"
     reviewers:
-      - 'Dobefu'
+      - "Dobefu"
