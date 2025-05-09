@@ -38,7 +38,7 @@
     "@types/better-sqlite3": "^7.6.13",
     "@types/qrcode": "^1.5.5",
     "@vueuse/nuxt": "^13.1.0",
-    "drizzle-kit": "^0.31.0",
+    "drizzle-kit": "^0.31.1",
     "nuxt-security": "^2.2.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11"
