@@ -19,7 +19,7 @@
     "better-sqlite3": "^11.10.0",
     "bun": "^1.2.13",
     "drizzle-orm": "^0.43.1",
-    "focus-trap": "^7.6.4",
+    "focus-trap": "^7.6.5",
     "nuxt": "^3.17.4",
     "nuxt-og-image": "^5.1.4",
     "qrcode": "^1.5.4",
