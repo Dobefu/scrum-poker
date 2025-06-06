@@ -41,6 +41,6 @@
     "drizzle-kit": "^0.31.1",
     "nuxt-security": "^2.2.0",
     "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier-plugin-tailwindcss": "^0.6.12"
   }
 }
