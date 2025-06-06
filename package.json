@@ -20,7 +20,7 @@
     "bun": "^1.2.15",
     "drizzle-orm": "^0.43.1",
     "focus-trap": "^7.6.5",
-    "nuxt": "^3.17.4",
+    "nuxt": "^3.17.5",
     "nuxt-og-image": "^5.1.6",
     "qrcode": "^1.5.4",
     "tailwind-merge": "^3.3.0",
