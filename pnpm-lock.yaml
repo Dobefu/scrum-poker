@@ -52,8 +52,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.3
       '@nuxt/icon':
-        specifier: ^1.14.0
-        version: 1.14.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
+        specifier: ^1.15.0
+        version: 1.15.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       '@nuxt/image':
         specifier: ^1.10.0
         version: 1.10.0(@netlify/blobs@8.2.0)(db0@0.3.2(better-sqlite3@12.2.0)(drizzle-orm@0.44.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.2.0)(gel@2.0.2)))(ioredis@5.6.1)(magicast@0.3.5)
@@ -623,8 +623,8 @@ packages:
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
 
-  '@iconify/collections@1.0.561':
-    resolution: {integrity: sha512-Bn3YLaXwNwVpVUk6YfxOc1I69r7pAV7GsDtkknXAa0Fk4vlh3YxwQU5J8N8h++tRmw702IVjQm6csyAyFZuADQ==}
+  '@iconify/collections@1.0.567':
+    resolution: {integrity: sha512-gq17Ig4TwGKPNYrShXjQijotxlv3FeN88sB1z8Mm+tbXcbITQTN50R2GbU9yh8rUbii4jx0jJRi30eYegvTfvg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -773,8 +773,8 @@ packages:
     peerDependencies:
       vite: '>=6.0'
 
-  '@nuxt/icon@1.14.0':
-    resolution: {integrity: sha512-4kb2rbvbSll784LUme2fDm62NW0Tryr8wADFEU3vIoOj4TZywcwPafIl0MT6ah3RNgbPd174EFVOaUdPSUQENA==}
+  '@nuxt/icon@1.15.0':
+    resolution: {integrity: sha512-kA0rxqr1B601zNJNcOXera8CyYcxUCEcT7dXEC7rwAz71PRCN5emf7G656eKEQgtqrD4JSj6NQqWDgrmFcf/GQ==}
 
   '@nuxt/image@1.10.0':
     resolution: {integrity: sha512-/B58GeEmme7bkmQUrXzEw8P9sJb9BkMaYZqLDtq8ZdDLEddE3P4nVya8RQPB+p4b7EdqWajpPqdy1A2ZPLev/A==}
@@ -5662,7 +5662,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/collections@1.0.561':
+  '@iconify/collections@1.0.567':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -5907,7 +5907,7 @@ snapshots:
 
   '@nuxt/devtools-kit@2.5.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))':
     dependencies:
-      '@nuxt/kit': 3.17.5(magicast@0.3.5)
+      '@nuxt/kit': 3.17.6(magicast@0.3.5)
       '@nuxt/schema': 3.17.6
       execa: 8.0.1
       vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0)
@@ -5974,14 +5974,14 @@ snapshots:
       - utf-8-validate
       - vue
 
-  '@nuxt/icon@1.14.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
+  '@nuxt/icon@1.15.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
-      '@iconify/collections': 1.0.561
+      '@iconify/collections': 1.0.567
       '@iconify/types': 2.0.0
       '@iconify/utils': 2.3.0
       '@iconify/vue': 5.0.0(vue@3.5.17(typescript@5.8.3))
-      '@nuxt/devtools-kit': 2.5.0(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))
-      '@nuxt/kit': 3.17.5(magicast@0.3.5)
+      '@nuxt/devtools-kit': 2.6.2(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))
+      '@nuxt/kit': 3.17.6(magicast@0.3.5)
       consola: 3.4.2
       local-pkg: 1.1.1
       mlly: 1.7.4
@@ -9242,7 +9242,7 @@ snapshots:
       '@nuxt/kit': 3.17.6(magicast@0.3.5)
       nuxt-site-config-kit: 3.2.1(magicast@0.3.5)(vue@3.5.17(typescript@5.8.3))
       pathe: 2.0.3
-      pkg-types: 2.1.0
+      pkg-types: 2.2.0
       sirv: 3.0.1
       site-config-stack: 3.2.1(vue@3.5.17(typescript@5.8.3))
       ufo: 1.6.1
