@@ -12,8 +12,8 @@ importers:
         specifier: ^13.5.0
         version: 13.5.0(vue@3.5.18(typescript@5.8.3))
       '@vueuse/integrations':
-        specifier: ^13.5.0
-        version: 13.5.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.18(typescript@5.8.3))
+        specifier: ^13.6.0
+        version: 13.6.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.18(typescript@5.8.3))
       better-sqlite3:
         specifier: ^12.2.0
         version: 12.2.0
@@ -1982,8 +1982,8 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
-  '@vueuse/integrations@13.5.0':
-    resolution: {integrity: sha512-7RACJySnlpl0MkSzxbtadioNGSX4TL5/Wl2cUy4nDq/XkeHwPYvVM880HJUSiap/FXhVEup9VKTM9y/n5UspAw==}
+  '@vueuse/integrations@13.6.0':
+    resolution: {integrity: sha512-dVFdgwYvkYjdizRL3ESdUW+Hg84i9Yhuzs+Ec3kEcuzJmT5xhiL/IGdw4z394qSBngUQvFi+wbHwhHX3EGbAxQ==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -7537,10 +7537,10 @@ snapshots:
       '@vueuse/shared': 13.6.0(vue@3.5.18(typescript@5.8.3))
       vue: 3.5.18(typescript@5.8.3)
 
-  '@vueuse/integrations@13.5.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.18(typescript@5.8.3))':
+  '@vueuse/integrations@13.6.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.18(typescript@5.8.3))':
     dependencies:
-      '@vueuse/core': 13.5.0(vue@3.5.18(typescript@5.8.3))
-      '@vueuse/shared': 13.5.0(vue@3.5.18(typescript@5.8.3))
+      '@vueuse/core': 13.6.0(vue@3.5.18(typescript@5.8.3))
+      '@vueuse/shared': 13.6.0(vue@3.5.18(typescript@5.8.3))
       vue: 3.5.18(typescript@5.8.3)
     optionalDependencies:
       change-case: 5.4.4

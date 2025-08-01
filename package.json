@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^13.5.0",
-    "@vueuse/integrations": "^13.5.0",
+    "@vueuse/integrations": "^13.6.0",
     "better-sqlite3": "^12.2.0",
     "bun": "^1.2.19",
     "drizzle-orm": "^0.44.3",
