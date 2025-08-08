@@ -18,7 +18,7 @@
     "@vueuse/integrations": "^13.6.0",
     "better-sqlite3": "^12.2.0",
     "bun": "^1.2.19",
-    "drizzle-orm": "^0.44.3",
+    "drizzle-orm": "^0.44.4",
     "focus-trap": "^7.6.5",
     "nuxt": "^4.0.2",
     "nuxt-og-image": "^5.1.9",
