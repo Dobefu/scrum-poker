@@ -12,8 +12,8 @@ importers:
         specifier: ^13.9.0
         version: 13.9.0(vue@3.5.19(typescript@5.9.2))
       '@vueuse/integrations':
-        specifier: ^13.7.0
-        version: 13.7.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.19(typescript@5.9.2))
+        specifier: ^13.9.0
+        version: 13.9.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.19(typescript@5.9.2))
       better-sqlite3:
         specifier: ^12.2.0
         version: 12.2.0
@@ -1997,11 +1997,6 @@ packages:
   '@vue/shared@3.5.19':
     resolution: {integrity: sha512-IhXCOn08wgKrLQxRFKKlSacWg4Goi1BolrdEeLYn6tgHjJNXVrWJ5nzoxZqNwl5p88aLlQ8LOaoMa3AYvaKJ/Q==}
 
-  '@vueuse/core@13.7.0':
-    resolution: {integrity: sha512-myagn09+c6BmS6yHc1gTwwsdZilAovHslMjyykmZH3JNyzI5HoWhv114IIdytXiPipdHJ2gDUx0PB93jRduJYg==}
-    peerDependencies:
-      vue: ^3.5.0
-
   '@vueuse/core@13.8.0':
     resolution: {integrity: sha512-rmBcgpEpxY0ZmyQQR94q1qkUcHREiLxQwNyWrtjMDipD0WTH/JBcAt0gdcn2PsH0SA76ec291cHFngmyaBhlxA==}
     peerDependencies:
@@ -2012,8 +2007,8 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
-  '@vueuse/integrations@13.7.0':
-    resolution: {integrity: sha512-Na5p0ONLepNV/xCBi8vBMuzCOZh9CFT/OHnrUlABWXgWTWSHM3wrVaLS1xvAijPLU5B1ysyJDDW/hKak80oLGA==}
+  '@vueuse/integrations@13.9.0':
+    resolution: {integrity: sha512-SDobKBbPIOe0cVL7QxMzGkuUGHvWTdihi9zOrrWaWUgFKe15cwEcwfWmgrcNzjT6kHnNmWuTajPHoIzUjYNYYQ==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -2054,9 +2049,6 @@ packages:
       universal-cookie:
         optional: true
 
-  '@vueuse/metadata@13.7.0':
-    resolution: {integrity: sha512-8okFhS/1ite8EwUdZZfvTYowNTfXmVCOrBFlA31O0HD8HKXhY+WtTRyF0LwbpJfoFPc+s9anNJIXMVrvP7UTZg==}
-
   '@vueuse/metadata@13.8.0':
     resolution: {integrity: sha512-BYMp3Gp1kBUPv7AfQnJYP96mkX7g7cKdTIgwv/Jgd+pfQhz678naoZOAcknRtPLP4cFblDDW7rF4e3KFa+PfIA==}
 
@@ -2067,11 +2059,6 @@ packages:
     resolution: {integrity: sha512-RpD/CWl6nJ6q92+EpPCsnwlq/N7YqTm1TRV9SY7ERt3WRaMzkIyMfYMGOonpGRG2Y0XSHK9aiWi8+QpoB1YKDw==}
     peerDependencies:
       nuxt: ^3.0.0 || ^4.0.0-0
-      vue: ^3.5.0
-
-  '@vueuse/shared@13.7.0':
-    resolution: {integrity: sha512-Wi2LpJi4UA9kM0OZ0FCZslACp92HlVNw1KPaDY6RAzvQ+J1s7seOtcOpmkfbD5aBSmMn9NvOakc8ZxMxmDXTIg==}
-    peerDependencies:
       vue: ^3.5.0
 
   '@vueuse/shared@13.8.0':
@@ -7627,13 +7614,6 @@ snapshots:
 
   '@vue/shared@3.5.19': {}
 
-  '@vueuse/core@13.7.0(vue@3.5.19(typescript@5.9.2))':
-    dependencies:
-      '@types/web-bluetooth': 0.0.21
-      '@vueuse/metadata': 13.7.0
-      '@vueuse/shared': 13.7.0(vue@3.5.19(typescript@5.9.2))
-      vue: 3.5.19(typescript@5.9.2)
-
   '@vueuse/core@13.8.0(vue@3.5.19(typescript@5.9.2))':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -7648,10 +7628,10 @@ snapshots:
       '@vueuse/shared': 13.9.0(vue@3.5.19(typescript@5.9.2))
       vue: 3.5.19(typescript@5.9.2)
 
-  '@vueuse/integrations@13.7.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.19(typescript@5.9.2))':
+  '@vueuse/integrations@13.9.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.19(typescript@5.9.2))':
     dependencies:
-      '@vueuse/core': 13.7.0(vue@3.5.19(typescript@5.9.2))
-      '@vueuse/shared': 13.7.0(vue@3.5.19(typescript@5.9.2))
+      '@vueuse/core': 13.9.0(vue@3.5.19(typescript@5.9.2))
+      '@vueuse/shared': 13.9.0(vue@3.5.19(typescript@5.9.2))
       vue: 3.5.19(typescript@5.9.2)
     optionalDependencies:
       change-case: 5.4.4
@@ -7659,8 +7639,6 @@ snapshots:
       fuse.js: 7.1.0
       jwt-decode: 4.0.0
       qrcode: 1.5.4
-
-  '@vueuse/metadata@13.7.0': {}
 
   '@vueuse/metadata@13.8.0': {}
 
@@ -7676,10 +7654,6 @@ snapshots:
       vue: 3.5.19(typescript@5.9.2)
     transitivePeerDependencies:
       - magicast
-
-  '@vueuse/shared@13.7.0(vue@3.5.19(typescript@5.9.2))':
-    dependencies:
-      vue: 3.5.19(typescript@5.9.2)
 
   '@vueuse/shared@13.8.0(vue@3.5.19(typescript@5.9.2))':
     dependencies:
