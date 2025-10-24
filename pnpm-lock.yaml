@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@vueuse/core':
-        specifier: ^13.9.0
-        version: 13.9.0(vue@3.5.22(typescript@5.9.2))
+        specifier: ^14.0.0
+        version: 14.0.0(vue@3.5.22(typescript@5.9.2))
       '@vueuse/integrations':
         specifier: ^13.9.0
         version: 13.9.0(change-case@5.4.4)(focus-trap@7.6.5)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.22(typescript@5.9.2))
