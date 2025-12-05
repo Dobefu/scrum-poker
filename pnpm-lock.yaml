@@ -79,11 +79,11 @@ importers:
         specifier: ^2.5.0
         version: 2.5.0(magicast@0.5.1)(rollup@4.52.5)
       prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
+        specifier: ^3.7.4
+        version: 3.7.4
       prettier-plugin-tailwindcss:
         specifier: ^0.6.14
-        version: 0.6.14(prettier@3.6.2)
+        version: 0.6.14(prettier@3.7.4)
 
 packages:
 
@@ -1785,11 +1785,6 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
-  '@vueuse/core@14.0.0':
-    resolution: {integrity: sha512-d6tKRWkZE8IQElX2aHBxXOMD478fHIYV+Dzm2y9Ag122ICBpNKtGICiXKOhWU3L1kKdttDD9dCMS4bGP3jhCTQ==}
-    peerDependencies:
-      vue: ^3.5.0
-
   '@vueuse/core@14.1.0':
     resolution: {integrity: sha512-rgBinKs07hAYyPF834mDTigH7BtPqvZ3Pryuzt1SD/lg5wEcWqvwzXXYGEDb2/cP0Sj5zSvHl3WkmMELr5kfWw==}
     peerDependencies:
@@ -1840,9 +1835,6 @@ packages:
   '@vueuse/metadata@13.9.0':
     resolution: {integrity: sha512-1AFRvuiGphfF7yWixZa0KwjYH8ulyjDCC0aFgrGRz8+P4kvDFSdXLVfTk5xAN9wEuD1J6z4/myMoYbnHoX07zg==}
 
-  '@vueuse/metadata@14.0.0':
-    resolution: {integrity: sha512-6yoGqbJcMldVCevkFiHDBTB1V5Hq+G/haPlGIuaFZHpXC0HADB0EN1ryQAAceiW+ryS3niUwvdFbGiqHqBrfVA==}
-
   '@vueuse/metadata@14.1.0':
     resolution: {integrity: sha512-7hK4g015rWn2PhKcZ99NyT+ZD9sbwm7SGvp7k+k+rKGWnLjS/oQozoIZzWfCewSUeBmnJkIb+CNr7Zc/EyRnnA==}
 
@@ -1854,11 +1846,6 @@ packages:
 
   '@vueuse/shared@13.9.0':
     resolution: {integrity: sha512-e89uuTLMh0U5cZ9iDpEI2senqPGfbPRTHM/0AaQkcxnpqjkZqDYP8rpfm7edOz8s+pOCOROEy1PIveSW8+fL5g==}
-    peerDependencies:
-      vue: ^3.5.0
-
-  '@vueuse/shared@14.0.0':
-    resolution: {integrity: sha512-mTCA0uczBgurRlwVaQHfG0Ja7UdGe4g9mwffiJmvLiTtp1G4AQyIjej6si/k8c8pUwTfVpNufck+23gXptPAkw==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -4129,8 +4116,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.6.2:
-    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -7072,13 +7059,6 @@ snapshots:
       '@vueuse/shared': 13.9.0(vue@3.5.25(typescript@5.9.2))
       vue: 3.5.25(typescript@5.9.2)
 
-  '@vueuse/core@14.0.0(vue@3.5.25(typescript@5.9.2))':
-    dependencies:
-      '@types/web-bluetooth': 0.0.21
-      '@vueuse/metadata': 14.0.0
-      '@vueuse/shared': 14.0.0(vue@3.5.25(typescript@5.9.2))
-      vue: 3.5.25(typescript@5.9.2)
-
   '@vueuse/core@14.1.0(vue@3.5.25(typescript@5.9.2))':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -7100,8 +7080,6 @@ snapshots:
 
   '@vueuse/metadata@13.9.0': {}
 
-  '@vueuse/metadata@14.0.0': {}
-
   '@vueuse/metadata@14.1.0': {}
 
   '@vueuse/nuxt@14.1.0(magicast@0.5.1)(nuxt@4.2.1(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@24.10.0)(@vue/compiler-sfc@3.5.25)(better-sqlite3@12.4.6)(db0@0.3.4(better-sqlite3@12.4.6)(drizzle-orm@0.44.7(@types/better-sqlite3@7.6.13)(better-sqlite3@12.4.6)(gel@2.1.1)))(drizzle-orm@0.44.7(@types/better-sqlite3@7.6.13)(better-sqlite3@12.4.6)(gel@2.1.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.52.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.2.1(@types/node@24.10.0)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.1))(yaml@2.8.1))(vue@3.5.25(typescript@5.9.2))':
@@ -7116,10 +7094,6 @@ snapshots:
       - magicast
 
   '@vueuse/shared@13.9.0(vue@3.5.25(typescript@5.9.2))':
-    dependencies:
-      vue: 3.5.25(typescript@5.9.2)
-
-  '@vueuse/shared@14.0.0(vue@3.5.25(typescript@5.9.2))':
     dependencies:
       vue: 3.5.25(typescript@5.9.2)
 
@@ -9701,11 +9675,11 @@ snapshots:
       tar-fs: 2.1.4
       tunnel-agent: 0.6.0
 
-  prettier-plugin-tailwindcss@0.6.14(prettier@3.6.2):
+  prettier-plugin-tailwindcss@0.6.14(prettier@3.7.4):
     dependencies:
-      prettier: 3.6.2
+      prettier: 3.7.4
 
-  prettier@3.6.2: {}
+  prettier@3.7.4: {}
 
   pretty-bytes@7.1.0: {}
 
