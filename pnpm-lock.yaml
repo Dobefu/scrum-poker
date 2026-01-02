@@ -13,7 +13,7 @@ importers:
         version: 14.1.0(vue@3.5.26(typescript@5.9.2))
       '@vueuse/integrations':
         specifier: ^14.1.0
-        version: 14.1.0(change-case@5.4.4)(focus-trap@7.7.0)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.26(typescript@5.9.2))
+        version: 14.1.0(change-case@5.4.4)(focus-trap@7.7.1)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.26(typescript@5.9.2))
       better-sqlite3:
         specifier: ^12.5.0
         version: 12.5.0
@@ -24,8 +24,8 @@ importers:
         specifier: ^0.45.1
         version: 0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(gel@2.1.1)
       focus-trap:
-        specifier: ^7.7.0
-        version: 7.7.0
+        specifier: ^7.7.1
+        version: 7.7.1
       nuxt:
         specifier: ^4.2.2
         version: 4.2.2(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.1)(@vue/compiler-sfc@3.5.26)(better-sqlite3@12.5.0)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.5.0)(drizzle-orm@0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(gel@2.1.1)))(drizzle-orm@0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(gel@2.1.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.53.3)(terser@5.44.1)(typescript@5.9.2)(vite@7.2.7(@types/node@25.0.1)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.2))(yaml@2.8.2)
@@ -2981,8 +2981,8 @@ packages:
     resolution: {integrity: sha512-YyZM99iHrqLKjmt4LJDj58KI+fYyufRLBSYcqycxf//KpBk9FoewoGX0450m9nB44qrZnovzC2oeP5hUibxc/g==}
     engines: {node: '>=18'}
 
-  focus-trap@7.7.0:
-    resolution: {integrity: sha512-DJJDHpEgoSbP8ZE1MNeU2IzCpfFyFdNZZRilqmfH2XiQsPK6PtD8AfJqWzEBudUQB2yHwZc5iq54rjTaGQ+ljw==}
+  focus-trap@7.7.1:
+    resolution: {integrity: sha512-Pkp8m55GjxBLnhBoT6OXdMvfRr4TjMAKLvFM566zlIryq5plbhaTmLAJWTGR0EkRwLjEte1lCOG9MxF1ipJrOg==}
 
   foreground-child@3.3.1:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
@@ -4329,8 +4329,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  qs@6.14.0:
-    resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
+  qs@6.14.1:
+    resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
     engines: {node: '>=0.6'}
 
   quansync@0.2.11:
@@ -4720,8 +4720,8 @@ packages:
     resolution: {integrity: sha512-ulAk51I9UVUyJgxlv9M6lFot2WP3e7t8Kz9+IS6D4rVba1tR9kON+Ey69f+1R4Q8cd45Lod6a4IcJIxnzGc/zA==}
     engines: {node: '>=18'}
 
-  tabbable@6.3.0:
-    resolution: {integrity: sha512-EIHvdY5bPLuWForiR/AN2Bxngzpuwn1is4asboytXtpTgsArc+WmSJKVLlhdh71u7jFcryDqB2A8lQvj78MkyQ==}
+  tabbable@6.4.0:
+    resolution: {integrity: sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg==}
 
   tagged-tag@1.0.0:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
@@ -7308,14 +7308,14 @@ snapshots:
       '@vueuse/shared': 14.1.0(vue@3.5.26(typescript@5.9.2))
       vue: 3.5.26(typescript@5.9.2)
 
-  '@vueuse/integrations@14.1.0(change-case@5.4.4)(focus-trap@7.7.0)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.26(typescript@5.9.2))':
+  '@vueuse/integrations@14.1.0(change-case@5.4.4)(focus-trap@7.7.1)(fuse.js@7.1.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.26(typescript@5.9.2))':
     dependencies:
       '@vueuse/core': 14.1.0(vue@3.5.26(typescript@5.9.2))
       '@vueuse/shared': 14.1.0(vue@3.5.26(typescript@5.9.2))
       vue: 3.5.26(typescript@5.9.2)
     optionalDependencies:
       change-case: 5.4.4
-      focus-trap: 7.7.0
+      focus-trap: 7.7.1
       fuse.js: 7.1.0
       jwt-decode: 4.0.0
       qrcode: 1.5.4
@@ -8269,9 +8269,9 @@ snapshots:
       unicorn-magic: 0.1.0
     optional: true
 
-  focus-trap@7.7.0:
+  focus-trap@7.7.1:
     dependencies:
-      tabbable: 6.3.0
+      tabbable: 6.4.0
 
   foreground-child@3.3.1:
     dependencies:
@@ -9010,7 +9010,7 @@ snapshots:
       micro-api-client: 3.3.0
       node-fetch: 3.3.2
       p-wait-for: 5.0.2
-      qs: 6.14.0
+      qs: 6.14.1
     optional: true
 
   nitropack@2.12.9(@netlify/blobs@9.1.2)(better-sqlite3@12.5.0)(drizzle-orm@0.45.1(@types/better-sqlite3@7.6.13)(better-sqlite3@12.5.0)(gel@2.1.1)):
@@ -9988,7 +9988,7 @@ snapshots:
       pngjs: 5.0.0
       yargs: 15.4.1
 
-  qs@6.14.0:
+  qs@6.14.1:
     dependencies:
       side-channel: 1.1.0
     optional: true
@@ -10452,7 +10452,7 @@ snapshots:
 
   system-architecture@0.1.0: {}
 
-  tabbable@6.3.0: {}
+  tabbable@6.4.0: {}
 
   tagged-tag@1.0.0: {}
 
