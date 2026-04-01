@@ -498,7 +498,7 @@ if (user && import.meta.client) {
         </div>
 
         <span class="flex w-full flex-wrap items-center justify-center gap-4">
-          <p class="break-all text-center">{{ url }}</p>
+          <p class="text-center break-all">{{ url }}</p>
 
           <FormButton
             v-if="isSupported"
@@ -667,7 +667,7 @@ if (user && import.meta.client) {
               title="Clear estimate"
               @click="pickEstimate('')"
               size="square"
-              class="pointer-events-none absolute end-0 top-0 -translate-y-1/2 translate-x-1/2 scale-0 rounded-full opacity-0 transition-all rtl:-translate-x-1/2"
+              class="pointer-events-none absolute end-0 top-0 translate-x-1/2 -translate-y-1/2 scale-0 rounded-full opacity-0 transition-all rtl:-translate-x-1/2"
               :class="
                 tableData.User.ID === user.ID &&
                 !!tableData.Estimate &&
@@ -690,7 +690,7 @@ if (user && import.meta.client) {
       </div>
 
       <div
-        class="absolute bottom-0 start-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-4"
+        class="absolute start-1/2 bottom-0 w-full max-w-2xl -translate-x-1/2 -translate-y-4"
       >
         <div class="flex w-full items-center justify-around gap-4 px-32">
           <div
