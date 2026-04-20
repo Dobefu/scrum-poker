@@ -21,13 +21,13 @@
     "drizzle-orm": "^0.45.2",
     "focus-trap": "^8.0.1",
     "nuxt": "^4.4.2",
-    "nuxt-og-image": "^6.3.3",
+    "nuxt-og-image": "^6.4.3",
     "qrcode": "^1.5.4",
     "tailwind-merge": "^3.5.0",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
   },
-  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
   "devDependencies": {
     "@formkit/auto-animate": "^0.9.0",
     "@iconify-json/mdi": "^1.2.3",

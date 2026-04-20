@@ -23,6 +23,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println("get-user: decode body:", err)
+
 		return
 	}
 
@@ -30,6 +31,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println("get-user: getUserByToken:", err)
+
 		return
 	}
 
@@ -41,5 +43,5 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write(result)
+	_, _ = w.Write(result)
 }

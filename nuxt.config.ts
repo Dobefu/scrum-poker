@@ -34,6 +34,12 @@ export default defineNuxtConfig({
     componentIslands: true,
   },
 
+  vite: {
+    optimizeDeps: {
+      include: ["tailwind-merge", "@vueuse/integrations/useFocusTrap"],
+    },
+  },
+
   modules: [
     "@vueuse/nuxt",
     "@nuxtjs/tailwindcss",
@@ -68,6 +74,10 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  ogImage: {
+    zeroRuntime: true,
   },
 
   security: {
