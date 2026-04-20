@@ -34,7 +34,7 @@ func checkOrigin(r *http.Request) bool {
 func broadcast(
 	room *database.Room,
 	user *database.User,
-	message interface{},
+	message any,
 ) error {
 	for _, roomUser := range roomData[room.UUID].Users {
 		if roomUser.User.ID == user.ID {
@@ -99,7 +99,7 @@ func Ws(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for {
-		var data map[string]interface{}
+		var data map[string]any
 		err := conn.ReadJSON(&data)
 
 		if err != nil {
@@ -119,7 +119,7 @@ func Ws(w http.ResponseWriter, r *http.Request) {
 
 func handleCommands(
 	db *sql.DB,
-	payload map[string]interface{},
+	payload map[string]any,
 	conn *websocket.Conn,
 	room *database.Room,
 	user *database.User,
@@ -188,7 +188,7 @@ func handleInit(
 		}
 	}
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "init",
 		"data": roomData[room.UUID],
 	}
@@ -200,7 +200,7 @@ func handleInit(
 		return err
 	}
 
-	response = map[string]interface{}{
+	response = map[string]any{
 		"type": "join",
 		"data": roomData[room.UUID].Users[user.ID],
 		"user": user.ID,
@@ -219,7 +219,7 @@ func handleInit(
 func handlePing(
 	conn *websocket.Conn,
 ) error {
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "pong",
 	}
 
@@ -237,7 +237,7 @@ func handleEstimate(
 	conn *websocket.Conn,
 	room *database.Room,
 	user *database.User,
-	payload map[string]interface{},
+	payload map[string]any,
 ) error {
 	estimate := payload["data"].(string)
 
@@ -301,7 +301,7 @@ func handleToggleCardVisibility(
 		return err
 	}
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "toggleCardVisibility",
 	}
 
@@ -318,7 +318,7 @@ func handleToggleCardVisibility(
 		return err
 	}
 
-	sendEstimates(conn, room, user)
+	_ = sendEstimates(conn, room, user)
 
 	return nil
 }
@@ -328,16 +328,16 @@ func handleUpdateSettings(
 	db *sql.DB,
 	room *database.Room,
 	user *database.User,
-	payload map[string]interface{},
+	payload map[string]any,
 ) error {
 	if !isAdmin(room, user) {
 		return fmt.Errorf("updateSettings: permission denied")
 	}
 
-	name := payload["data"].(map[string]interface{})["name"].(string)
-	cards := payload["data"].(map[string]interface{})["cards"].(string)
-	allowShow := payload["data"].(map[string]interface{})["allowShow"].(bool)
-	allowDelete := payload["data"].(map[string]interface{})["allowDelete"].(bool)
+	name := payload["data"].(map[string]any)["name"].(string)
+	cards := payload["data"].(map[string]any)["cards"].(string)
+	allowShow := payload["data"].(map[string]any)["allowShow"].(bool)
+	allowDelete := payload["data"].(map[string]any)["allowDelete"].(bool)
 
 	if name == "" {
 		name = "Poker Room"
@@ -369,7 +369,7 @@ func handleUpdateSettings(
 		return err
 	}
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "setRoomName",
 		"data": name,
 	}
@@ -388,7 +388,7 @@ func handleUpdateSettings(
 		return err
 	}
 
-	response = map[string]interface{}{
+	response = map[string]any{
 		"type": "setCards",
 		"data": newCards,
 	}
@@ -407,7 +407,7 @@ func handleUpdateSettings(
 		return err
 	}
 
-	response = map[string]interface{}{
+	response = map[string]any{
 		"type": "setAllowShow",
 		"data": allowShow,
 	}
@@ -426,7 +426,7 @@ func handleUpdateSettings(
 		return err
 	}
 
-	response = map[string]interface{}{
+	response = map[string]any{
 		"type": "setAllowDelete",
 		"data": allowDelete,
 	}
@@ -459,7 +459,7 @@ func handleClearEstimates(
 	}
 
 	for _, roomUser := range roomData[room.UUID].Users {
-		response := map[string]interface{}{
+		response := map[string]any{
 			"type": "estimate",
 			"user": roomUser.User.ID,
 			"data": "",
@@ -475,6 +475,7 @@ func handleClearEstimates(
 
 		if err != nil {
 			log.Println("clearEstimates: write:", err)
+
 			return err
 		}
 
@@ -482,11 +483,12 @@ func handleClearEstimates(
 
 		if err != nil {
 			log.Println("clearEstimates: broadcast:", err)
+
 			return err
 		}
 
 		if roomData[room.UUID].RoomSettings.ShowCards {
-			handleToggleCardVisibility(conn, db, room, user)
+			_ = handleToggleCardVisibility(conn, db, room, user)
 		}
 	}
 
@@ -512,7 +514,7 @@ func handleToggleSpectate(
 	} else {
 		spectators = append(spectators, user.ID)
 
-		err := handleEstimate(conn, room, user, map[string]interface{}{
+		err := handleEstimate(conn, room, user, map[string]any{
 			"type": "estimate",
 			"data": "",
 		})
@@ -549,7 +551,7 @@ func handleToggleSpectate(
 		Users: roomData[room.UUID].Users,
 	}
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "setSpectators",
 		"data": room.Spectators,
 	}
@@ -577,7 +579,7 @@ func handleLeave(
 ) error {
 	delete(roomData[room.UUID].Users, user.ID)
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "leave",
 		"data": user.ID,
 	}

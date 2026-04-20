@@ -47,9 +47,10 @@ const value = computed(() => {
     }"
   >
     <template v-if="props.type === 'sm'">
-      <div>
+      <div :style="{ backfaceVisibility: 'hidden' }">
         <div
           class="absolute inset-2 rounded-md border border-gray-200 dark:border-gray-400"
+          :style="{ backfaceVisibility: 'hidden' }"
         />
 
         <p
@@ -79,7 +80,7 @@ const value = computed(() => {
           class="absolute inset-2 rounded-md border border-gray-200 dark:border-gray-400"
         />
 
-        <p
+        <label
           class="absolute -m-1 rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
         >
           <template v-if="$props.value.startsWith('i:')">
@@ -90,9 +91,10 @@ const value = computed(() => {
           </template>
 
           <template v-else>
+            <p class="sr-only">Card:</p>
             {{ $props.value.substring(0, 3) }}
           </template>
-        </p>
+        </label>
 
         <NuxtImg
           alt=""
@@ -105,6 +107,7 @@ const value = computed(() => {
         <div class="h-full rotate-180 leading-none">
           <p
             class="-m-1 inline-block rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
+            aria-hidden="true"
           >
             <template v-if="$props.value.startsWith('i:')">
               <Icon
