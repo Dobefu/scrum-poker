@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteName: "Scrum Poker",
-      version: "v1.2.2",
+      version: "v1.2.3",
       https: !!+(process.env.HTTPS ?? 0),
       backendEndpoint: process.env.BACKEND_ENDPOINT,
     },
