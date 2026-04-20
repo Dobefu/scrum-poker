@@ -13,6 +13,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Panicln("database:", err)
+
 		return
 	}
 
@@ -40,6 +41,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Println("JSON marshal user:", err)
+
 		return
 	}
 

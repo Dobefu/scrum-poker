@@ -13,15 +13,16 @@ func GetRoom(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Panicln("database:", err)
+
 		return
 	}
 
-	roomUuid := r.PathValue("roomUuid")
-
-	room, err := database.GetRoomDataByUuid(db, roomUuid)
+	roomUUID := r.PathValue("roomUuid")
+	room, err := database.GetRoomDataByUuid(db, roomUUID)
 
 	if err != nil {
 		log.Panicln("getRoomDataByUuid:", err)
+
 		return
 	}
 
@@ -29,8 +30,9 @@ func GetRoom(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Panicln("JSON marshal room:", err)
+
 		return
 	}
 
-	w.Write(result)
+	_, _ = w.Write(result)
 }

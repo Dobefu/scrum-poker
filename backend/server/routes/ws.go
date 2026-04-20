@@ -104,7 +104,8 @@ func Ws(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			log.Println("websocket read:", err)
-			handleLeave(room, user)
+			_ = handleLeave(room, user)
+
 			break
 		}
 
@@ -130,18 +131,25 @@ func handleCommands(
 	}
 
 	switch msgType {
+
 	case "init":
 		return handleInit(conn, room, user)
+
 	case "ping":
 		return handlePing(conn)
+
 	case "estimate":
 		return handleEstimate(conn, room, user, payload)
+
 	case "toggleCardVisibility":
 		return handleToggleCardVisibility(conn, db, room, user)
+
 	case "updateSettings":
 		return handleUpdateSettings(conn, db, room, user, payload)
+
 	case "clearEstimates":
 		return handleClearEstimates(conn, db, room, user)
+
 	case "toggleSpectate":
 		return handleToggleSpectate(conn, db, room, user)
 	}
@@ -243,7 +251,7 @@ func handleEstimate(
 		estimate = "<HIDDEN>"
 	}
 
-	response := map[string]interface{}{
+	response := map[string]any{
 		"type": "estimate",
 		"user": user.ID,
 		"data": estimate,
@@ -619,7 +627,7 @@ func sendEstimates(
 			estimate = "<HIDDEN>"
 		}
 
-		response := map[string]interface{}{
+		response := map[string]any{
 			"type": "estimate",
 			"data": estimate,
 			"user": roomUser.User.ID,
@@ -630,6 +638,7 @@ func sendEstimates(
 
 			if err != nil {
 				log.Println("estimate: write:", err)
+
 				return err
 			}
 		}
@@ -638,6 +647,7 @@ func sendEstimates(
 
 		if err != nil {
 			log.Println("estimate: broadcast:", err)
+
 			return err
 		}
 	}

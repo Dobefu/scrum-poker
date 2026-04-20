@@ -47,13 +47,14 @@ const value = computed(() => {
     }"
   >
     <template v-if="props.type === 'sm'">
-      <div :style="{ backfaceVisibility: 'hidden' }">
+      <div>
         <div
           class="absolute inset-2 rounded-md border border-gray-200 dark:border-gray-400"
         />
 
         <p
           class="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full leading-none rtl:translate-x-1/2"
+          :style="{ backfaceVisibility: 'hidden' }"
         >
           <template v-if="$props.value.startsWith('i:')">
             <Icon
