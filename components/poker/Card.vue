@@ -81,7 +81,7 @@ const value = computed(() => {
         />
 
         <label
-          class="absolute -m-1 rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
+          class="absolute -m-1 rounded-full bg-white p-1 leading-none transition-all group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
         >
           <template v-if="$props.value.startsWith('i:')">
             <Icon
@@ -106,7 +106,7 @@ const value = computed(() => {
 
         <div class="h-full rotate-180 leading-none">
           <p
-            class="-m-1 inline-block rounded-full bg-white p-1 leading-none group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
+            class="-m-1 inline-block rounded-full bg-white p-1 leading-none transition-all group-aria-disabled:bg-gray-100 dark:bg-gray-200 dark:group-aria-disabled:bg-gray-300"
             aria-hidden="true"
           >
             <template v-if="$props.value.startsWith('i:')">
