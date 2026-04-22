@@ -94,7 +94,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content: `The Scrum Poker room "${roomName}"`,
+      content: `The Scrum Poker room "${roomName.value}"`,
     },
   ],
 })
