@@ -59,7 +59,7 @@ importers:
         version: 2.0.0(@netlify/blobs@9.1.2)(db0@0.3.4(better-sqlite3@12.9.0)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.9.0)(gel@2.1.1)))(ioredis@5.10.1)(magicast@0.5.2)(srvx@0.11.15)
       '@nuxtjs/seo':
         specifier: 5.1.3
-        version: 5.1.3(771214496859d8d6c2c75a4922822fb4)
+        version: 5.1.3(a6d7d2134048bd12420bb8b4eab2466c)
       '@nuxtjs/tailwindcss':
         specifier: ^6.14.0
         version: 6.14.0(magicast@0.5.2)(tsx@4.21.0)(yaml@2.8.3)
@@ -82,8 +82,8 @@ importers:
         specifier: ^3.8.3
         version: 3.8.3
       prettier-plugin-tailwindcss:
-        specifier: ^0.7.3
-        version: 0.7.3(prettier@3.8.3)
+        specifier: ^0.8.0
+        version: 0.8.0(prettier@3.8.3)
 
 packages:
 
@@ -2896,18 +2896,20 @@ packages:
     peerDependencies:
       vue: '>=3.5.18'
 
+  '@valibot/to-json-schema@1.6.0':
+    resolution: {integrity: sha512-d6rYyK5KVa2XdqamWgZ4/Nr+cXhxjy7lmpe6Iajw15J/jmU+gyxl2IEd1Otg1d7Rl3gOQL5reulnSypzBtYy1A==}
+    peerDependencies:
+      valibot: ^1.3.0
+
   '@vercel/nft@1.5.0':
     resolution: {integrity: sha512-IWTDeIoWhQ7ZtRO/JRKH+jhmeQvZYhtGPmzw/QGDY+wDCQqfm25P9yIdoAFagu4fWsK4IwZXDFIjrmp5rRm/sA==}
     engines: {node: '>=20'}
     hasBin: true
 
-  '@vitejs/devtools-kit@0.1.15':
-    resolution: {integrity: sha512-6OCgoAW7HeJFMpxiNqIZLoBtG+jGTwXBwNgmxPi2KT77nCFUUvnDHrXSOZ8ErmQ7WdrDPLnUeBq/TWyi9xdAyA==}
+  '@vitejs/devtools-kit@0.1.16':
+    resolution: {integrity: sha512-NUcR5+3y7w5ZKt470guvOThDx/0SN9rQgfHKaI0FmJ9wuunUwSaYM170G/YeJeFZGqlJm3Dkaytk5dm9jgxXHg==}
     peerDependencies:
       vite: '*'
-
-  '@vitejs/devtools-rpc@0.1.15':
-    resolution: {integrity: sha512-pHDz3bcK0dlpLzI2ve2Xwnnx6iSASRMuEFJDbe64LAZJPVCBW/Pb0IeEpodI58O9xVpB0EBZykZftz8/oTeVtQ==}
 
   '@vitejs/plugin-vue-jsx@5.1.5':
     resolution: {integrity: sha512-jIAsvHOEtWpslLOI2MeElGFxH7M8pM83BU/Tor4RLyiwH0FM4nUW3xdvbw20EeU9wc5IspQwMq225K3CMnJEpA==}
@@ -3325,6 +3327,10 @@ packages:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
 
+  cac@7.0.0:
+    resolution: {integrity: sha512-tixWYgm5ZoOD+3g6UTea91eow5z6AAHaho3g0V9CNSNb45gM8SmflpAc+GRd1InC4AqN/07Unrgp56Y94N9hJQ==}
+    engines: {node: '>=20.19.0'}
+
   cache-content-type@1.0.1:
     resolution: {integrity: sha512-IKufZ1o4Ut42YUrZSo8+qnMTrFuKkvyoLXUywKz9GJ5BrhOFGhLdkx9sG4KAnVvbY6kEcSFjLQul+DVmBm2bgA==}
     engines: {node: '>= 6.0.0'}
@@ -3699,6 +3705,20 @@ packages:
 
   devalue@5.7.1:
     resolution: {integrity: sha512-MUbZ586EgQqdRnC4yDrlod3BEdyvE4TapGYHMW2CiaW+KkkFmWEFqBUaLltEZCGi0iFXCEjRF0OjF0DV2QHjOA==}
+
+  devframe@0.1.16:
+    resolution: {integrity: sha512-fcGQzigWNHzGnjeuOvLOlusQ+SWm+wsGNGF9I1lGEw2ohV/1TKhY94cKebIeEDTndxDRXdRhtOAhMyVfhU5Cbw==}
+    peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.0.0
+      '@nuxt/kit': ^3.0.0 || ^4.0.0
+      launch-editor: ^2.0.0
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+      '@nuxt/kit':
+        optional: true
+      launch-editor:
+        optional: true
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -5169,10 +5189,6 @@ packages:
     resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  p-limit@7.3.0:
-    resolution: {integrity: sha512-7cIXg/Z0M5WZRblrsOla88S4wAK+zOQQWeBYfV3qJuJXMr+LnbYjaadrFaS0JILfEDPVqHyKnZ1Z/1d6J9VVUw==}
-    engines: {node: '>=20'}
-
   p-locate@4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
     engines: {node: '>=8'}
@@ -5521,8 +5537,8 @@ packages:
     deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
-  prettier-plugin-tailwindcss@0.7.3:
-    resolution: {integrity: sha512-lckXaWWdo2ZVXoMoUO3WIBiz9hVY+YBEh1gYyMFfrWP9WZW/wpFXQKizHx7WrFQFMkcG0bGShdpp531X1n+qpg==}
+  prettier-plugin-tailwindcss@0.8.0:
+    resolution: {integrity: sha512-V8ITGH87yuBDF6JpEZTOVlUz/saAwqb8f3HRgUj8Lh+tGCcrmorhsLpYqzygwFwK0PE2Ib6Mv3M7T/uE2tZV1g==}
     engines: {node: '>=20.19'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -6198,6 +6214,9 @@ packages:
   ufo@1.6.3:
     resolution: {integrity: sha512-yDJTmhydvl5lJzBmy/hyOAA0d+aqCBuwl818haVdYCRrWV84o7YyeVm4QlVHStqNrrJSTb6jKuFAVqAFsr+K3Q==}
 
+  ufo@1.6.4:
+    resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
+
   ultrahtml@1.6.0:
     resolution: {integrity: sha512-R9fBn90VTJrqqLDwyMph+HGne8eqY1iPfYhPzZrvKpIfwkWZbcYlfpsb8B9dTvBfpy1/hqAD7Wi8EKfP9e8zdw==}
 
@@ -6393,8 +6412,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  uuid@11.1.0:
-    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+  uuid@11.1.1:
+    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
     hasBin: true
 
   valibot@1.3.1:
@@ -7469,7 +7488,7 @@ snapshots:
       lodash.debounce: 4.0.8
       netlify: 13.3.5
       parse-gitignore: 2.0.0
-      uuid: 11.1.0
+      uuid: 11.1.1
       write-file-atomic: 6.0.0
     optional: true
 
@@ -8038,7 +8057,7 @@ snapshots:
       - vite
       - vue
 
-  '@nuxtjs/seo@5.1.3(771214496859d8d6c2c75a4922822fb4)':
+  '@nuxtjs/seo@5.1.3(a6d7d2134048bd12420bb8b4eab2466c)':
     dependencies:
       '@nuxt/kit': 4.4.2(magicast@0.5.2)
       '@nuxtjs/robots': 6.0.7(@nuxt/schema@4.4.2)(magicast@0.5.2)(nuxt@4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.9.2)(@emnapi/runtime@1.10.0)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.6)(@types/node@25.6.0)(@vue/compiler-sfc@3.5.33)(better-sqlite3@12.9.0)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.9.0)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.9.0)(gel@2.1.1)))(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.9.0)(gel@2.1.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(rollup-plugin-visualizer@7.0.1(rollup@4.60.1))(rollup@4.60.1)(srvx@0.11.15)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.33(typescript@5.9.2))
@@ -8047,7 +8066,7 @@ snapshots:
       nuxt-link-checker: 5.0.9(c9c3840d6f6ebc260e8093b140d04953)
       nuxt-og-image: 6.4.7(b3d31ef4ec8061be6d86b5fb677f2d08)
       nuxt-schema-org: 6.0.4(0311cc80d51d62c74278717c021b6fad)
-      nuxt-seo-utils: 8.1.9(af855131b2f5dca14fd768cdaad07388)
+      nuxt-seo-utils: 8.1.9(4166e8e673c435cb1ed9b8524b062c78)
       nuxt-site-config: 4.0.8(@nuxt/schema@4.4.2)(magicast@0.5.2)(nuxt@4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@emnapi/core@1.9.2)(@emnapi/runtime@1.10.0)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.6)(@types/node@25.6.0)(@vue/compiler-sfc@3.5.33)(better-sqlite3@12.9.0)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.9.0)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.9.0)(gel@2.1.1)))(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.9.0)(gel@2.1.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(rollup-plugin-visualizer@7.0.1(rollup@4.60.1))(rollup@4.60.1)(srvx@0.11.15)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.33(typescript@5.9.2))
       nuxtseo-shared: 5.1.3(232f7a0d3a3657fa3082d1ae4f64e3b9)
     transitivePeerDependencies:
@@ -9307,24 +9326,27 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/addons@3.0.4(@unhead/bundler@3.0.4(esbuild@0.27.7)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)))':
+  '@unhead/addons@3.0.4(@unhead/bundler@3.0.4(@nuxt/kit@4.4.2(magicast@0.5.2))(esbuild@0.27.7)(launch-editor@2.13.2)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)))':
     dependencies:
-      '@unhead/bundler': 3.0.4(esbuild@0.27.7)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+      '@unhead/bundler': 3.0.4(@nuxt/kit@4.4.2(magicast@0.5.2))(esbuild@0.27.7)(launch-editor@2.13.2)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
-  '@unhead/bundler@3.0.4(esbuild@0.27.7)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
+  '@unhead/bundler@3.0.4(@nuxt/kit@4.4.2(magicast@0.5.2))(esbuild@0.27.7)(launch-editor@2.13.2)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@vitejs/devtools-kit': 0.1.15(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+      '@vitejs/devtools-kit': 0.1.16(@nuxt/kit@4.4.2(magicast@0.5.2))(launch-editor@2.13.2)(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
       magic-string: 0.30.21
       oxc-parser: 0.125.0
       oxc-walker: 0.7.0(oxc-parser@0.125.0)
-      ufo: 1.6.3
+      ufo: 1.6.4
       unhead: 2.1.13
       unplugin: 3.0.0
     optionalDependencies:
       esbuild: 0.27.7
       lightningcss: 1.32.0
     transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - '@nuxt/kit'
       - bufferutil
+      - launch-editor
       - typescript
       - utf-8-validate
       - vite
@@ -9341,6 +9363,10 @@ snapshots:
       hookable: 6.1.1
       unhead: 2.1.13
       vue: 3.5.33(typescript@5.9.2)
+
+  '@valibot/to-json-schema@1.6.0(valibot@1.3.1(typescript@5.9.2))':
+    dependencies:
+      valibot: 1.3.1(typescript@5.9.2)
 
   '@vercel/nft@1.5.0(rollup@4.60.1)':
     dependencies:
@@ -9361,28 +9387,18 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vitejs/devtools-kit@0.1.15(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
+  '@vitejs/devtools-kit@0.1.16(@nuxt/kit@4.4.2(magicast@0.5.2))(launch-editor@2.13.2)(typescript@5.9.2)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@vitejs/devtools-rpc': 0.1.15(typescript@5.9.2)
       birpc: 4.0.0
+      devframe: 0.1.16(@nuxt/kit@4.4.2(magicast@0.5.2))(launch-editor@2.13.2)(typescript@5.9.2)
       ohash: 2.0.11
+      sirv: 3.0.2
       vite: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - '@nuxt/kit'
       - bufferutil
-      - typescript
-      - utf-8-validate
-
-  '@vitejs/devtools-rpc@0.1.15(typescript@5.9.2)':
-    dependencies:
-      birpc: 4.0.0
-      logs-sdk: 0.0.6
-      ohash: 2.0.11
-      p-limit: 7.3.0
-      structured-clone-es: 2.0.0
-      valibot: 1.3.1(typescript@5.9.2)
-      ws: 8.20.0
-    transitivePeerDependencies:
-      - bufferutil
+      - launch-editor
       - typescript
       - utf-8-validate
 
@@ -9847,6 +9863,8 @@ snapshots:
 
   cac@6.7.14: {}
 
+  cac@7.0.0: {}
+
   cache-content-type@1.0.1:
     dependencies:
       mime-types: 2.1.35
@@ -10178,6 +10196,28 @@ snapshots:
   detect-libc@2.1.2: {}
 
   devalue@5.7.1: {}
+
+  devframe@0.1.16(@nuxt/kit@4.4.2(magicast@0.5.2))(launch-editor@2.13.2)(typescript@5.9.2):
+    dependencies:
+      '@valibot/to-json-schema': 1.6.0(valibot@1.3.1(typescript@5.9.2))
+      ansis: 4.2.0
+      birpc: 4.0.0
+      cac: 7.0.0
+      h3: 1.15.11
+      logs-sdk: 0.0.6
+      ohash: 2.0.11
+      pathe: 2.0.3
+      sirv: 3.0.2
+      structured-clone-es: 2.0.0
+      valibot: 1.3.1(typescript@5.9.2)
+      ws: 8.20.0
+    optionalDependencies:
+      '@nuxt/kit': 4.4.2(magicast@0.5.2)
+      launch-editor: 2.13.2
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
 
   devlop@1.1.0:
     dependencies:
@@ -11737,10 +11777,10 @@ snapshots:
       - rollup
       - supports-color
 
-  nuxt-seo-utils@8.1.9(af855131b2f5dca14fd768cdaad07388):
+  nuxt-seo-utils@8.1.9(4166e8e673c435cb1ed9b8524b062c78):
     dependencies:
       '@nuxt/kit': 4.4.2(magicast@0.5.2)
-      '@unhead/addons': 3.0.4(@unhead/bundler@3.0.4(esbuild@0.27.7)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)))
+      '@unhead/addons': 3.0.4(@unhead/bundler@3.0.4(@nuxt/kit@4.4.2(magicast@0.5.2))(esbuild@0.27.7)(launch-editor@2.13.2)(lightningcss@1.32.0)(typescript@5.9.2)(unhead@2.1.13)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)))
       citty: 0.2.2
       defu: 6.1.7
       escape-string-regexp: 5.0.0
@@ -12292,10 +12332,6 @@ snapshots:
       yocto-queue: 1.2.2
     optional: true
 
-  p-limit@7.3.0:
-    dependencies:
-      yocto-queue: 1.2.2
-
   p-locate@4.1.0:
     dependencies:
       p-limit: 2.3.0
@@ -12608,7 +12644,7 @@ snapshots:
       tar-fs: 2.1.4
       tunnel-agent: 0.6.0
 
-  prettier-plugin-tailwindcss@0.7.3(prettier@3.8.3):
+  prettier-plugin-tailwindcss@0.8.0(prettier@3.8.3):
     dependencies:
       prettier: 3.8.3
 
@@ -13393,6 +13429,8 @@ snapshots:
 
   ufo@1.6.3: {}
 
+  ufo@1.6.4: {}
+
   ultrahtml@1.6.0: {}
 
   uncrypto@0.1.3: {}
@@ -13607,7 +13645,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  uuid@11.1.0:
+  uuid@11.1.1:
     optional: true
 
   valibot@1.3.1(typescript@5.9.2):
@@ -13911,7 +13949,8 @@ snapshots:
 
   ylru@1.4.0: {}
 
-  yocto-queue@1.2.2: {}
+  yocto-queue@1.2.2:
+    optional: true
 
   youch-core@0.3.3:
     dependencies:
