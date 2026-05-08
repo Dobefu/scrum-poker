@@ -12,8 +12,8 @@ importers:
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.33(typescript@5.9.2))
       '@vueuse/integrations':
-        specifier: ^14.2.1
-        version: 14.2.1(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))
+        specifier: ^14.3.0
+        version: 14.3.0(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))
       better-sqlite3:
         specifier: ^12.9.0
         version: 12.9.0
@@ -3054,8 +3054,8 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
-  '@vueuse/integrations@14.2.1':
-    resolution: {integrity: sha512-2LIUpBi/67PoXJGqSDQUF0pgQWpNHh7beiA+KG2AbybcNm+pTGWT6oPGlBgUoDWmYwfeQqM/uzOHqcILpKL7nA==}
+  '@vueuse/integrations@14.3.0':
+    resolution: {integrity: sha512-76I5FT2ESvCmCaSwapI+a/u/CFtNXmzl9f9lNp1hRtx8vKB8hfiokJr8IvQqcQG5ckGXElyXK516b54ozV3MvA==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -8121,7 +8121,7 @@ snapshots:
       '@tiptap/vue-3': 3.22.3(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.3(@tiptap/pm@3.22.3))(@tiptap/pm@3.22.3)(vue@3.5.33(typescript@5.9.2))
       '@unhead/vue': 2.1.13(vue@3.5.33(typescript@5.9.2))
       '@vueuse/core': 14.3.0(vue@3.5.33(typescript@5.9.2))
-      '@vueuse/integrations': 14.2.1(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))
+      '@vueuse/integrations': 14.3.0(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))
       '@vueuse/shared': 14.3.0(vue@3.5.33(typescript@5.9.2))
       colortranslator: 5.0.0
       consola: 3.4.2
@@ -9713,10 +9713,10 @@ snapshots:
       '@vueuse/shared': 14.3.0(vue@3.5.33(typescript@5.9.2))
       vue: 3.5.33(typescript@5.9.2)
 
-  '@vueuse/integrations@14.2.1(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))':
+  '@vueuse/integrations@14.3.0(change-case@5.4.4)(focus-trap@8.1.0)(fuse.js@7.3.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.33(typescript@5.9.2))':
     dependencies:
-      '@vueuse/core': 14.2.1(vue@3.5.33(typescript@5.9.2))
-      '@vueuse/shared': 14.2.1(vue@3.5.33(typescript@5.9.2))
+      '@vueuse/core': 14.3.0(vue@3.5.33(typescript@5.9.2))
+      '@vueuse/shared': 14.3.0(vue@3.5.33(typescript@5.9.2))
       vue: 3.5.33(typescript@5.9.2)
     optionalDependencies:
       change-case: 5.4.4
