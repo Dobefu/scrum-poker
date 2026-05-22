@@ -76,8 +76,8 @@ importers:
         specifier: ^0.31.10
         version: 0.31.10
       nuxt-security:
-        specifier: ^2.5.1
-        version: 2.5.1(magicast@0.5.3)(rollup@4.60.4)
+        specifier: ^2.6.0
+        version: 2.6.0(magicast@0.5.3)(rollup@4.60.4)
       prettier:
         specifier: ^3.8.3
         version: 3.8.3
@@ -98,8 +98,8 @@ packages:
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/compat-data@7.29.0':
-    resolution: {integrity: sha512-T1NCJqT/j9+cn8fvkt7jtwbLBfLC/1y1c7NtCeXFRgzGTsafi68MRv8yzkYSapBnFA6L3U2VSc02ciDzoAJhJg==}
+  '@babel/compat-data@7.29.3':
+    resolution: {integrity: sha512-LIVqM46zQWZhj17qA8wb4nW/ixr2y1Nw+r1etiAWgRM6U1IqP+LNhL1yg440jYZR72jCWcWbLWzIosH+uP1fqg==}
     engines: {node: '>=6.9.0'}
 
   '@babel/core@7.29.0':
@@ -4949,6 +4949,10 @@ packages:
     resolution: {integrity: sha512-W+R+kFL4HgVxONq2bhXPi3bGpzGe/yEhVOp233qw9wCRtgncJ15P3bC+e4zZMu4Cq7d+WAJjXGW0uUkifhcatA==}
     engines: {node: 20 || >=22}
 
+  lru-cache@11.5.0:
+    resolution: {integrity: sha512-5YgH9UJd7wVb9hIouI2adWpgqrrICkt070Dnj8EUY1+B4B2P9eRLPAkAAo6NICA7CEhOIeBHl46u9zSNpNu7zA==}
+    engines: {node: 20 || >=22}
+
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -5282,9 +5286,9 @@ packages:
       zod:
         optional: true
 
-  nuxt-security@2.5.1:
-    resolution: {integrity: sha512-gXUhJiOqgkKkP0FHDAPOuREjoala0p6G/4TIlkti1ZafpJV8TkjjFqCNT6NuiWHxKzVYY00OIR1tbRcZuJ7LmQ==}
-    engines: {node: '>=20.0.0'}
+  nuxt-security@2.6.0:
+    resolution: {integrity: sha512-5rEfyxw1gS+vl1s5q7GcGuFOL5g0I03Q/mz7Zfr+IRJFsaZKwRxNVMFNRbatfK3Dz65LuRPnLewLmJ+Yh9ujOA==}
+    engines: {node: '>=24.0.0'}
 
   nuxt-seo-utils@8.1.9:
     resolution: {integrity: sha512-IoVPkJU8kSSroCaUemvBX4Oksc1d3cyTMiInRv5wqjF6uzwprS6Oc9ucmcX/9brI68UBb3sIrhXPLrGZ2zKCFA==}
@@ -7089,7 +7093,7 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
-  '@babel/compat-data@7.29.0': {}
+  '@babel/compat-data@7.29.3': {}
 
   '@babel/core@7.29.0':
     dependencies:
@@ -7134,7 +7138,7 @@ snapshots:
 
   '@babel/helper-compilation-targets@7.28.6':
     dependencies:
-      '@babel/compat-data': 7.29.0
+      '@babel/compat-data': 7.29.3
       '@babel/helper-validator-option': 7.27.1
       browserslist: 4.28.2
       lru-cache: 5.1.1
@@ -9405,7 +9409,7 @@ snapshots:
 
   '@rollup/pluginutils@5.3.0(rollup@4.60.4)':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
       estree-walker: 2.0.2
       picomatch: 4.0.4
     optionalDependencies:
@@ -11930,6 +11934,8 @@ snapshots:
 
   lru-cache@11.4.0: {}
 
+  lru-cache@11.5.0: {}
+
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -12465,9 +12471,9 @@ snapshots:
       - yjs
       - yup
 
-  nuxt-security@2.5.1(magicast@0.5.3)(rollup@4.60.4):
+  nuxt-security@2.6.0(magicast@0.5.3)(rollup@4.60.4):
     dependencies:
-      '@nuxt/kit': 4.4.2(magicast@0.5.3)
+      '@nuxt/kit': 4.4.6(magicast@0.5.3)
       basic-auth: 2.0.1
       defu: 6.1.7
       nuxt-csurf: 1.6.5(magicast@0.5.3)
@@ -13125,7 +13131,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.4.0
+      lru-cache: 11.5.0
       minipass: 7.1.3
 
   path-to-regexp@6.3.0: {}
@@ -14323,7 +14329,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/generator': 7.29.1
-      '@babel/parser': 7.29.2
+      '@babel/parser': 7.29.3
       '@babel/traverse': 7.29.0
       '@rollup/pluginutils': 5.3.0(rollup@4.60.4)
       magic-string: 0.30.21
