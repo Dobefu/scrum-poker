@@ -7,6 +7,10 @@ export default defineNuxtConfig({
 
   ssr: true,
 
+  site: {
+    url: "https://scrum-poker.connor.nl/",
+  },
+
   devtools: {
     enabled: true,
   },
@@ -77,6 +81,10 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
+    zeroRuntime: true,
+  },
+
+  sitemap: {
     zeroRuntime: true,
   },
 
