@@ -31,7 +31,7 @@
   "devDependencies": {
     "@formkit/auto-animate": "^0.10.0",
     "@iconify-json/mdi": "^1.2.3",
-    "@nuxt/icon": "^2.5.0",
+    "@nuxt/icon": "^2.5.1",
     "@nuxt/image": "^2.1.0",
     "@nuxtjs/seo": "5.3.14",
     "@nuxtjs/tailwindcss": "^6.14.0",
