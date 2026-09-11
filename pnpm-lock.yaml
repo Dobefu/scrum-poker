@@ -18,8 +18,8 @@ importers:
         specifier: ^13.0.3
         version: 13.0.3
       bun:
-        specifier: ^1.4.0
-        version: 1.4.0
+        specifier: ^1.4.2
+        version: 1.4.2
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/better-sqlite3@9.6.0)(better-sqlite3@13.0.3)(gel@2.1.1)
@@ -1520,67 +1520,67 @@ packages:
   '@nuxtjs/tailwindcss@6.14.0':
     resolution: {integrity: sha512-30RyDK++LrUVRgc2A85MktGWIZoRQgeQKjE4CjjD64OXNozyl+4ScHnnYgqVToMM6Ch2ZG2W4wV2J0EN6F0zkQ==}
 
-  '@oven/bun-darwin-aarch64@1.4.0':
-    resolution: {integrity: sha512-GCpf8QuFLsyioVawP5HrMxA1ZRBlu6Hq9RNnSc3UTUWAzIxBso9trjoZczw1HdgpqSssFkszfIV2zmOzFTjhkw==}
+  '@oven/bun-darwin-aarch64@1.4.2':
+    resolution: {integrity: sha512-MXdZkP1featqxZ+/VTXWG1BVjM4OGBehVY2Q88EeUj/7L0UMeCGItmyPYTN+wxvlGJ6F66JEtzsw+GvQWewnag==}
     cpu: [arm64]
     os: [darwin]
 
-  '@oven/bun-darwin-x64@1.4.0':
-    resolution: {integrity: sha512-cIrhwOr0SPEraewznhC+c/k6TG8bwFn5uZ4EJuXwjiKJLcAF36q7/bGjWkeXSe48JwMcPRUR054JXF7+cRwSSA==}
+  '@oven/bun-darwin-x64@1.4.2':
+    resolution: {integrity: sha512-gZTxZuLjkUhAWjTETu3tw0WhsEdNkJ64daj60ybhPf835a2yollV3yTkK9JozvzKPx4TRFzLSl8C+U525pxVbw==}
     cpu: [x64]
     os: [darwin]
 
-  '@oven/bun-freebsd-aarch64@1.4.0':
-    resolution: {integrity: sha512-09x7wnjMR6M5KGBDBhVl2CpfoCIQOkVDbPX2KfIhpXv4N6grbWE7dfLPw/Ydi9gaUMGhU7UKhoz444Nu6RCycA==}
+  '@oven/bun-freebsd-aarch64@1.4.2':
+    resolution: {integrity: sha512-SMNItMw1Z8QeeQVKnw8jA7xQNkeXdP+OPgin4Wi/QTx/B8RHHLnuZfqmFy7NtVeT2NF0kKYppW4WWd2CCYZjhQ==}
     cpu: [arm64]
     os: [freebsd]
 
-  '@oven/bun-freebsd-x64@1.4.0':
-    resolution: {integrity: sha512-dRwzti/qJqV1HWplU27iUWUqp+f2DtFSf2yqQKSb+HH2dDOC//Uqd9u/A5h1DMsLszfP5OGP9UwQIKxVwFODaA==}
+  '@oven/bun-freebsd-x64@1.4.2':
+    resolution: {integrity: sha512-THbPKXhO54N0DpFRKZNDZpQ7dpbX0bWASuARckAUS9wRtFIHsiY+uULXJvxJGo2YD1YewvXQ4G8Fj7XT5oBCiw==}
     cpu: [x64]
     os: [freebsd]
 
-  '@oven/bun-linux-aarch64-android@1.4.0':
-    resolution: {integrity: sha512-HpPIxJfDNPBPhiBNMyZoo/dOLijARfsx5j72vNuLtaTvl0Hh7HUculxjsOQ2WSyGoCgqXMEr1Qqjab1im9u1RA==}
+  '@oven/bun-linux-aarch64-android@1.4.2':
+    resolution: {integrity: sha512-3mZKO2rhsNgbAUtAHC1UKUlF2zTxFraDZT/Elv8wzyH0fJL9h+Iv3TgB9lO63w89PRn3eFe+NRA1bhVgikKNPQ==}
     cpu: [arm64]
     os: [android]
 
-  '@oven/bun-linux-aarch64-musl@1.4.0':
-    resolution: {integrity: sha512-RUjAAkJ/CdNV++zVxyANWshPc73CECYsfhk0fWAkoJjtywxJ2BwXzI6nopBBDMfs0HS+fhRGn6zGwU8ccxLeJg==}
+  '@oven/bun-linux-aarch64-musl@1.4.2':
+    resolution: {integrity: sha512-+Sm6y+lSiSFBOtXmnekp5Q6n1tUKlyv71FCPWBc61Cgb14T5eBs8SN/nh4MUCOKzONkI3O+as3MGUgikS4aCBQ==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@oven/bun-linux-aarch64@1.4.0':
-    resolution: {integrity: sha512-Y5yAtCbHK6JjprXEtkdklDQFPADgs+CkfcliyY5g4JJ8baGHyQSrfpSkX3XVJ2C+aBLsdwNDdW+oczMsAwx6uA==}
+  '@oven/bun-linux-aarch64@1.4.2':
+    resolution: {integrity: sha512-3BBP9ovJ2RGHFH6Ae1CAtxNtG1+YY6GD6rmYbsUosoAk9+OEl6zeDQ/k4fBkc6dYOJCtWnx8hUxzNzQATSmvYQ==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@oven/bun-linux-x64-android@1.4.0':
-    resolution: {integrity: sha512-u++KyLlfMn36yWz+AgJs+fZtS46UFDNpSSZhrcitkytONtNwq0X6Q9BDVEFXxYl/+Eec0xme1rb6MgW+U35WeA==}
+  '@oven/bun-linux-x64-android@1.4.2':
+    resolution: {integrity: sha512-6HC5tzcC79113n2IHCTJMWv+HsQImv4ZFEK2XpYLxY6HbT8tM4cUM2Zv1bHZBQsS3jv/zYBamDJ1UX7If0d5tw==}
     cpu: [x64]
     os: [android]
 
-  '@oven/bun-linux-x64-musl@1.4.0':
-    resolution: {integrity: sha512-C1Dv+ISL8YKEKM9jAHzNifOcRUoziy6UMxh+yVXjUCP6QnbRhENDHLaIWWkQZJyBLTn0I3xozflorAlHiGzGqA==}
+  '@oven/bun-linux-x64-musl@1.4.2':
+    resolution: {integrity: sha512-vVTKUg1bnPhRP/Hp73jIVoFh2vPFNYEqYX0ERKfZBOQEEHitNAeukZzzuUDZS0SoDCIpuWUGSpd/CDMbjdR+Uw==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@oven/bun-linux-x64@1.4.0':
-    resolution: {integrity: sha512-Du44zebtPXJujvMLmtIxEQ6ykOhYt7L/Q+YIGVm+Yy+Pj/fpOnq60ggwIpKp/pGAFbYHNiTrA3JTjuZ9MTbZIg==}
+  '@oven/bun-linux-x64@1.4.2':
+    resolution: {integrity: sha512-9/E/UXOTpSo3YsV5g+FhtTd/qTpiWoKuxS12cqtuYA1ssu9fRAoPQnipFgGyck3tWO63iUdxBiygq+kELFawng==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@oven/bun-windows-aarch64@1.4.0':
-    resolution: {integrity: sha512-FBAYaQpJBP0asgqzL6NFUfjdQqsV+kvTpJ/eWxPKj+RcDgIfPSuE8kvQuPYu5pa8u8JTujYMjmuyvHxVuQsInA==}
+  '@oven/bun-windows-aarch64@1.4.2':
+    resolution: {integrity: sha512-8EJ1ST7339WJE3poPW5nBgVW/lWf9HBz4W27ZUNhburKmcBLOByPyE6DP9fHD8FQGm5c+ilUN2hX1mrW0jxq9Q==}
     cpu: [arm64]
     os: [win32]
 
-  '@oven/bun-windows-x64@1.4.0':
-    resolution: {integrity: sha512-jRKv1NPLznMSZY5BEWciMF7zv0Tiyo2pQSxAJ3w+YWJ6y3VWNJQQQdLlV5Jx8lbOFDrJdrc9dD3GV17k3BP41A==}
+  '@oven/bun-windows-x64@1.4.2':
+    resolution: {integrity: sha512-+bN6OuVld/9diT/RLSXSW7JE6CvNE3gL9XsAEjULi1nUsXd6DNO6GuA9jNdNb3r8PdJFnYHr5aypNV1Oj3Rd9g==}
     cpu: [x64]
     os: [win32]
 
@@ -2728,8 +2728,8 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
-  bun@1.4.0:
-    resolution: {integrity: sha512-iRiFkc2W7UVpCyZXO9tod45TP9QCyN19fWqbpeN/jaM/K7uzeHYx/OSPsahMJazGKBgPsnxRt+4Jc43d8BcHZw==}
+  bun@1.4.2:
+    resolution: {integrity: sha512-TrSXo6HJfIEaczpb3kjX82I2pL47vK1QUNmHRCUdz9IzaOwa9lzOXSWwu2l18YHE3sNfGRapVLd4nNm+22vVVA==}
     cpu: [arm64, x64]
     os: [darwin, linux, android, freebsd, win32]
     hasBin: true
@@ -3598,8 +3598,8 @@ packages:
   h3@1.15.11:
     resolution: {integrity: sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==}
 
-  h3@2.0.1-rc.29:
-    resolution: {integrity: sha512-woEUYLvpUa9SzbBGOYn3GfsK/EU7JhoUeNc49B2an6mcO1aqg7P8VvWVUfa5Vkb8FxBh9ZAkU+/rJ5m5pTULUA==}
+  h3@2.0.1-rc.31:
+    resolution: {integrity: sha512-AG7qZzF99a0BSYoXT3evJgIhwSIUKow7R+hwkLRZS06WJ9nbSb7QXUDgs1ByBjp6svTvl++N/GKA7I9YPz9cQQ==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
@@ -5195,8 +5195,8 @@ packages:
     engines: {node: '>=20.16.0'}
     hasBin: true
 
-  srvx@0.12.7:
-    resolution: {integrity: sha512-PIaq1pDGg3EU2OGSN3pzRfYVu9MJDzLdojlGN6E3lvhAdxqn/lNMJFMA1xGA38jYkBb0V9xw02QEVVMDb0PExA==}
+  srvx@1.0.4:
+    resolution: {integrity: sha512-eZmYaxUfZSo7/8m8UdsHRJNmTLSCTPPom9d7a60vMmuVeZvwhbvflRR+00/CxTCjMOFa5+H8tgBeNDVZ+w7AAQ==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -5347,6 +5347,10 @@ packages:
 
   tinyexec@1.3.0:
     resolution: {integrity: sha512-QKAl9m8gWWGHV8jZcPeym6j+XULi6tOf1mT83WYJ4Lk2ytW/uwAWkrP0uFsdoYMdueVJ0qs26wZ+23xeB4ibNQ==}
+    engines: {node: '>=18'}
+
+  tinyexec@1.3.1:
+    resolution: {integrity: sha512-GCvB3aoys96IuDFBMcTB46JOR6mdMtAToqwiW8JlWhsoh1mhHi/xn9ss/Dg7N555GiJyEt2qzoG/NHCwM6h1EA==}
     engines: {node: '>=18'}
 
   tinyglobby@0.2.17:
@@ -6274,7 +6278,7 @@ snapshots:
       nostics: 1.2.0
       pathe: 2.0.3
       perfect-debounce: 2.1.0
-      tinyexec: 1.3.0
+      tinyexec: 1.3.1
       zigpty: 0.2.1
     optional: true
 
@@ -7383,7 +7387,7 @@ snapshots:
       destr: 2.0.5
       errx: 0.1.2
       exsolve: 1.1.1
-      ignore: 7.0.6
+      ignore: 7.0.8
       jiti: 2.7.0
       klona: 2.0.6
       mlly: 1.8.2
@@ -7717,40 +7721,40 @@ snapshots:
       - tsx
       - yaml
 
-  '@oven/bun-darwin-aarch64@1.4.0':
+  '@oven/bun-darwin-aarch64@1.4.2':
     optional: true
 
-  '@oven/bun-darwin-x64@1.4.0':
+  '@oven/bun-darwin-x64@1.4.2':
     optional: true
 
-  '@oven/bun-freebsd-aarch64@1.4.0':
+  '@oven/bun-freebsd-aarch64@1.4.2':
     optional: true
 
-  '@oven/bun-freebsd-x64@1.4.0':
+  '@oven/bun-freebsd-x64@1.4.2':
     optional: true
 
-  '@oven/bun-linux-aarch64-android@1.4.0':
+  '@oven/bun-linux-aarch64-android@1.4.2':
     optional: true
 
-  '@oven/bun-linux-aarch64-musl@1.4.0':
+  '@oven/bun-linux-aarch64-musl@1.4.2':
     optional: true
 
-  '@oven/bun-linux-aarch64@1.4.0':
+  '@oven/bun-linux-aarch64@1.4.2':
     optional: true
 
-  '@oven/bun-linux-x64-android@1.4.0':
+  '@oven/bun-linux-x64-android@1.4.2':
     optional: true
 
-  '@oven/bun-linux-x64-musl@1.4.0':
+  '@oven/bun-linux-x64-musl@1.4.2':
     optional: true
 
-  '@oven/bun-linux-x64@1.4.0':
+  '@oven/bun-linux-x64@1.4.2':
     optional: true
 
-  '@oven/bun-windows-aarch64@1.4.0':
+  '@oven/bun-windows-aarch64@1.4.2':
     optional: true
 
-  '@oven/bun-windows-x64@1.4.0':
+  '@oven/bun-windows-x64@1.4.2':
     optional: true
 
   '@oxc-parser/binding-android-arm-eabi@0.143.0':
@@ -8722,20 +8726,20 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bun@1.4.0:
+  bun@1.4.2:
     optionalDependencies:
-      '@oven/bun-darwin-aarch64': 1.4.0
-      '@oven/bun-darwin-x64': 1.4.0
-      '@oven/bun-freebsd-aarch64': 1.4.0
-      '@oven/bun-freebsd-x64': 1.4.0
-      '@oven/bun-linux-aarch64': 1.4.0
-      '@oven/bun-linux-aarch64-android': 1.4.0
-      '@oven/bun-linux-aarch64-musl': 1.4.0
-      '@oven/bun-linux-x64': 1.4.0
-      '@oven/bun-linux-x64-android': 1.4.0
-      '@oven/bun-linux-x64-musl': 1.4.0
-      '@oven/bun-windows-aarch64': 1.4.0
-      '@oven/bun-windows-x64': 1.4.0
+      '@oven/bun-darwin-aarch64': 1.4.2
+      '@oven/bun-darwin-x64': 1.4.2
+      '@oven/bun-freebsd-aarch64': 1.4.2
+      '@oven/bun-freebsd-x64': 1.4.2
+      '@oven/bun-linux-aarch64': 1.4.2
+      '@oven/bun-linux-aarch64-android': 1.4.2
+      '@oven/bun-linux-aarch64-musl': 1.4.2
+      '@oven/bun-linux-x64': 1.4.2
+      '@oven/bun-linux-x64-android': 1.4.2
+      '@oven/bun-linux-x64-musl': 1.4.2
+      '@oven/bun-windows-aarch64': 1.4.2
+      '@oven/bun-windows-x64': 1.4.2
 
   bundle-name@4.1.0:
     dependencies:
@@ -9080,7 +9084,7 @@ snapshots:
       birpc: 4.2.0
       crossws: 0.4.12(srvx@0.11.22)
       destr: 2.0.5
-      h3: 2.0.1-rc.29(crossws@0.4.12(srvx@0.11.22))
+      h3: 2.0.1-rc.31(crossws@0.4.12(srvx@0.11.22))
       mrmime: 2.0.1
       nostics: 1.2.0
       pathe: 2.0.3
@@ -9631,10 +9635,10 @@ snapshots:
       ufo: 1.6.4
       uncrypto: 0.1.3
 
-  h3@2.0.1-rc.29(crossws@0.4.12(srvx@0.11.22)):
+  h3@2.0.1-rc.31(crossws@0.4.12(srvx@0.11.22)):
     dependencies:
       rou3: 0.9.2
-      srvx: 0.12.7
+      srvx: 1.0.4
     optionalDependencies:
       crossws: 0.4.12(srvx@0.11.22)
     optional: true
@@ -11721,7 +11725,7 @@ snapshots:
   srvx@0.12.5:
     optional: true
 
-  srvx@0.12.7:
+  srvx@1.0.4:
     optional: true
 
   standard-as-callback@2.1.0: {}
@@ -11929,6 +11933,9 @@ snapshots:
   tinyclip@0.1.15: {}
 
   tinyexec@1.3.0: {}
+
+  tinyexec@1.3.1:
+    optional: true
 
   tinyglobby@0.2.17:
     dependencies:
