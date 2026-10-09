@@ -13,7 +13,7 @@ importers:
         version: 15.0.0(vue@3.5.43(typescript@5.9.2))
       '@vueuse/integrations':
         specifier: ^15.0.0
-        version: 15.0.0(change-case@5.4.4)(focus-trap@8.2.2)(fuse.js@7.5.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.43(typescript@5.9.2))
+        version: 15.0.0(change-case@5.4.4)(focus-trap@8.2.3)(fuse.js@7.5.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.43(typescript@5.9.2))
       better-sqlite3:
         specifier: ^13.0.3
         version: 13.0.3
@@ -24,8 +24,8 @@ importers:
         specifier: ^0.45.3
         version: 0.45.3(@types/better-sqlite3@9.6.0)(better-sqlite3@13.0.3)(gel@2.1.1)
       focus-trap:
-        specifier: ^8.2.2
-        version: 8.2.2
+        specifier: ^8.2.3
+        version: 8.2.3
       nuxt:
         specifier: ^4.6.0
         version: 4.6.0(d66063030396f33e0c257deeaf8a4981)
@@ -3506,8 +3506,8 @@ packages:
   fnv1a-64@0.1.2:
     resolution: {integrity: sha512-mJbcILTPybAR1jdOwt/lVv8N2cffeJFFP+gVbSAwLEx1ujXH27RpPd8Rokec/KX9c76UYIB6Co+H4lQzxPnJfA==}
 
-  focus-trap@8.2.2:
-    resolution: {integrity: sha512-qV0g8hRYBqgACcFOH3f9wXc4zPKhr/0z9RI2a6ZijZ72EeBi4g8oBy8zAWuUR1TsMpOzwpUMFvjdasrC41Joug==}
+  focus-trap@8.2.3:
+    resolution: {integrity: sha512-LTNHZwcFM7bSdU1cG1ExoaTEzoGmdjw+EzDotolZmLTCbm0ll2k6J3NL+WfqP14nGLxAp+XDJgwlT2DtNhcukA==}
 
   fontaine@0.8.0:
     resolution: {integrity: sha512-eek1GbzOdWIj9FyQH/emqW1aEdfC3lYRCHepzwlFCm5T77fBSRSyNRKE6/antF1/B1M+SfJXVRQTY9GAr7lnDg==}
@@ -8611,14 +8611,14 @@ snapshots:
       '@vueuse/shared': 15.0.0(vue@3.5.43(typescript@5.9.2))
       vue: 3.5.43(typescript@5.9.2)
 
-  '@vueuse/integrations@15.0.0(change-case@5.4.4)(focus-trap@8.2.2)(fuse.js@7.5.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.43(typescript@5.9.2))':
+  '@vueuse/integrations@15.0.0(change-case@5.4.4)(focus-trap@8.2.3)(fuse.js@7.5.0)(jwt-decode@4.0.0)(qrcode@1.5.4)(vue@3.5.43(typescript@5.9.2))':
     dependencies:
       '@vueuse/core': 15.0.0(vue@3.5.43(typescript@5.9.2))
       '@vueuse/shared': 15.0.0(vue@3.5.43(typescript@5.9.2))
       vue: 3.5.43(typescript@5.9.2)
     optionalDependencies:
       change-case: 5.4.4
-      focus-trap: 8.2.2
+      focus-trap: 8.2.3
       fuse.js: 7.5.0
       jwt-decode: 4.0.0
       qrcode: 1.5.4
@@ -9595,7 +9595,7 @@ snapshots:
 
   fnv1a-64@0.1.2: {}
 
-  focus-trap@8.2.2:
+  focus-trap@8.2.3:
     dependencies:
       tabbable: 6.5.0
 
