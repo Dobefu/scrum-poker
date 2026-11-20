@@ -46,8 +46,8 @@ importers:
         version: 5.3.1(@vue/compiler-sfc@3.5.45)(esbuild@0.28.2)(rolldown@1.2.16)(rollup@4.67.5)(vite@8.3.6(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.0))(vue@3.5.45(typescript@5.9.2))
     devDependencies:
       '@formkit/auto-animate':
-        specifier: ^0.10.0
-        version: 0.10.0
+        specifier: ^0.10.2
+        version: 0.10.2
       '@iconify-json/mdi':
         specifier: ^1.2.3
         version: 1.2.3
@@ -927,14 +927,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fastify/busboy@3.2.5':
-    resolution: {integrity: sha512-y8MTAeBlEQUNVnskmZQwpseZN3EgCksQNOULlfxWY6o6VEqh01+oExMgbM7gN6YLQ8pNDYeweNPKJRt8jQm2ZQ==}
+  '@fastify/busboy@3.2.6':
+    resolution: {integrity: sha512-UPXdyAMbz/gNvjS8HONpJR2TDaHM3wQKMtSRPFkoh2LTeRRtnm+ICVYKgBYkTwlPOVzDNynOd34EH8qapwfelQ==}
 
   '@fingerprintjs/botd@2.0.0':
     resolution: {integrity: sha512-yhuz23NKEcBDTHmGz/ULrXlGnbHenO+xZmVwuBkuqHUkqvaZ5TAA0kAgcRy4Wyo5dIBdkIf57UXX8/c9UlMLJg==}
 
-  '@formkit/auto-animate@0.10.0':
-    resolution: {integrity: sha512-KGomRttjUfORuPUaR/ZGQw+6xfMrTM+sxnILv7JAd9AmabU9rg9i6gF/iC0Ih+QpKCubJpCA/1DX9UHKE8cX+A==}
+  '@formkit/auto-animate@0.10.2':
+    resolution: {integrity: sha512-t2Z3y8b/zB3wPWwgpc6JDVm4q0ezb5vfe2mqfUrQJ7XziZY8iYuhocQ7eJdTzowRePihrNbZ/DNJoFa6Yi5blg==}
 
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
@@ -6591,12 +6591,12 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@fastify/busboy@3.2.5':
+  '@fastify/busboy@3.2.6':
     optional: true
 
   '@fingerprintjs/botd@2.0.0': {}
 
-  '@formkit/auto-animate@0.10.0': {}
+  '@formkit/auto-animate@0.10.2': {}
 
   '@iconify-json/mdi@1.2.3':
     dependencies:
@@ -8500,7 +8500,7 @@ snapshots:
 
   '@whatwg-node/node-fetch@0.8.6':
     dependencies:
-      '@fastify/busboy': 3.2.5
+      '@fastify/busboy': 3.2.6
       '@whatwg-node/disposablestack': 0.0.6
       '@whatwg-node/promise-helpers': 1.3.2
       tslib: 2.9.1
